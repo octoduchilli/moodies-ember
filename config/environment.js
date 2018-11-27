@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'moodies-ember',
+    podModulePrefix: 'moodies-ember/pods',
     environment,
     rootURL: '/',
     locationType: 'auto',
