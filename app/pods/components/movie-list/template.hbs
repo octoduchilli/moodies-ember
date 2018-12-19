@@ -11,11 +11,11 @@
               {{#if (eq item.id hover)}}
                 {{buttons-lists movie=item class="col"}}
               {{else}}
-                {{fake-buttons-lists movie=item class="col"}}
+                {{buttons-lists-fake movie=item class="col"}}
               {{/if}}
             {{/if}}
           {{else}}
-            {{fake-buttons-lists movie=item class="col" click=(action "notifyNotConnected")}}
+            {{buttons-lists-fake movie=item class="col" click=(action "notifyNotConnected")}}
           {{/if}}
         </div>
       </li>
@@ -33,7 +33,7 @@
             {{/if}}
           {{else}}
             {{#if (eq item.id hover)}}
-              {{fake-buttons-lists movie=item class="col" click=(action "notifyNotConnected")}}
+              {{buttons-lists-fake movie=item class="col" click=(action "notifyNotConnected")}}
             {{/if}}
           {{/if}}
         </div>
@@ -48,8 +48,7 @@
         <h1 class="details__title">{{item.title}}</h1>
         <ul class="details__genres flex wrap work">
           {{#if item.genres}}
-            {{!-- {{#each (slice 0 3 item.genres) as |genre|}} --}}
-            {{#each item.genres as |genre|}}
+            {{#each (slice 0 3 item.genres) as |genre|}}
               <li class="genre">{{genre.name}}</li>
             {{/each}}
           {{else}}
@@ -70,7 +69,7 @@
                 {{#if (eq item.id hover)}}
                   {{buttons-lists movie=item}}
                 {{else}}
-                  {{fake-buttons-lists movie=item}}
+                  {{buttons-lists-fake movie=item}}
                 {{/if}}
               {{else}}
                 {{#if (eq item.id hover)}}
@@ -80,7 +79,7 @@
             {{/if}}
           {{else}}
             {{#if (or (eq item.id hover) (eq view.userButton "visible"))}}
-              {{fake-buttons-lists movie=item click=(action "notifyNotConnected")}}
+              {{buttons-lists-fake movie=item click=(action "notifyNotConnected")}}
             {{/if}}
           {{/if}}
         </div>
