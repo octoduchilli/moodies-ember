@@ -1,0 +1,5 @@
+<label class="{{styleNamespace}}__label" for="{{styleNamespace}}__{{dasherizedLabel}}">{{label}}</label>
+{{input class=(concat styleNamespace "__input") id=(concat styleNamespace "__" dasherizedLabel) value=value type=type placeholder=placeholder maxlength=maxlength}}
+{{#if error}}
+  <div class="{{styleNamespace}}__error">{{error}}</div>
+{{/if}}

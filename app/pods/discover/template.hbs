@@ -1,0 +1,23 @@
+<div class="discover">
+  {{#filters-top-bar lock=filtersBarLock onResize=(action "setTopbarHeight") as |topbar|}}
+    {{#topbar.filters resetFilters=(action "resetFilters") as |filters|}}
+      {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sortItems value=sort onSelect=(action "sortUpdate")}}
+      {{#if (eq sort.value "vote_average.desc")}}
+        {{filters.dropdown label="Avec un minimum de" smallLabel="Minimum" items=voteItems value=vote onSelect=(action "voteUpdate")}}
+      {{/if}}
+      {{filters.dropdown label="Avec les genres" smallLabel="Genres" items=genresItems multipleSelect=true value=genres onSelect=(action "genresUpdate")}}
+      {{filters.date label="Depuis le ..." value=releaseGte max=releaseLte dateUpdate=(action "dateUpdate" "Gte")}}
+      {{filters.date label="Jusqu'au ..." value=releaseLte min=releaseGte dateUpdate=(action "dateUpdate" "Lte")}}
+    {{/topbar.filters}}
+    {{#topbar.options as |options|}}
+      {{options.option onChange=(action "warnViewUserButton") selected=view.userButton options=view.userButtonOptions}}
+      {{options.option onChange=(perform __fetchData) selected=view.list options=view.listOptions}}
+    {{/topbar.options}}
+  {{/filters-top-bar}}
+
+  <div class="total-results">
+    <p class="total">Nombres de titres correspondants à votre recherche : <span class="higher">{{totalResults}}</span></p>
+  </div>
+
+  {{movie-list class="movie-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=movies.results}}
+</div>

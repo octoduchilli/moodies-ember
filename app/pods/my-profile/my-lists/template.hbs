@@ -1,0 +1,21 @@
+<div class="my-lists">
+  {{#filters-top-bar lock=filtersBarLock onResize=(action "setTopbarHeight") as |topbar|}}
+    {{#topbar.filters resetFilters=(action "resetFilters") as |filters|}}
+      {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sortItems value=sort onSelect=(action "sortUpdate")}}
+      {{filters.dropdown label="Avec les genres" smallLabel="Genres" items=genresItems multipleSelect=true value=genres onSelect=(action "genresUpdate")}}
+      {{filters.dropdown label="Afficher les listes" smallLabel="Afficher" items=listsItems multipleSelect=true value=lists onSelect=(action "listsUpdate")}}
+      {{filters.dropdown label="Affiner le résultat" smallLabel="Affiner" items=refineItems value=refine onSelect=(action "refineUpdate")}}
+      {{filters.input placeholder="Titre" type="text" value=title onInput=(action "titleUpdate")}}
+    {{/topbar.filters}}
+    {{#topbar.options as |options|}}
+      {{options.option onChange=(action "warnViewUserButton") selected=view.userButton options=view.userButtonOptions}}
+      {{options.option selected=view.list options=view.listOptions}}
+    {{/topbar.options}}
+  {{/filters-top-bar}}
+
+  <div class="total-results">
+    <p class="total">Temps accumulés : <span class="higher">{{compute (action "minToMDHM") movies.totalRuntime}} - {{movies.total}} titres</span></p>
+  </div>
+
+  {{movie-list class="movie-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=moviesContentSliced}}
+</div>

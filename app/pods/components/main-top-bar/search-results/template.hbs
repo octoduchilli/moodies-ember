@@ -1,0 +1,6 @@
+{{#each items as |item|}}
+  {{#link-to type item.id class="item flex ali-center"}}
+    <img class="poster" src="https://image.tmdb.org/t/p/w500{{if (eq type 'movie') item.poster_path item.profile_path}}" alt=" " onerror="this.src='/img/no-picture.png'">
+    <p class="name">{{if (eq type 'movie') item.title item.name}}</p>
+  {{/link-to}}
+{{/each}}

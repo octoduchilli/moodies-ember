@@ -1,0 +1,21 @@
+<div class="div-label" {{action "openOrClose"}}>
+  <span class="label">
+    {{#if computedLabel}}
+      {{computedLabel}}
+    {{else}}
+      {{#if isOpen}}
+        {{label}}
+      {{else}}
+        {{smallLabel}}
+      {{/if}}
+    {{/if}}
+  </span>
+  <div class="div-icon" {{action "openOrClose"}}>
+    {{fa-icon (if isOpen "times" "chevron-circle-down") click=(action "openOrClose") class="icon"}}
+  </div>
+</div>
+<ul class="item-list">
+  {{#each items as |item|}}
+    <li class="item {{if item.isSelected 'is--selected' 'not--selected'}}" {{action "selectOrDeselect" item.id on="click"}}>{{item.name}}</li>
+  {{/each}}
+</ul>

@@ -1,0 +1,19 @@
+{{#each basicLists as |list|}}
+  <li class="button-list {{movie.id}}__button-basic-list {{if list.isSelected "is--selected" "not--selected"}}" {{action (if (eq list.id "plus") "openOtherLists" "selectOrDeselect") list}} style="{{compute (action "listColor") list.isSelected list.color}}">
+    {{fa-icon list.icon}}
+  </li>
+{{/each}}
+<ul class="other-lists {{movie.id}}__other-lists {{if otherListsOpen "is--visible" "not--visible"}}" {{action (mut otherListsOpen) false on="mouseLeave"}}>
+  {{#if otherListsOpen}}
+    {{#each (sort-by "position" otherLists) as |list|}}
+      <li class="div-button-list" {{action "selectOrDeselect" list}}>
+        <div class="button-list {{movie.id}}__{{list.id}} {{if list.isSelected "is--selected" "not--selected"}}" style="{{compute (action "listColor") list.isSelected list.color}}">
+          {{list.label}}
+        </div>
+        <p class="list-name">
+          {{list.name}}
+        </p>
+      </li>
+    {{/each}}
+  {{/if}}
+</ul>

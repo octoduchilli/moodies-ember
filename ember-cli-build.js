@@ -24,5 +24,14 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
+  app.import('node_modules/pickadate/lib/legacy.js');
+  app.import('node_modules/pickadate/lib/picker.js');
+  app.import('node_modules/pickadate/lib/picker.time.js');
+  app.import('node_modules/pickadate/lib/picker.date.js');
+
+  app.import('node_modules/pickadate/lib/themes/classic.css');
+  app.import('node_modules/pickadate/lib/themes/classic.time.css');
+  app.import('node_modules/pickadate/lib/themes/classic.date.css');
+
   return app.toTree();
 };

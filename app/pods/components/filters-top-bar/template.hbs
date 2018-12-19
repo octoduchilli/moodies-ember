@@ -1,0 +1,9 @@
+<div class="container">
+  {{yield (hash
+    filters=(component "filters-top-bar/filters-section" onResize=(action "onResize"))
+    options=(component "filters-top-bar/options-section")
+  )}}
+  <div class="div-lock-icon" {{action "toggleLock" on="click"}}>
+    {{fa-icon (if lock "lock" "unlock") color="white"}}
+  </div>
+</div>

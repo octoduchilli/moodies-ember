@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | main-title-bar/search-type', function(hooks) {
+module('Integration | Component | main-top-bar/search-type', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{main-title-bar/search-type}}`);
+    await render(hbs`{{main-top-bar/search-type}}`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      {{#main-title-bar/search-type}}
+      {{#main-top-bar/search-type}}
         template block text
-      {{/main-title-bar/search-type}}
+      {{/main-top-bar/search-type}}
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');
