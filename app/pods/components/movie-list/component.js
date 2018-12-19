@@ -33,6 +33,8 @@ export default Component.extend(lerpColor, {
     window.scroll({
       top: this.scrollY
     })
+
+    this.updatedItems(this.items)
   },
 
   didUpdateAttrs () {
