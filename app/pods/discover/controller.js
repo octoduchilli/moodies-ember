@@ -253,7 +253,7 @@ export default Controller.extend(preloadImg, {
     set(this, 'page', 1)
 
     return yield all([
-      timeout(500),
+      timeout(750),
       this.__fetchMovies()
     ])
   }).restartable(),

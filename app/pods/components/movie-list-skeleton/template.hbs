@@ -1,0 +1,38 @@
+{{#each (repeat 30) as |nb|}}
+  {{#if (eq view.list "basic")}}
+    <li class="{{styleNamespace}}__item {{if (eq view.userButton "visible") "mouse--is-over"}}">
+      <div class="item__link">
+        <div class="link__poster"></div>
+      </div>
+      <div class="div-buttons-lists">
+      {{#if (eq view.userButton "visible")}}
+        {{buttons-lists-skeleton class="col"}}
+      {{/if}}
+      </div>
+    </li>
+  {{else if (eq view.list "details")}}
+    <li class="{{styleNamespace}}__item mouse--is-over">
+      <div class="item__link">
+        <div class="link__poster bigger"></div>
+      </div>
+      <div class="item__details flex col">
+        <h1 class="details__title"></h1>
+        <ul class="details__genres flex wrap work">
+          {{#each (repeat 3) as |nb|}}
+            <li class="genre"></li>
+          {{/each}}
+        </ul>
+        <div class="details__vote flex ali-center work">
+          <div class="vote__average"></div>
+          <div class="vote__count"></div>
+        </div>
+        <p class="details__overview"></p>
+        <div class="div-buttons-lists margin-auto">
+          {{#if (eq view.userButton "visible")}}
+            {{buttons-lists-skeleton}}
+          {{/if}}
+        </div>
+      </div>
+    </li>
+  {{/if}}
+{{/each}}

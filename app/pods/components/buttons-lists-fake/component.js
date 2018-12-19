@@ -53,10 +53,6 @@ export default Component.extend({
     }
   },
 
-  didInsertElement () {
-    this._super(...arguments)
-  },
-
   actions: {
     listColor (isSelected, color) {
       if (!isSelected) {

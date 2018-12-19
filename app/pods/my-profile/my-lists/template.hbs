@@ -14,8 +14,16 @@
   {{/filters-top-bar}}
 
   <div class="total-results">
-    <p class="total">Temps accumulés : <span class="higher">{{compute (action "minToMDHM") movies.totalRuntime}} - {{movies.total}} titres</span></p>
+    {{#if (or __updateMovies.isRunning (not __updateMovies.performCount))}}
+      <p class="total">Temps accumulés : <span class="higher">...</span></p>
+    {{else}}
+      <p class="total">Temps accumulés : <span class="higher">{{compute (action "minToMDHM") (or movies.totalRuntime 0)}} - {{movies.total}} titres</span></p>
+    {{/if}}
   </div>
 
-  {{movie-list class="movie-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=moviesContentSliced}}
+  {{#if __updateMovies.isRunning}}
+    {{movie-list-skeleton}}
+  {{else}}
+    {{movie-list class="movie-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=moviesContentSliced}}
+  {{/if}}
 </div>
