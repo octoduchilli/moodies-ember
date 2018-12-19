@@ -1,0 +1,60 @@
+& {
+  position: fixed;
+
+  right: 0;
+  top: 70px;
+
+  z-index: 9999;
+
+  width: calc(100% - 200px);
+
+  max-height: 300px;
+
+  background: #fbfcff;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  color: #272121;
+
+  .item {
+    height: 90px;
+
+    margin: 0 10px;
+
+    box-sizing: border-box;
+
+    border-top: .5px solid #ebe6eb;
+
+    cursor: pointer;
+
+    &:hover {
+      background: #ebe6eb;
+
+      .title {
+        color: rgba(#272121, 1);
+      }
+    }
+
+    .poster {
+      height: 80px;
+      width: 55px;
+
+      margin: 5px 15px;
+    }
+
+    .name {
+      color: rgba(#272121, .7);
+
+      padding: 2px 0;
+
+      font-size: 1.3em;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+      white-space: nowrap;
+    }
+  }
+}

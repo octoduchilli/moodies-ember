@@ -1,0 +1,6 @@
+{{#each-in options as |key option|}}
+  <li class="option unselectable {{if (eq selected key) 'is--selected' 'not--selected'}}"
+      {{action "selectOption" key}}>
+    {{option.name}}
+  </li>
+{{/each-in}}

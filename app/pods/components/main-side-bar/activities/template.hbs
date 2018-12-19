@@ -1,0 +1,9 @@
+
+{{#each user.activities as |activity|}}
+  {{#link-to activity.type activity.id class=(concat styleNamespace "__activity-item") title=activity.name}}
+    {{fa-icon activity.icon color="white" class="activity-item__icon"}}
+    <p class="activity-item__name">
+      {{activity.name}}
+    </p>
+  {{/link-to}}
+{{/each}}

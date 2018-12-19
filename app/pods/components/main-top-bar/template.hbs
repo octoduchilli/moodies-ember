@@ -1,0 +1,14 @@
+<div class="moodies-title josefin">
+  <div class="shine-container">
+    <h1 class="shine-title">moodies</h1>
+  </div>
+  <h1 class="title">moodies</h1>
+</div>
+
+{{main-top-bar/search-input text=searchText onClick=(action "search") onChange=(action "search") totalResults=fetch.total_results}}
+
+{{basic-options class="type-options" selected=searchType options=typeOptions onChange=(action "search")}}
+
+{{main-top-bar/search-results type=searchType items=fetch.results click=(action "resetFetch")}}
+
+{{main-top-bar/user-log}}

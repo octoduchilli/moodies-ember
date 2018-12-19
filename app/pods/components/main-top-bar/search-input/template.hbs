@@ -1,0 +1,10 @@
+<div class="logo flex jus-center ali-center">
+  {{#if (not-eq totalResults undefined)}}
+    <div class="total-results">
+      {{if (gte totalResults 20) '20+' totalResults}}
+    </div>
+  {{else}}
+    {{fa-icon "search" class="find-glass"}}
+  {{/if}}
+</div>
+{{input type="search" placeholder="Rechercher" value=text input=(action onChange)}}

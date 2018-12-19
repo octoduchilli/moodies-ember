@@ -1,0 +1,107 @@
+& {
+  position: relative;
+
+  height: 36px;
+
+  max-width: 250px;
+
+  border-radius: 5px;
+
+  background: #ebe6eb;
+
+  color: #272121;
+
+  cursor: pointer;
+
+  &.is--opened {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    z-index: 10;
+  }
+
+  &.is--closed {
+
+    .item-list {
+      visibility: hidden;
+    }
+  }
+
+  .div-label {
+    width: 100%;
+    height: 100%;
+
+    padding: 0 45px 0 15px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    .label {
+      margin: auto;
+
+      white-space: nowrap;
+
+      text-overflow: ellipsis;
+
+      overflow: hidden;
+
+      padding: 5px 0;
+    }
+
+    .div-icon {
+      position: absolute;
+
+      right: 15px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      display: flex;
+    }
+
+    .icon {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  .item-list {
+    position: absolute;
+
+    background: #ebe6eb;
+
+    top: 36px;
+    left: 0;
+
+    border-radius: 0 0 5px 5px;
+
+    max-height: 230px;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    .item {
+      white-space: nowrap;
+
+      text-overflow: ellipsis;
+
+      overflow: hidden;
+
+      padding: 15px 60px 15px 10px;
+
+      transform: 200ms all;
+
+      &:hover {
+        background: #fbfcff;
+      }
+
+      &.is--selected {
+        color: #fbfcff;
+
+        background: #272121;
+      }
+    }
+  }
+}

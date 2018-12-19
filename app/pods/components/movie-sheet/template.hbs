@@ -1,0 +1,52 @@
+{{#if __fetchData.isRunning}}
+  <div class="{{styleNamespace}}__topbar-skeleton flex ali-start work">
+    <div class="div-poster">
+    </div>
+    <div class="left--content-poster flex col">
+      <h1 class="title"></h1>
+      <p class="info"></p>
+      <p class="info"></p>
+      <ul class="genres flex wrap">
+        <li class="genre"></li>
+        <li class="genre"></li>
+        <li class="genre"></li>
+      </ul>
+      <p class="overview"></p>
+    </div>
+  </div>
+  <div class="{{styleNamespace}}__separator"></div>
+{{else}}
+  <div class="{{styleNamespace}}__main-background" style="background-image: url(https://image.tmdb.org/t/p/original{{if movie.backdrop_path movie.backdrop_path movie.poster_path}})"></div>
+  <div class="{{styleNamespace}}__topbar flex ali-start work">
+    <div {{action "togglePoster" on="click"}} class="div-poster pointer {{if isShowingPoster 'popup'}}">
+      <img class="poster" src="{{concat (if isShowingPoster 'https://image.tmdb.org/t/p/original' 'https://image.tmdb.org/t/p/w500') movie.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.onerror=''">
+    </div>
+    <div class="left--content-poster flex col">
+      <h1 class="title josefin">{{movie.title}}</h1>
+      <p class="release-date">Sortie le {{moment-format movie.release_date "Do MMMM YYYY"}}</p>
+      <p class="runtime">Durée du film {{runtime}}</p>
+      <ul class="genres flex wrap">
+        {{#each movie.genres as |genre|}}
+          <li class="genre">{{genre.name}}</li>
+        {{/each}}
+      </ul>
+      <p class="overview josefin">{{if movie.overview movie.overview 'Aucun synopsis'}}</p>
+      <div class="buttons flex">
+        {{!-- <basic-switch-button class="button " :button="buttons.trailer" :disabled="__trailer ? false : true"/>
+        <basic-switch-button class="button " :button="buttons.videos" :disabled="!__hasVideos"/> --}}
+      </div>
+    </div>
+  </div>
+  <div class="{{styleNamespace}}__separator"></div>
+  <h1 class="{{styleNamespace}}__section-title">Casting - {{movie.credits.cast.length}} personnalités</h1>
+  {{horizontal-list type='person' onClick=(action "scrollTop") items=movie.credits.cast}}
+  <h1 class="{{styleNamespace}}__section-title">Équipe - {{movie.credits.crew.length}} personnalités</h1>
+  {{horizontal-list type='person' onClick=(action "scrollTop") items=movie.credits.crew}}
+  <div class="{{styleNamespace}}__separator"></div>
+  {{#if movie.collection}}
+    <h1 class="{{styleNamespace}}__section-title">{{movie.collection.name}}</h1>
+    {{horizontal-list type='movie' onClick=(action "scrollTop") items=movie.collection.parts}}
+  {{/if}}
+  <h1 class="{{styleNamespace}}__section-title">Recommandations</h1>
+  {{horizontal-list type='movie' onClick=(action "scrollTop") items=movie.recommendations.results}}
+{{/if}}

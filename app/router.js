@@ -7,6 +7,20 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('home');
+
+  this.route('movie', { path: 'movie/:id' });
+  this.route('person', { path: 'person/:id' });
+
+  this.route('discover');
+
+  this.route('my-profile', function() {
+    this.route('my-lists');
+    this.route('informations');
+  });
+
+  this.route('community');
+  this.route('home');
 });
 
 export default Router;

@@ -1,0 +1,130 @@
+& {
+  position: relative;
+
+  height: 36px;
+  width: 260px;
+
+  margin-left: 70px;
+
+  color: #272121;
+
+  &:hover {
+
+    &::after {
+      box-shadow: 0 3px 5px rgba(#b3b3b3, 0);
+    }
+
+    input {
+      box-shadow: 0 3px 5px rgba(#b3b3b3, 1) inset;
+
+      background: #ebe6eb;
+    }
+  }
+
+  &:focus-within {
+
+    &::after {
+      box-shadow: 0 3px 5px rgba(#b3b3b3, 0);
+    }
+
+    input {
+      box-shadow: 0 3px 5px rgba(#b3b3b3, 1) inset;
+
+      background: #ebe6eb;
+    }
+
+    .logo {
+
+      .find-glass {
+        height: 18px;
+
+        opacity: .7;
+
+        animation: find-glass__focus 500ms ease;
+      }
+    }
+  }
+
+  &::after {
+    content: "";
+
+    position: absolute;
+
+    z-index: -1;
+
+    top: 0;
+    left: 0;
+
+    border-radius: 9999px;
+
+    height: 100%;
+    width: 100%;
+
+    box-shadow: 0 3px 5px rgba(#b3b3b3, 1);
+
+    transition: 250ms all;
+  }
+
+  .logo {
+    position: absolute;
+
+    width: 40px;
+    height: 100%;
+
+    overflow: hidden;
+
+    .find-glass {
+      height: 16px;
+
+      opacity: .3;
+
+      transition: 250ms all;
+    }
+
+    .total-results {
+      padding-top: 1px;
+      padding-left: 2px;
+    }
+  }
+
+  input {
+    height: 102%;
+    width: 100%;
+
+    padding: 0 5px 0 40px;
+
+    border-radius: 9999px;
+
+    border: none;
+
+    background: #ebe6eb;
+
+    font-size: .9em;
+
+    box-shadow: 0 3px 5px rgba(#b3b3b3, 0) inset;
+
+    transition: 250ms all;
+  }
+}
+
+@keyframes find-glass__focus {
+  from {
+    height: 16px;
+
+    opacity: .3;
+  }
+
+  50% {
+    transform: translateY(-60px);
+  }
+
+  51% {
+    transform: translateX(-60px);
+  }
+
+  to {
+    height: 18px;
+
+    opacity: .7;
+  }
+}
