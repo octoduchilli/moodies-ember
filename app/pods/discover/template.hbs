@@ -16,8 +16,12 @@
   {{/filters-top-bar}}
 
   <div class="total-results">
-    <p class="total">Nombres de titres correspondants à votre recherche : <span class="higher">{{totalResults}}</span></p>
+    <p class="total">Nombres de titres correspondants à votre recherche : <span class="higher">{{if __fetchData.isRunning "..." totalResults}}</span></p>
   </div>
 
-  {{movie-list class="movie-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=movies.results}}
+  {{#if __fetchData.isRunning}}
+    {{movie-list-skeleton}}
+  {{else}}
+    {{movie-list class="movie-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=movies.results}}
+  {{/if}}
 </div>

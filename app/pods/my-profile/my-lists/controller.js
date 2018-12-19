@@ -180,7 +180,7 @@ export default Controller.extend(preloadImg, {
       this.__update('with_genres', str)
     },
     titleUpdate () {
-      this.__updateMovies()
+      this.__updateMovies.perform()
     },
     resetFilters () {
       window.scroll({
@@ -192,7 +192,7 @@ export default Controller.extend(preloadImg, {
 
       this.queryFilters.resetQuery()
 
-      this.__updateMovies()
+      this.__updateMovies.perform()
 
       this.__updateMoviesContentSliced(this.page)
     },
@@ -298,7 +298,7 @@ export default Controller.extend(preloadImg, {
       }
     })
 
-    this.__updateMovies()
+    this.__updateMovies.perform()
   },
 
   __nextPage () {
@@ -320,7 +320,9 @@ export default Controller.extend(preloadImg, {
     }
   },
 
-  __updateMovies () {
+  __updateMovies: task(function* () {
+    yield timeout(750)
+
     window.scroll({
       top: 0
     })
@@ -398,7 +400,7 @@ export default Controller.extend(preloadImg, {
     })
 
     this.__updateMoviesContentSliced()
-  },
+  }),
 
   __updateMoviesContentSliced () {
     this.moviesContentSliced.removeObjects(this.moviesContentSliced)
