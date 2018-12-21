@@ -8,6 +8,7 @@ export default Component.extend({
 
   type: 'text',
   placeholder: null,
+  disabled: false,
 
   value: null,
   error: null,
