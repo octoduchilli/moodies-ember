@@ -226,7 +226,7 @@ export default Controller.extend(preloadImg, {
   },
 
   __updatePaddingTop () {
-    document.getElementsByClassName('my-lists')[0].style.paddingTop = `${this.topbarHeight}px`
+    document.getElementsByClassName('my-profile__my-lists')[0].style.paddingTop = `${this.topbarHeight}px`
   },
 
   __update (key, value) {
