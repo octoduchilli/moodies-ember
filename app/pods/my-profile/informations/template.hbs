@@ -1,1 +1,75 @@
-{{outlet}}
+<div class="my-profile__informations flex wrap jus-center ali-center">
+  <div class="informations__corner top-left"></div>
+  <div class="informations__corner top-right"></div>
+  <div class="informations__corner bottom-right"></div>
+  <div class="informations__corner bottom-left"></div>
+  <section class="informations__section">
+    <h1 class="section__title">Informations</h1>
+    {{#basic-form onSubmit=(perform savePseudo) as |form|}}
+      {{form.input label="Nom" value=user.infos.firstname disabled=true}}
+      {{form.input label="Prénom" value=user.infos.lastname disabled=true}}
+      {{form.input label="Pseudo" placeholder="Toto42" value=pseudo error=errorPseudo maxlength=14}}
+    {{/basic-form}}
+    {{basic-button click=(perform savePseudo) icon="check" label="Sauvegarder" pending=savePseudo.isRunning class="save-button"}}
+  </section>
+  <section class="informations__section informations__settings">
+    <h1 class="section__title">Paramètres</h1>
+    <div class="setting">
+      <p class="setting__message">Profil privé</p>
+      {{basic-switch-option check=user.infos.private onCheck=(action "updatePrivateSetting")}}
+    </div>
+    <div class="setting">
+      <p class="setting__message">Couleur</p>
+      {{basic-color-selector value=user.infos.color onChange=(perform updateColorSetting)}}
+    </div>
+  </section>
+  <section class="informations__section informations__statistic">
+    <h1 class="section__title">Statistiques</h1>
+    <div class="statistic">
+      <p class="statistic__message">
+        Nombre total de films :
+        <span class="message__value">{{totalMovies.total}}</span>
+      </p>
+      <div class="statistic__little-statistic">
+        <p class="little-statistic__message">
+          {{compute (action "minToMDHM") totalMovies.totalRuntime}}
+        </p>
+      </div>
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Nombre total de films visionnés :
+        <span class="message__value">{{totalViewedMovies.total}}</span>
+      </p>
+      <div class="statistic__little-statistic">
+        <p class="little-statistic__message">
+          {{compute (action "minToMDHM") totalViewedMovies.totalRuntime}}
+        </p>
+      </div>
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Nombre total de films favoris :
+        <span class="message__value">{{totalFavoriteMovies.total}}</span>
+      </p>
+      <div class="statistic__little-statistic">
+        <p class="little-statistic__message">
+          {{compute (action "minToMDHM") totalFavoriteMovies.totalRuntime}}
+        </p>
+      </div>
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Genres les plus appréciés :
+      </p>
+      {{#each likedGenres as |genre|}}
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            {{genre.name}} :
+            <span class="message__value">{{genre.total}}</span>
+          </p>
+        </div>
+      {{/each}}
+    </div>
+  </section>
+</div>

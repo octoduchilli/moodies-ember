@@ -35,9 +35,9 @@
 
     overflow: hidden;
 
-    &::after {
-      content: "Mon profil";
+    border: 1px solid #274556;
 
+    .profile-link__message {
       position: absolute;
 
       top: 0;
@@ -61,7 +61,7 @@
 
     &:hover {
 
-      &::after {
+      .profile-link__message {
         transform: translateX(0)
       }
     }

@@ -6,13 +6,7 @@
     {{yield}}
   </div>
   <div class="popup-container__footer">
-    <button class="footer__button footer__close-button" {{action close on="click"}}>
-      {{fa-icon "times" color="black" class="icon" height=15 width=15}}
-      Fermer
-    </button>
-    <button class=" footer__button footer__confirm-button" {{action confirm on="click"}}>
-      {{fa-icon (if pending "hourglass-half" confirmIcon) color="black" class="icon" height=15 width=15}}
-      {{confirmLabel}}
-    </button>
+    {{basic-button icon="times" label="Fermer" click=(action close) class="footer__close-button"}}
+    {{basic-button icon=confirmIcon label=confirmLabel pending=pending click=(action confirm) class="footer__confirm-button"}}
   </div>
 </div>

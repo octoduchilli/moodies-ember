@@ -11,5 +11,7 @@ export default DS.Model.extend({
   firstname: attr('string'),
   lastname: attr('string'),
 
-  pseudo: attr('string')
+  pseudo: attr('string'),
+
+  private: attr('boolean')
 })

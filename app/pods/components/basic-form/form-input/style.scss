@@ -41,7 +41,12 @@
 
     border-radius: 3px;
 
-    transition: 500ms ease;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      margin-left: 10px;
+    }
   }
 
   &__error {
@@ -83,5 +88,9 @@
     min-width: 280px;
 
     transition: 500ms ease;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 }
