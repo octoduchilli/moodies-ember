@@ -1,0 +1,9 @@
+<div class="{{styleNamespace}}__switcher">
+  <section class="switcher__red-part {{if (not check) 'is--selected'}}">
+    {{fa-icon "times" class="icon" color="white"}}
+  </section>
+  <div class="switcher__button"></div>
+  <section class="switcher__green-part {{if check 'is--selected'}}">
+    {{fa-icon "check" class="icon" color="white"}}
+  </section>
+</div>
