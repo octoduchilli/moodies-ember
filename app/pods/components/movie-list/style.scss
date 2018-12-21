@@ -22,12 +22,47 @@
     }
 
     .item__link {
+      position: relative;
+
       padding: 5px;
       padding-top: 9px;
 
       border-radius: 5px;
 
       border: 3px solid rgba(gray, .15);
+
+      &.no-poster {
+
+        &::after {
+          z-index: 1;
+        }
+      }
+
+      &::after {
+        content: attr(data-name);
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        height: 100%;
+        width: calc(100% - 10px);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        text-align: center;
+
+        padding: 0 5px;
+
+        z-index: -1;
+
+        background: rgba(black, .75);
+
+        color: white;
+      }
 
       .link__poster {
         height: 220px;

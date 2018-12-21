@@ -5,7 +5,7 @@
     Se déconnecter
   {{/link-to}}
   {{#link-to "my-profile.informations" class=(concat styleNamespace "__profile-link")}}
-    <div class="profile-link__message" style="{{compute (action "styleUserColor") user.infos.color "background"}}">Mon profile</div>
+    <div class="profile-link__message" style="{{compute (action "styleUserColor") user.infos.color "background"}}">Mon profil</div>
     {{user.infos.pseudo}}
   {{/link-to}}
 {{else}}

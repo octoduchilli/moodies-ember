@@ -21,6 +21,7 @@ Router.map(function() {
 
   this.route('community');
   this.route('home');
+  this.route('search');
 });
 
 export default Router;
