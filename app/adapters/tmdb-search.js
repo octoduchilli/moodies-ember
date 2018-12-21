@@ -21,6 +21,18 @@ export default tmdb.extend({
 
     query = Object.assign({}, query, defaultQuery)
 
-    return this.ajax(url, 'GET', { data: query })
+    return this.ajax(url, 'GET', { data: query }).then(response => {
+      let q = ''
+
+      Object.entries(query).forEach(values => {
+        q += `${values[0]}=${values[1]}&`
+      })
+
+      q = q.substr(0, q.length - 1)
+
+      response['query'] = q
+
+      return response
+    })
   }
 });
