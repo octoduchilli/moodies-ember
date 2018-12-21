@@ -2,6 +2,7 @@ import Component from '@ember/component'
 import { task, timeout } from 'ember-concurrency'
 import { inject as service } from '@ember/service'
 import { set } from '@ember/object'
+import { htmlSafe } from '@ember/string'
 
 export default Component.extend({
   tagName: 'div',
@@ -38,6 +39,9 @@ export default Component.extend({
       await this.session.close()
 
       this.user.resetUser()
+    },
+    styleUserColor (color, attr) {
+      return htmlSafe(`${attr}: ${color}`)
     }
   },
 
