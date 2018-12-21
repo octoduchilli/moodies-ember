@@ -1,0 +1,7 @@
+{{#each items as |item|}}
+  <li class="{{styleNamespace}}__item">
+    {{#link-to 'person' item.id class="item__link" data-name=item.name}}
+      <img class="link__poster" src="https://image.tmdb.org/t/p/w500{{item.profile_path}}" alt=" " onerror="this.parentElement.classList.add('no-poster')">
+    {{/link-to}}
+  </li>
+{{/each}}
