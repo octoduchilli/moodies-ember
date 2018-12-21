@@ -1,7 +1,7 @@
-@import "pod-styles";
+@import "settings/settings.colors.scss";
+@import "settings/settings.fonts.scss";
 
-@import "settings/colors.scss";
-@import "settings/fonts.scss";
+@import "pod-styles";
 
 @import "generic/reset.scss";
 

@@ -23,7 +23,7 @@
 
     height: 50px;
 
-    border: 1px solid #274556;
+    border: 1px solid $darkblue2;
 
     margin-left: 10px;
 
@@ -35,7 +35,7 @@
 
     overflow: hidden;
 
-    border: 1px solid #274556;
+    border: 1px solid $darkblue2;
 
     .profile-link__message {
       position: absolute;
@@ -46,9 +46,9 @@
       height: 100%;
       width: 100%;
 
-      background: #274556;
+      background: $darkblue2;
 
-      color: #fbfcff;
+      color: $white;
 
       display: flex;
       align-items: center;

@@ -3,7 +3,7 @@
 
   margin: 5px;
 
-  color: #fbfcff;
+  color: $white;
 
   .button-list {
     cursor: pointer;
@@ -23,7 +23,7 @@
 
     box-sizing: border-box;
 
-    border: 2px solid rgba($color: #000, $alpha: 0);
+    border: 2px solid rgba(black, 0);
 
     transition: 500ms ease;
 

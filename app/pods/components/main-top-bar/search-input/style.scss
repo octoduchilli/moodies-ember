@@ -6,31 +6,31 @@
 
   margin-left: 70px;
 
-  color: #272121;
+  color: $black;
 
   &:hover {
 
     &::after {
-      box-shadow: 0 3px 5px rgba(#b3b3b3, 0);
+      box-shadow: 0 3px 5px rgba($darkgrey, 0);
     }
 
     input {
-      box-shadow: 0 3px 5px rgba(#b3b3b3, 1) inset;
+      box-shadow: 0 3px 5px rgba($darkgrey, 1) inset;
 
-      background: #ebe6eb;
+      background: $lightgrey;
     }
   }
 
   &:focus-within {
 
     &::after {
-      box-shadow: 0 3px 5px rgba(#b3b3b3, 0);
+      box-shadow: 0 3px 5px rgba($darkgrey, 0);
     }
 
     input {
-      box-shadow: 0 3px 5px rgba(#b3b3b3, 1) inset;
+      box-shadow: 0 3px 5px rgba($darkgrey, 1) inset;
 
-      background: #ebe6eb;
+      background: $lightgrey;
     }
 
     .logo {
@@ -60,7 +60,7 @@
     height: 100%;
     width: 100%;
 
-    box-shadow: 0 3px 5px rgba(#b3b3b3, 1);
+    box-shadow: 0 3px 5px rgba($darkgrey, 1);
 
     transition: 250ms all;
   }
@@ -97,11 +97,11 @@
 
     border: none;
 
-    background: #ebe6eb;
+    background: $lightgrey;
 
     font-size: .9em;
 
-    box-shadow: 0 3px 5px rgba(#b3b3b3, 0) inset;
+    box-shadow: 0 3px 5px rgba($darkgrey, 0) inset;
 
     transition: 250ms all;
   }

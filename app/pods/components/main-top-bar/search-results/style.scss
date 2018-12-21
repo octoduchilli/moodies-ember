@@ -10,12 +10,12 @@
 
   max-height: 300px;
 
-  background: #fbfcff;
+  background: $white;
 
   overflow-y: scroll;
   overflow-x: hidden;
 
-  color: #272121;
+  color: $black;
 
   .item {
     height: 90px;
@@ -24,15 +24,15 @@
 
     box-sizing: border-box;
 
-    border-top: .5px solid #ebe6eb;
+    border-top: .5px solid $lightgrey;
 
     cursor: pointer;
 
     &:hover {
-      background: #ebe6eb;
+      background: $lightgrey;
 
       .title {
-        color: rgba(#272121, 1);
+        color: rgba($black, 1);
       }
     }
 
@@ -44,7 +44,7 @@
     }
 
     .name {
-      color: rgba(#272121, .7);
+      color: rgba($black, .7);
 
       padding: 2px 0;
 

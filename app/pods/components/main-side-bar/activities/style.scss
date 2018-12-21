@@ -22,7 +22,7 @@
     transition: 200ms linear;
 
     &:hover {
-      background: rgba(#fbfcff, .1);
+      background: rgba($white, .1);
     }
 
     .activity-item__icon {
@@ -41,7 +41,7 @@
 
       white-space: nowrap;
 
-      color: #fbfcff;
+      color: $white;
     }
   }
 }

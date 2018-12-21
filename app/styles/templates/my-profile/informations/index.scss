@@ -7,15 +7,19 @@
 
   padding: 5vw;
 
-  color: #fbfcff;
+  color: $white;
 
   .informations__corner {
     position: absolute;
 
-    background: #274556;
+    background: $darkblue2;
 
     width: 15vw;
     height: 15vw;
+
+    transition: 300ms ease;
+
+    opacity: .7;
 
     &.top-left {
       top: 0;
@@ -62,9 +66,9 @@
 
     border-radius: 5px;
 
-    background: #d0ccd0;
+    background: $grey;
 
-    color: #272121;
+    color: $black;
 
 
     .section__title {
@@ -77,9 +81,9 @@
 
       border-radius: 5px;
 
-      background: #1a1616;
+      background: $black2;
 
-      color: #fbfcff;
+      color: $white;
     }
 
     .save-button {
@@ -87,7 +91,7 @@
 
       box-sizing: border-box;
 
-      border: 2px solid #274556;
+      border: 2px solid $darkblue2;
     }
   }
 
@@ -100,7 +104,7 @@
 
       border-radius: 5px;
 
-      background: #ebe6eb;
+      background: $lightgrey;
 
       padding: 0 10px;
 
@@ -122,7 +126,7 @@
 
       border-radius: 5px;
 
-      background: #ebe6eb;
+      background: $lightgrey;
 
       padding: 20px 10px;
 

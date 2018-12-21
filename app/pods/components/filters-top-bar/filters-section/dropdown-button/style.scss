@@ -7,9 +7,9 @@
 
   border-radius: 5px;
 
-  background: #ebe6eb;
+  background: $lightgrey;
 
-  color: #272121;
+  color: $black;
 
   cursor: pointer;
 
@@ -70,7 +70,7 @@
   .item-list {
     position: absolute;
 
-    background: #ebe6eb;
+    background: $lightgrey;
 
     top: 36px;
     left: 0;
@@ -94,13 +94,13 @@
       transform: 200ms all;
 
       &:hover {
-        background: #fbfcff;
+        background: $white;
       }
 
       &.is--selected {
-        color: #fbfcff;
+        color: $white;
 
-        background: #272121;
+        background: $black;
       }
     }
   }

@@ -44,7 +44,7 @@ table {
 a {
   text-decoration: none;
 
-  color: #272121;
+  color: $black;
 }
 html,
 body {
@@ -57,7 +57,7 @@ body {
   margin: 0;
   padding: 0;
 
-  background: #1a1616;
+  background: $black2;
 }
 button {
   font-family: 'Work Sans';

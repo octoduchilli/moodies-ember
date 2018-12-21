@@ -33,11 +33,11 @@
 
     transform: translateY(50%);
 
-    border: 2px solid #274556;
+    border: 2px solid $darkblue2;
 
     padding: 5px 10px;
 
-    background: #fbfcff;
+    background: $white;
 
     border-radius: 3px;
 
@@ -61,7 +61,7 @@
 
     padding: 5px 10px;
 
-    background: #fbfcff;
+    background: $white;
 
     border-radius: 3px;
 
@@ -77,11 +77,11 @@
 
     box-sizing: border-box;
 
-    border: 2px solid #274556;
+    border: 2px solid $darkblue2;
 
-    color: #272121;
+    color: $black;
 
-    background: #ebe6eb;
+    background: $lightgrey;
 
     border-radius: 3px;
 

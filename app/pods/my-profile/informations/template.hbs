@@ -1,8 +1,8 @@
 <div class="my-profile__informations flex wrap jus-center ali-center">
-  <div class="informations__corner top-left"></div>
-  <div class="informations__corner top-right"></div>
-  <div class="informations__corner bottom-right"></div>
-  <div class="informations__corner bottom-left"></div>
+  <div class="informations__corner top-left" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
+  <div class="informations__corner top-right" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
+  <div class="informations__corner bottom-right" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
+  <div class="informations__corner bottom-left" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
   <section class="informations__section">
     <h1 class="section__title">Informations</h1>
     {{#basic-form onSubmit=(perform savePseudo) as |form|}}

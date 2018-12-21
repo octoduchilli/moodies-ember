@@ -3,6 +3,7 @@ import genres from 'moodies-ember/data/genres'
 import { inject as service } from '@ember/service'
 import { task, timeout } from 'ember-concurrency'
 import { get, set, computed } from '@ember/object'
+import { htmlSafe } from '@ember/string'
 
 export default Controller.extend({
   firebaseApp: service(),
@@ -125,6 +126,9 @@ export default Controller.extend({
       let H = Math.floor(min / 60) % 24
       let m = min % 60
       return `${M} mois, ${D} jours, ${H} heures, ${m} minutes`
+    },
+    updateUserColorStyle (color, attr) {
+      return htmlSafe(`${attr}: ${color}`)
     }
   },
 

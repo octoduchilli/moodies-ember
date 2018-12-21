@@ -11,7 +11,7 @@
 
     border-radius: 5px;
 
-    color: #fbfcff;
+    color: $white;
 
     &.mouse--is-over {
       border: 3px solid rgba(gray, .15);
@@ -112,9 +112,9 @@
 
           padding: 7px;
 
-          background: #fbfcff;
+          background: $white;
 
-          color: #272121;
+          color: $black;
 
           border-radius: 3px;
         }
@@ -128,7 +128,7 @@
 
           padding: 7px;
 
-          border: 2px solid #fbfcff;
+          border: 2px solid $white;
 
           box-sizing: border-box;
 

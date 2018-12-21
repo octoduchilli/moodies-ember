@@ -1,7 +1,7 @@
 & {
   height: 36px;
 
-  color: #272121;
+  color: $black;
 
   &.is--closed {
     overflow: hidden;
@@ -22,20 +22,20 @@
   &.is--opened {
 
     .option {
-      background: #fbfcff;
+      background: $white;
 
-      color: rgba(#272121, .7);
+      color: rgba($black, .7);
 
       &:hover {
-        background: rgba(#ebe6eb, 1);
+        background: rgba($lightgrey, 1);
 
-        color: #272121;
+        color: $black;
       }
 
       &:first-child {
         border-radius: 5px 5px 0 0;
 
-        border: 1px solid rgba(#ebe6eb, 1);
+        border: 1px solid rgba($lightgrey, 1);
 
         border-bottom: none;
       }
@@ -43,9 +43,9 @@
       &:last-child {
         border-radius: 0 0 5px 5px;
 
-        border: 1px solid rgba(#ebe6eb, 1);
+        border: 1px solid rgba($lightgrey, 1);
 
-        border-top-color: rgba(#ebe6eb, 0);
+        border-top-color: rgba($lightgrey, 0);
       }
     }
   }
@@ -61,18 +61,18 @@
 
     box-sizing: border-box;
 
-    background: rgba(#ebe6eb, 1);
+    background: rgba($lightgrey, 1);
 
     padding: 0 10px;
 
     &:first-child {
-      border: 1px solid rgba(#ebe6eb, 0);
+      border: 1px solid rgba($lightgrey, 0);
 
       border-bottom: none;
     }
 
     &:last-child {
-      border: 1px solid rgba(#ebe6eb, 0);
+      border: 1px solid rgba($lightgrey, 0);
 
       border-top: none;
     }

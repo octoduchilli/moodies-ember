@@ -14,7 +14,7 @@
 
     border-radius: 5px 0 0 5px;
 
-    background: #fbfcff;
+    background: $white;
 
     transition: 500ms ease;
 
@@ -26,18 +26,18 @@
 
     cursor: pointer;
 
-    color: #fbfcff;
+    color: $white;
 
     font-size: 1.15em;
 
     transition: 200ms linear;
 
     &:hover {
-      background: rgba(#fbfcff, .1);
+      background: rgba($white, .1);
     }
 
     &.active {
-      background: linear-gradient(to right, rgba(#fbfcff, 0), rgba(#fbfcff, .1) 40%);
+      background: linear-gradient(to right, rgba($white, 0), rgba($white, .1) 40%);
     }
   }
 }

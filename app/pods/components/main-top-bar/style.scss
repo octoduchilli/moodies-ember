@@ -9,7 +9,7 @@
   height: 70px;
   width: 100%;
 
-  background: #fbfcff;
+  background: $white;
 
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.6);
 
@@ -50,7 +50,7 @@
       height: 52px;
       width: 183px;
 
-      background: #274156;
+      background: $darkblue;
 
       box-shadow: 3px 0 9px rgba(0, 0, 0, 0.6) inset;
 
@@ -65,7 +65,7 @@
 
       z-index: 2;
 
-      color: #ebe6eb;
+      color: $lightgrey;
     }
 
     .shine-container {
@@ -129,7 +129,7 @@
 
       height: 50px;
 
-      border: 1px solid #274556;
+      border: 1px solid $darkblue2;
 
       margin-left: 10px;
 
@@ -159,9 +159,9 @@
         height: 100%;
         width: 100%;
 
-        background: #274556;
+        background: $darkblue2;
 
-        color: #fbfcff;
+        color: $white;
 
         display: flex;
         align-items: center;
