@@ -1,10 +1,17 @@
 <div class="logo flex jus-center ali-center">
   {{#if (not-eq totalResults undefined)}}
-    <div class="total-results">
+    {{#link-to 'search' (query-params query=text type=searchType) class="total-results"}}
       {{if (gte totalResults 20) '20+' totalResults}}
-    </div>
+    {{/link-to}}
   {{else}}
     {{fa-icon "search" class="find-glass"}}
   {{/if}}
 </div>
-{{input type="search" placeholder="Rechercher" value=text input=(action onChange)}}
+<div class="box-shadow">
+  {{input type="search" placeholder="Rechercher" value=text input=(action onChange)}}
+</div>
+{{#if (gte totalResults 20)}}
+  {{#link-to 'search' (query-params query=text type=searchType) class="see-all-results" click=(pipe-action (action (mut text) null) (action onChange) (action (mut user.reset) "search"))}}
+    Tout voir
+  {{/link-to}}
+{{/if}}

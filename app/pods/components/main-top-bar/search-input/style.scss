@@ -1,6 +1,9 @@
 & {
   position: relative;
 
+  display: flex;
+  align-items: center;
+
   height: 36px;
   width: 260px;
 
@@ -10,27 +13,27 @@
 
   &:hover {
 
-    &::after {
+    .box-shadow {
       box-shadow: 0 3px 5px rgba($darkgrey, 0);
-    }
 
-    input {
-      box-shadow: 0 3px 5px rgba($darkgrey, 1) inset;
+      input {
+        box-shadow: 0 3px 5px rgba($darkgrey, 1) inset;
 
-      background: $lightgrey;
+        background: $lightgrey;
+      }
     }
   }
 
   &:focus-within {
 
-    &::after {
+    .box-shadow {
       box-shadow: 0 3px 5px rgba($darkgrey, 0);
-    }
 
-    input {
-      box-shadow: 0 3px 5px rgba($darkgrey, 1) inset;
+      input {
+        box-shadow: 0 3px 5px rgba($darkgrey, 1) inset;
 
-      background: $lightgrey;
+        background: $lightgrey;
+      }
     }
 
     .logo {
@@ -43,26 +46,6 @@
         animation: find-glass__focus 500ms ease;
       }
     }
-  }
-
-  &::after {
-    content: "";
-
-    position: absolute;
-
-    z-index: -1;
-
-    top: 0;
-    left: 0;
-
-    border-radius: 9999px;
-
-    height: 100%;
-    width: 100%;
-
-    box-shadow: 0 3px 5px rgba($darkgrey, 1);
-
-    transition: 250ms all;
   }
 
   .logo {
@@ -87,23 +70,44 @@
     }
   }
 
-  input {
+  .box-shadow {
+    display: flex;
+
     height: 102%;
     width: 100%;
 
-    padding: 0 5px 0 40px;
+    box-shadow: 0 3px 5px rgba($darkgrey, 1);
+
+    transition: 250ms all;
 
     border-radius: 9999px;
 
-    border: none;
+    input {
+      height: 102%;
+      width: 100%;
 
-    background: $lightgrey;
+      padding: 0 5px 0 40px;
 
-    font-size: .9em;
+      border-radius: 9999px;
 
-    box-shadow: 0 3px 5px rgba($darkgrey, 0) inset;
+      border: none;
 
-    transition: 250ms all;
+      background: $lightgrey;
+
+      font-size: .9em;
+
+      box-shadow: 0 3px 5px rgba($darkgrey, 0) inset;
+
+      transition: 250ms all;
+    }
+  }
+
+  .see-all-results {
+    margin: 0 10px;
+
+    white-space: nowrap;
+
+    text-decoration: underline;
   }
 }
 
