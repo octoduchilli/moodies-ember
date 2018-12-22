@@ -10,6 +10,7 @@ export default Controller.extend(preloadImg, {
   queryFilters: service(),
   notify: service('notification-messages'),
   view: service(),
+  user: service('current-user'),
   queryKeys: null,
 
   filtersBarLock: false,
@@ -234,6 +235,12 @@ export default Controller.extend(preloadImg, {
         set(this, 'vote', null)
       }
 
+      if (this.user.reset === 'discover') {
+        set(this.user, 'reset', null)
+
+        set(this, 'isLeaving', false)
+      }
+
       if (!this.isLeaving) {
         this.__checkQueryFilters()
       } else {
@@ -249,6 +256,7 @@ export default Controller.extend(preloadImg, {
 
     this.__destroyRecords()
 
+    set(this, 'scrollY', null)
     set(this, 'movies', null)
     set(this, 'page', 1)
 

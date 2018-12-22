@@ -8,6 +8,8 @@ export default Service.extend({
   session: service(),
   store: service(),
 
+  reset: null,
+
   infos: null,
   lists: null,
   movies: null,

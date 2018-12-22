@@ -49,11 +49,15 @@
         <ul class="details__genres flex wrap work">
           {{#if item.genres}}
             {{#each (slice 0 3 item.genres) as |genre|}}
-              <li class="genre">{{genre.name}}</li>
+              {{#link-to 'discover' (query-params with_genres=genre.id) class="genre" click=(action (mut user.reset) "discover")}}
+                {{genre.name}}
+              {{/link-to}}
             {{/each}}
           {{else}}
             {{#each (slice 0 3 item.genre_ids) as |genreId|}}
-              <li class="genre">{{compute (action "genreName") genreId}}</li>
+              {{#link-to 'discover' (query-params with_genres=genreId) class="genre" click=(action (mut user.reset) "discover")}}
+                {{compute (action "genreName") genreId}}
+              {{/link-to}}
             {{/each}}
           {{/if}}
         </ul>
