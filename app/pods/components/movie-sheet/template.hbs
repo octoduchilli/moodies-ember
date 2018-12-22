@@ -27,7 +27,9 @@
       <p class="runtime">Durée du film {{runtime}}</p>
       <ul class="genres flex wrap">
         {{#each movie.genres as |genre|}}
-          <li class="genre">{{genre.name}}</li>
+          {{#link-to 'discover' (query-params with_genres=genre.id) class="genre" click=(action (mut user.reset) "discover")}}
+            {{genre.name}}
+          {{/link-to}}
         {{/each}}
       </ul>
       <p class="overview josefin">{{if movie.overview movie.overview 'Aucun synopsis'}}</p>
