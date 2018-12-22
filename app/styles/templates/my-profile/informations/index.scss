@@ -136,6 +136,57 @@
       .setting__message {
         margin: 0 20px;
       }
+
+      .setting__user-img {
+        height: 50px;
+      }
+
+      .setting__user-profile-img-container {
+        position: relative;
+
+        height: 50px;
+        width: 50px;
+
+        border-radius: 50%;
+
+        overflow: hidden;
+
+        margin-left: auto;
+
+        .setting__user-img {
+          position: absolute;
+
+          top: 50%;
+          left: 50%;
+
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      .setting__no-user-img {
+        height: 50px;
+        width: 100px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: rgba(white, .5);
+
+        &.circle {
+          width: 50px;
+
+          border-radius: 50%;
+        }
+      }
+
+      .setting__delete-user-img {
+        cursor: pointer;
+
+        text-decoration: underline;
+
+        margin-left: 10px;
+      }
     }
   }
 

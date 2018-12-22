@@ -21,6 +21,34 @@
       <p class="setting__message">Couleur</p>
       {{basic-color-selector value=user.infos.color onChange=(perform updateColorSetting)}}
     </div>
+    <div class="setting">
+      <p class="setting__message">Image de profil</p>
+      {{#if user.infos.profileImg}}
+        <div class="setting__user-profile-img-container">
+          <img class="setting__user-img" src="https://image.tmdb.org/t/p/w500{{user.infos.profileImg}}" alt=" ">
+        </div>
+        <div class="setting__delete-user-img" {{action "removeUserImg" "profileImg" on="click"}}>
+          Supprimer
+        </div>
+      {{else}}
+        <div class="setting__no-user-img circle">
+          Aucune
+        </div>
+      {{/if}}
+    </div>
+    <div class="setting">
+      <p class="setting__message">Image de couverture</p>
+      {{#if user.infos.coverImg}}
+        <img class="setting__user-img" src="https://image.tmdb.org/t/p/w500{{user.infos.coverImg}}" alt=" ">
+        <div class="setting__delete-user-img" {{action "removeUserImg" "coverImg" on="click"}}>
+          Supprimer
+        </div>
+      {{else}}
+        <div class="setting__no-user-img">
+          Aucune
+        </div>
+      {{/if}}
+    </div>
     <div class="section__band-container">
       <div class="band-container__band" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
     </div>

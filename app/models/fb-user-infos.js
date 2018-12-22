@@ -13,5 +13,8 @@ export default DS.Model.extend({
 
   pseudo: attr('string'),
 
-  private: attr('boolean')
+  private: attr('boolean'),
+
+  profileImg: attr('string'),
+  coverImg: attr('string'),
 })

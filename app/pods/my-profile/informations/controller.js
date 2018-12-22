@@ -129,13 +129,18 @@ export default Controller.extend({
     },
     updateUserColorStyle (color, attr) {
       return htmlSafe(`${attr}: ${color}`)
+    },
+    async removeUserImg (img) {
+      await this.user.updateInfos({ [img]: null })
+
+      set(this.user.infos, img, null)
     }
   },
 
   updateColorSetting: task(function*(color) {
     yield timeout(750)
 
-    this.user.updateInfos({ color: color })
+    yield this.user.updateInfos({ color: color })
   }).restartable(),
 
   savePseudo: task(function*() {
