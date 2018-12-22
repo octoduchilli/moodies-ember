@@ -1,8 +1,4 @@
 <div class="my-profile__informations flex wrap jus-center ali-center">
-  <div class="informations__corner top-left" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
-  <div class="informations__corner top-right" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
-  <div class="informations__corner bottom-right" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
-  <div class="informations__corner bottom-left" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
   <section class="informations__section">
     <h1 class="section__title">Informations</h1>
     {{#basic-form onSubmit=(perform savePseudo) as |form|}}
@@ -11,6 +7,9 @@
       {{form.input label="Pseudo" placeholder="Toto42" value=pseudo error=errorPseudo maxlength=14}}
     {{/basic-form}}
     {{basic-button click=(perform savePseudo) icon="check" label="Sauvegarder" pending=savePseudo.isRunning class="save-button"}}
+    <div class="section__band-container">
+      <div class="band-container__band" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
+    </div>
   </section>
   <section class="informations__section informations__settings">
     <h1 class="section__title">Paramètres</h1>
@@ -21,6 +20,9 @@
     <div class="setting">
       <p class="setting__message">Couleur</p>
       {{basic-color-selector value=user.infos.color onChange=(perform updateColorSetting)}}
+    </div>
+    <div class="section__band-container">
+      <div class="band-container__band" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
     </div>
   </section>
   <section class="informations__section informations__statistic">
@@ -70,6 +72,9 @@
           </p>
         </div>
       {{/each}}
+    </div>
+    <div class="section__band-container">
+      <div class="band-container__band" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
     </div>
   </section>
 </div>
