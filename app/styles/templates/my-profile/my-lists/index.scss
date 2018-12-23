@@ -1,6 +1,9 @@
 .my-profile__my-lists {
   padding-top: 140px;
 
+  display: flex;
+  flex-direction: column;
+
   .total-results {
     margin-bottom: 10px;
 
@@ -27,5 +30,20 @@
         margin-left: 5px;
       }
     }
+  }
+
+  .no-movies {
+    padding: 15px 25px;
+
+    border-radius: 10px;
+
+    background: $white;
+
+    color: $black;
+
+    text-align: center;
+
+    margin: auto;
+    margin-top: 20px;
   }
 }

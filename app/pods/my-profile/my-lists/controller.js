@@ -57,7 +57,11 @@ export default Controller.extend(preloadImg, {
       })))
     }
 
-    return null
+    return {
+      id: 0,
+      name: 'Aucune list',
+      value: null
+    }
   }),
 
   refineItems: computed('user.lists', function () {
@@ -84,7 +88,11 @@ export default Controller.extend(preloadImg, {
       })))
     }
 
-    return null
+    return {
+      id: 0,
+      name: 'Aucune list',
+      value: null
+    }
   }),
 
   init () {

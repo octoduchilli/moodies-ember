@@ -21,9 +21,15 @@
     {{/if}}
   </div>
 
-  {{#if __updateMovies.isRunning}}
-    {{movie-list-skeleton}}
+  {{#if (or (eq user.movies.length 0) (eq user.movies. null))}}
+    {{#link-to 'discover' class="no-movies work"}}
+      Visitez la bibliothèque et enrichissez vos listes !
+    {{/link-to}}
   {{else}}
-    {{movie-list class="movie-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=moviesContentSliced}}
+    {{#if __updateMovies.isRunning}}
+      {{movie-list-skeleton}}
+    {{else}}
+      {{movie-list class="movie-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=moviesContentSliced}}
+    {{/if}}
   {{/if}}
 </div>
