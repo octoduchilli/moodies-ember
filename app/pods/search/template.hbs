@@ -1,7 +1,7 @@
 <div class="search">
   {{#filters-top-bar lock=filtersBarLock onResize=(action "setTopbarHeight") as |topbar|}}
     {{#topbar.filters resetFilters=(action "resetFilters") as |filters|}}
-      {{filters.input placeholder="Recherche" type="text" value=text onInput=(action "textUpdate")}}
+      {{filters.input placeholder="Recherche" type="text" value=text onInput=(perform textUpdate)}}
       {{filters.dropdown label="Type de recherche" smallLabel="Type" items=typeItems value=type onSelect=(action "typeUpdate")}}
     {{/topbar.filters}}
     {{#topbar.options as |options|}}

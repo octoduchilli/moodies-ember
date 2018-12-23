@@ -57,13 +57,6 @@ export default Controller.extend(preloadImg, {
   },
 
   actions: {
-    textUpdate (text) {
-      if (!text) {
-        this.__update('query', null)
-      } else {
-        this.__update('query', text)
-      }
-    },
     typeUpdate (type) {
       if (type.length === 0) {
         this.__update('search_type', null)
@@ -93,6 +86,16 @@ export default Controller.extend(preloadImg, {
       }
     }
   },
+
+  textUpdate: task(function*(text) {
+    yield timeout(800)
+
+    if (!text) {
+      this.__update('query', null)
+    } else {
+      this.__update('query', text)
+    }
+  }).restartable(),
 
   __updatePaddingTop () {
     document.getElementsByClassName('search')[0].style.paddingTop = `${this.topbarHeight}px`
