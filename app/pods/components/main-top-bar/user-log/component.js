@@ -41,7 +41,23 @@ export default Component.extend({
       this.user.resetUser()
     },
     styleUserColor (color, attr) {
-      return htmlSafe(`${attr}: ${color}`)
+      let c = color.substring(1)
+      let rgb = parseInt(c, 16)
+      let r = (rgb >> 16) & 0xff
+      let g = (rgb >>  8) & 0xff
+      let b = (rgb >>  0) & 0xff
+
+      let luma = 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+      let str = `${attr}: ${color};`
+
+      if (luma > 255 / 2) {
+        str += 'color: black'
+      } else {
+        str += 'color: white'
+      }
+
+      return htmlSafe(str)
     }
   },
 
