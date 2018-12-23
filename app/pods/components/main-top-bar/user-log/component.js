@@ -128,6 +128,8 @@ export default Component.extend({
 
         set(this, 'isShowingSignUpPopup', false)
 
+        this.router.transitionTo('my-profile.informations')
+
         this.notify.success(`Bienvenue à toi ${this.pseudoSignUp} !`)
       }
     }
