@@ -1,0 +1,50 @@
+& {
+  position: relative;
+
+  margin: 5px;
+
+  color: $white;
+
+  .button-list {
+    cursor: pointer;
+
+    position: relative;
+
+    height: 40px;
+    width: 40px;
+    min-height: 40px;
+    min-width: 40px;
+
+    margin: 3px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    border: 2px solid rgba(black, 0);
+
+    transition: 500ms ease;
+
+    &::after {
+      content: "";
+
+      position: absolute;
+
+      top: -2px;
+      left: -2px;
+
+      height: calc(100% + 4px);
+      width: calc(100% + 4px);
+
+      border: 2px solid rgba(gray, .15);
+
+      box-sizing: border-box;
+    }
+
+    .icon {
+      opacity: .15;
+    }
+  }
+}

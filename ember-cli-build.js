@@ -2,9 +2,13 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
+const nodeSass = require('node-sass');
+
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
-    // Add options here
+    sassOptions: {
+      implementation: nodeSass
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -19,6 +23,15 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+
+  app.import('node_modules/pickadate/lib/legacy.js');
+  app.import('node_modules/pickadate/lib/picker.js');
+  app.import('node_modules/pickadate/lib/picker.time.js');
+  app.import('node_modules/pickadate/lib/picker.date.js');
+
+  app.import('node_modules/pickadate/lib/themes/classic.css');
+  app.import('node_modules/pickadate/lib/themes/classic.time.css');
+  app.import('node_modules/pickadate/lib/themes/classic.date.css');
 
   return app.toTree();
 };

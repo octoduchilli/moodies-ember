@@ -1,0 +1,18 @@
+.my-profile {
+  display: flex;
+  flex-direction: column;
+
+  .fetching {
+    background: $white;
+
+    color: $black;
+
+    border-radius: 5px;
+
+    padding: 15px 25px;
+    margin: 20px auto 0 auto;
+
+    font-size: 20px;
+    font-family: 'Work Sans';
+  }
+}

@@ -1,0 +1,10 @@
+<label class="{{styleNamespace}}__label" for="{{styleNamespace}}__{{dasherizedLabel}}">
+  {{label}}
+  {{#if disabled}}
+    {{fa-icon "lock" class="icon" color="black"}}
+  {{/if}}
+</label>
+{{input class=(concat styleNamespace "__input") id=(concat styleNamespace "__" dasherizedLabel) value=value type=type placeholder=placeholder maxlength=maxlength disabled=disabled}}
+{{#if error}}
+  <div class="{{styleNamespace}}__error">{{error}}</div>
+{{/if}}

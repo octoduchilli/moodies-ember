@@ -1,0 +1,49 @@
+& {
+  position: fixed;
+
+  left: 0;
+  top: 0;
+
+  z-index: 9998;
+
+  height: 100%;
+  width: 200px;
+
+  background: $darkblue;
+
+  box-shadow: 3px 0 9px rgba(0, 0, 0, 0.4);
+
+  padding-top: 100px;
+
+  .part {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      position: relative;
+
+      color: gray;
+
+      font-size: 1em;
+
+      letter-spacing: 2px;
+
+      margin: 10px;
+      padding: 5px;
+
+      &::after {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        bottom: 0;
+
+        height: 1px;
+        width: 100%;
+
+        background: gray;
+      }
+    }
+  }
+}

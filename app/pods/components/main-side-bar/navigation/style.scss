@@ -1,0 +1,43 @@
+& {
+  position: relative;
+
+  text-transform: uppercase;
+
+  #active-link-bar {
+    position: absolute;
+
+    top: 24px;
+    right: 0;
+
+    height: 47px;
+    width: 4px;
+
+    border-radius: 5px 0 0 5px;
+
+    background: $white;
+
+    transition: 500ms ease;
+
+    transform: translateY(-50%);
+  }
+
+  .side-bar__link {
+    padding: 15px 5px 15px 20px;
+
+    cursor: pointer;
+
+    color: $white;
+
+    font-size: 1.15em;
+
+    transition: 200ms linear;
+
+    &:hover {
+      background: rgba($white, .1);
+    }
+
+    &.active {
+      background: linear-gradient(to right, rgba($white, 0), rgba($white, .1) 40%);
+    }
+  }
+}

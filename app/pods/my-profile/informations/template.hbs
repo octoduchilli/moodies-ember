@@ -1,0 +1,118 @@
+<div class="my-profile__informations flex wrap jus-center ali-center">
+  <section class="informations__section">
+    <h1 class="section__title">Informations</h1>
+    {{#basic-form onSubmit=(perform savePseudo) as |form|}}
+      {{form.input label="Nom" value=user.infos.firstname disabled=true}}
+      {{form.input label="Prénom" value=user.infos.lastname disabled=true}}
+      {{form.input label="Pseudo" placeholder="Toto42" value=pseudo error=errorPseudo maxlength=14}}
+    {{/basic-form}}
+    {{basic-button click=(perform savePseudo) icon="check" label="Sauvegarder" pending=savePseudo.isRunning class="save-button"}}
+    <div class="section__band-container">
+      <div class="band-container__band" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
+    </div>
+  </section>
+  <section class="informations__section informations__settings">
+    <h1 class="section__title">Paramètres</h1>
+    <div class="setting">
+      <p class="setting__message">Profil privé</p>
+      {{basic-switch-option check=user.infos.private onCheck=(action "updatePrivateSetting")}}
+    </div>
+    <div class="setting">
+      <p class="setting__message">Couleur</p>
+      {{basic-color-selector value=user.infos.color onChange=(perform updateColorSetting)}}
+    </div>
+    <div class="setting">
+      <p class="setting__message">Image de profil</p>
+      {{#if user.infos.profileImg}}
+        <div class="setting__user-profile-img-container">
+          <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.profileImg.posX user.infos.profileImg.posY user.infos.profileImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.profileImg.path}}" alt=" " {{action (mut imgDataPathToCenter) "profileImg" on="click"}}>
+        </div>
+        <div class="setting__delete-user-img" {{action "removeUserImg" "profileImg" on="click"}}>
+          Supprimer
+        </div>
+      {{else}}
+        <div class="setting__no-user-img circle">
+          Aucune
+        </div>
+      {{/if}}
+    </div>
+    <div class="setting">
+      <p class="setting__message">Image de couverture</p>
+      {{#if user.infos.coverImg}}
+        <div class="setting__user-cover-img-container">
+          <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.coverImg.posX user.infos.coverImg.posY user.infos.coverImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.coverImg.path}}" alt=" " {{action (mut imgDataPathToCenter) "coverImg" on="click"}}>
+        </div>
+        <div class="setting__delete-user-img" {{action "removeUserImg" "coverImg" on="click"}}>
+          Supprimer
+        </div>
+      {{else}}
+        <div class="setting__no-user-img">
+          Aucune
+        </div>
+      {{/if}}
+    </div>
+  </section>
+  <section class="informations__section informations__statistic">
+    <h1 class="section__title">Statistiques</h1>
+    <div class="statistic">
+      <p class="statistic__message">
+        Nombre total de films :
+        <span class="message__value">{{totalMovies.total}}</span>
+      </p>
+      <div class="statistic__little-statistic">
+        <p class="little-statistic__message">
+          {{compute (action "minToMDHM") totalMovies.totalRuntime}}
+        </p>
+      </div>
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Nombre total de films visionnés :
+        <span class="message__value">{{totalViewedMovies.total}}</span>
+      </p>
+      <div class="statistic__little-statistic">
+        <p class="little-statistic__message">
+          {{compute (action "minToMDHM") totalViewedMovies.totalRuntime}}
+        </p>
+      </div>
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Nombre total de films favoris :
+        <span class="message__value">{{totalFavoriteMovies.total}}</span>
+      </p>
+      <div class="statistic__little-statistic">
+        <p class="little-statistic__message">
+          {{compute (action "minToMDHM") totalFavoriteMovies.totalRuntime}}
+        </p>
+      </div>
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Genres les plus appréciés :
+      </p>
+      {{#if likedGenres}}
+        {{#each likedGenres as |genre|}}
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            {{genre.name}} :
+            <span class="message__value">{{genre.total}}</span>
+          </p>
+        </div>
+      {{/each}}
+      {{else}}
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            Commencez à ajouter des films !
+          </p>
+        </div>
+      {{/if}}
+    </div>
+  </section>
+</div>
+
+{{#if imgDataPathToCenter}}
+  {{#basic-popup title="Centrer l'image" confirmLabel="Sauvegarder" confirmIcon="check" pending=saveCenterImg.isRunning close=(action (mut imgDataPathToCenter) null) confirm=(perform saveCenterImg) as |popup|}}
+    {{center-img imgDataPath=imgDataPathToCenter save=saveCenterImg.isRunning}}
+  {{/basic-popup}}
+{{/if}}

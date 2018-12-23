@@ -1,0 +1,47 @@
+& {
+  overflow-y: scroll;
+
+  height: 300px;
+
+  &__activity-item {
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 10px 5px 10px 20px;
+
+    font-size: .8em;
+
+    max-width: calc(100% - 25px);
+    min-width: calc(100% - 25px);
+
+    min-height: 20px;
+
+    transition: 200ms linear;
+
+    &:hover {
+      background: rgba($white, .1);
+    }
+
+    .activity-item__icon {
+      min-width: 15px;
+      min-height: 15px;
+
+      margin-right: 10px;
+    }
+
+    .activity-item__name {
+      position: relative;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+      white-space: nowrap;
+
+      color: $white;
+    }
+  }
+}

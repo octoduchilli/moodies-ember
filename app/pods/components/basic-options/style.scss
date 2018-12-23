@@ -1,0 +1,80 @@
+& {
+  height: 36px;
+
+  color: $black;
+
+  &.is--closed {
+    overflow: hidden;
+
+    height: 36px;
+
+    .option {
+      border-radius: 5px;
+
+      display: none;
+
+      &.is--selected {
+        display: flex;
+      }
+    }
+  }
+
+  &.is--opened {
+
+    .option {
+      background: $white;
+
+      color: rgba($black, .7);
+
+      &:hover {
+        background: rgba($lightgrey, 1);
+
+        color: $black;
+      }
+
+      &:first-child {
+        border-radius: 5px 5px 0 0;
+
+        border: 1px solid rgba($lightgrey, 1);
+
+        border-bottom: none;
+      }
+
+      &:last-child {
+        border-radius: 0 0 5px 5px;
+
+        border: 1px solid rgba($lightgrey, 1);
+
+        border-top-color: rgba($lightgrey, 0);
+      }
+    }
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+
+    height: 36px;
+    min-width: 115px;
+
+    box-sizing: border-box;
+
+    background: rgba($lightgrey, 1);
+
+    padding: 0 10px;
+
+    &:first-child {
+      border: 1px solid rgba($lightgrey, 0);
+
+      border-bottom: none;
+    }
+
+    &:last-child {
+      border: 1px solid rgba($lightgrey, 0);
+
+      border-top: none;
+    }
+  }
+}

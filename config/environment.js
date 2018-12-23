@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'moodies-ember',
+    podModulePrefix: 'moodies-ember/pods',
     environment,
     rootURL: '/',
     locationType: 'auto',
@@ -20,6 +21,23 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    firebase: {
+      apiKey: 'AIzaSyCoEI1RieubL2z_TIwD4R5FHokpgGMvngs',
+      authDomain: 'app-film-bd1b7.firebaseapp.com',
+      databaseURL: 'https://app-film-bd1b7.firebaseio.com',
+      projectId: 'app-film-bd1b7',
+      storageBucket: 'app-film-bd1b7.appspot.com',
+      messagingSenderId: '796383962142'
+    },
+
+    torii: {
+      sessionServiceName: 'session'
+    },
+
+    moment: {
+      includeLocales: true
     }
   };
 

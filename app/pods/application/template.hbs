@@ -1,0 +1,10 @@
+<div id="main-progress-bar"></div>
+{{notification-container class="work notify-shadow" position="bottom-right"}}
+{{main-top-bar}}
+{{main-side-bar activities=user.activities}}
+<div class="div-scroll-top-icon" {{action "scrollTop" on="click"}}>
+  {{fa-icon "arrow-up" color="white"}}
+</div>
+<div id="app">
+  {{outlet}}
+</div>

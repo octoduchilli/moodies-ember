@@ -1,0 +1,103 @@
+& {
+  margin-left: auto;
+  margin-right: 15px;
+
+  white-space: nowrap;
+
+  margin-left: auto;
+
+  &__sign-out, &__sign-up {
+    text-decoration: underline;
+
+    cursor: pointer;
+  }
+
+  &__sign-in, &__profile-link {
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 10px;
+
+    height: 50px;
+
+    border: 1px solid $darkblue2;
+
+    margin-left: 10px;
+
+    min-width: 125px;
+  }
+
+  &__profile-link {
+    position: relative;
+
+    overflow: hidden;
+
+    border: 1px solid $darkblue2;
+
+    .profile-link__message {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      height: 100%;
+      width: 100%;
+
+      background: $darkblue2;
+
+      color: $white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      transition: 500ms ease;
+
+      transform: translateX(100%);
+    }
+
+    &:hover {
+
+      .profile-link__message {
+        transform: translateX(0)
+      }
+    }
+  }
+}
+
+@keyframes shine-container {
+  15%, 100% {
+    opacity: 0;
+
+    left: 200px;
+  }
+
+  0% {
+    opacity: 1;
+
+    left: -15px;
+  }
+
+  15% {
+    opacity: 1;
+
+    left: 200px;
+  }
+}
+
+@keyframes shine-title {
+  15%, 100% {
+    transform: skew(25deg) translateX(calc(-197px));
+  }
+
+  0% {
+    transform: skew(25deg) translateX(calc(18px));
+  }
+
+  15% {
+    transform: skew(25deg) translateX(calc(-197px));
+  }
+}

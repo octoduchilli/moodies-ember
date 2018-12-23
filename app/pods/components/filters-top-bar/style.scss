@@ -1,0 +1,67 @@
+& {
+  position: fixed;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 10;
+
+  top: 70px;
+  left: 200px;
+
+  min-height: 70px;
+  width: calc(100vw - 200px);
+
+  background: $darkblue3;
+
+  color: $white;
+
+  font-size: 1.1em;
+
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.2);
+
+  &.is--locked {
+    position: absolute;
+  }
+
+  .container {
+    position: relative;
+
+    section {
+      min-height: 70px;
+
+      display: flex;
+      align-items: center;
+
+      margin-right: 20px;
+
+      .section__title {
+        margin-left: 10px;
+        margin-right: 20px;
+      }
+    }
+
+    .filter {
+      margin: 17px 5px;
+    }
+
+    .div-lock-icon {
+      cursor: pointer;
+
+      position: absolute;
+
+      right: 20px;
+
+      padding: 20px;
+
+      border: 2px solid white;
+      border-radius: 5px;
+
+      background: rgba(black, .7);
+
+      display: flex;
+
+      opacity: .8;
+    }
+  }
+}

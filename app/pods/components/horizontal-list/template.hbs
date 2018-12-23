@@ -1,0 +1,5 @@
+{{#each items as |item|}}
+  {{#link-to type item.id class="item" invokeAction=(action "sendClickAction") data-line=item.title}}
+    <img class="poster" src="https://image.tmdb.org/t/p/w500{{if item.poster_path item.poster_path item.profile_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster'); this.onerror=''">
+  {{/link-to}}
+{{/each}}

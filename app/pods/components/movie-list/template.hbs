@@ -1,0 +1,93 @@
+{{#each items as |item|}}
+  {{#if (eq view.list "basic")}}
+    {{#if (eq view.userButton "visible")}}
+      <li class="{{styleNamespace}}__item mouse--is-over" {{action (mut hover) item.id on="mouseEnter"}} {{action (mut hover) null on="mouseLeave"}}>
+        {{#link-to 'movie' item.id class="item__link" data-name=item.title}}
+          <img class="link__poster" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
+        {{/link-to}}
+        <div class="div-buttons-lists">
+          {{#if session.isAuthenticated}}
+            {{#if (not user.fetch.isRunning)}}
+              {{#if (eq item.id hover)}}
+                {{buttons-lists movie=item class="col"}}
+              {{else}}
+                {{buttons-lists-fake movie=item class="col"}}
+              {{/if}}
+            {{/if}}
+          {{else}}
+            {{buttons-lists-fake movie=item class="col" click=(action "notifyNotConnected")}}
+          {{/if}}
+        </div>
+      </li>
+    {{else}}
+      <li class="{{styleNamespace}}__item {{if (eq item.id hover) "mouse--is-over"}}" {{action (mut hover) null on="mouseLeave"}}>
+        {{#link-to 'movie' item.id class="item__link" mouseEnter=(action (mut hover) item.id) data-name=item.title}}
+          <img class="link__poster" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
+        {{/link-to}}
+        <div class="div-buttons-lists">
+          {{#if session.isAuthenticated}}
+            {{#if (not user.fetch.isRunning)}}
+              {{#if (eq item.id hover)}}
+                {{buttons-lists movie=item class="col"}}
+              {{/if}}
+            {{/if}}
+          {{else}}
+            {{#if (eq item.id hover)}}
+              {{buttons-lists-fake movie=item class="col" click=(action "notifyNotConnected")}}
+            {{/if}}
+          {{/if}}
+        </div>
+      </li>
+    {{/if}}
+  {{else if (eq view.list "details")}}
+    <li class="{{styleNamespace}}__item mouse--is-over" {{action (mut hover) null on="mouseLeave"}} {{action (mut hover) item.id on="mouseEnter"}}>
+      {{#link-to 'movie' item.id class="item__link" data-name=item.title}}
+        <img class="link__poster bigger" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
+      {{/link-to}}
+      <div class="item__details flex col">
+        <h1 class="details__title">{{item.title}}</h1>
+        <ul class="details__genres flex wrap work">
+          {{#if item.genres}}
+            {{#each (slice 0 3 item.genres) as |genre|}}
+              {{#link-to 'discover' (query-params with_genres=genre.id) class="genre" click=(action (mut user.reset) "discover")}}
+                {{genre.name}}
+              {{/link-to}}
+            {{/each}}
+          {{else}}
+            {{#each (slice 0 3 item.genre_ids) as |genreId|}}
+              {{#link-to 'discover' (query-params with_genres=genreId) class="genre" click=(action (mut user.reset) "discover")}}
+                {{compute (action "genreName") genreId}}
+              {{/link-to}}
+            {{/each}}
+          {{/if}}
+        </ul>
+        <div class="details__vote flex ali-center work">
+          <div class="vote__average" style="{{compute (action "initVoteColors") item "average"}}"><span class="number">{{item.vote_average}}</span> / 10</div>
+          <div class="vote__count">sur <span class="number" style="{{compute (action "initVoteColors") item "count"}}">{{item.vote_count}}</span> votes</div>
+        </div>
+        <p class="details__overview">{{compute (action "overviewSliced") item.overview}}</p>
+        <div class="div-buttons-lists margin-auto">
+          {{#if session.isAuthenticated}}
+            {{#if (not user.fetch.isRunning)}}
+              {{#if (eq view.userButton "visible")}}
+                {{#if (eq item.id hover)}}
+                  {{buttons-lists movie=item}}
+                {{else}}
+                  {{buttons-lists-fake movie=item}}
+                {{/if}}
+              {{else}}
+                {{#if (eq item.id hover)}}
+                  {{buttons-lists movie=item}}
+                {{/if}}
+              {{/if}}
+            {{/if}}
+          {{else}}
+            {{#if (or (eq item.id hover) (eq view.userButton "visible"))}}
+              {{buttons-lists-fake movie=item click=(action "notifyNotConnected")}}
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+    </li>
+  {{/if}}
+{{/each}}

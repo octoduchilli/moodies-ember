@@ -1,0 +1,12 @@
+<div class="{{styleNamespace}}__popup-container">
+  <div class="popup-container__header">
+    {{title}}
+  </div>
+  <div class="popup-container__body">
+    {{yield}}
+  </div>
+  <div class="popup-container__footer">
+    {{basic-button icon="times" label="Fermer" click=(action close) class="footer__close-button"}}
+    {{basic-button icon=confirmIcon label=confirmLabel pending=pending click=(action confirm) class="footer__confirm-button"}}
+  </div>
+</div>

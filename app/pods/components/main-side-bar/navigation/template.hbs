@@ -1,0 +1,25 @@
+{{#link-to "search" class="side-bar__link"}}
+  recherche
+{{/link-to}}
+{{#link-to "discover" class="side-bar__link"}}
+  bibliothèque
+{{/link-to}}
+{{#if session.isAuthenticated}}
+  {{#link-to "my-profile.my-lists" class="side-bar__link"}}
+    mes listes
+  {{/link-to}}
+  {{#link-to "my-profile.informations" class="side-bar__link"}}
+    mon profil
+  {{/link-to}}
+{{else}}
+  <div  class="side-bar__link" {{action "notifyNotConnected" on="click"}}>
+    mes listes
+  </div>
+  <div class="side-bar__link" {{action "notifyNotConnected" on="click"}}>
+    mon profil
+  </div>
+{{/if}}
+{{#link-to "community" class="side-bar__link"}}
+  communauté
+{{/link-to}}
+<div id="active-link-bar"></div>

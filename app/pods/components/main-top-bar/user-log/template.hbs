@@ -1,0 +1,39 @@
+{{#if user.fetchInfos.isRunning}}
+  connexion...
+{{else if session.isAuthenticated}}
+  {{#link-to "home" class=(concat styleNamespace "__sign-out") click=(action "signOut")}}
+    Se déconnecter
+  {{/link-to}}
+  {{#link-to "my-profile.informations" class=(concat styleNamespace "__profile-link")}}
+    <div class="profile-link__message" style="{{compute (action "styleUserColor") user.infos.color "background"}}">Mon profil</div>
+    {{user.infos.pseudo}}
+  {{/link-to}}
+{{else}}
+  <div class="{{styleNamespace}}__sign-up" {{action (mut isShowingSignUpPopup) true on="click"}}>
+    S'inscrire
+  </div>
+  <div class="{{styleNamespace}}__sign-in" {{action (mut isShowingSignInPopup) true on="click"}}>
+    Se connecter
+  </div>
+{{/if}}
+
+{{#if isShowingSignInPopup}}
+  {{#basic-popup title="Se connecter" confirmLabel="Connexion" confirmIcon="check" pending=signIn.isRunning close=(action (mut isShowingSignInPopup) false) confirm=(perform signIn)}}
+    {{#basic-form onSubmit=(perform signIn) as |form|}}
+      {{form.input label="Email" placeholder="example@mail.com" value=emailSignIn error=errorEmailSignIn maxlength=100}}
+      {{form.input label="Mot de passe" type="password" placeholder="motdepasse" value=passwordSignIn error=errorPasswordSignIn maxlength=30}}
+    {{/basic-form}}
+  {{/basic-popup}}
+{{/if}}
+
+{{#if isShowingSignUpPopup}}
+  {{#basic-popup title="S'inscrire sur Moodies" confirmLabel="S'inscrire" confirmIcon="user-plus" pending=signUp.isRunning close=(action (mut isShowingSignUpPopup) false) confirm=(perform signUp)}}
+    {{#basic-form onSubmit=(perform signUp) as |form|}}
+      {{form.input label="Nom" placeholder="Dupont" value=firstnameSignUp error=errorFirstnameSignUp maxlength=30}}
+      {{form.input label="Prénom" placeholder="Jean-paul" value=lastnameSignUp error=errorLastnameSignUp maxlength=30}}
+      {{form.input label="Pseudo" placeholder="Toto42" value=pseudoSignUp error=errorPseudoSignUp maxlength=14}}
+      {{form.input label="Email" placeholder="example@mail.com" value=emailSignUp error=errorEmailSignUp maxlength=100}}
+      {{form.input label="Mot de passe" type="password" placeholder="motdepasse" value=passwordSignUp error=errorPasswordSignUp maxlength=30}}
+    {{/basic-form}}
+  {{/basic-popup}}
+{{/if}}

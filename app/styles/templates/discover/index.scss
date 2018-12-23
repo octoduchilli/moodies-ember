@@ -1,0 +1,26 @@
+.discover {
+  padding-top: 140px;
+
+  .total-results {
+    margin-bottom: 10px;
+
+    height: 70px;
+
+    background: $darkblue4;
+
+    padding-left: 10px;
+
+    font-family: 'Work Sans';
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+
+    .higher {
+      font-size: 1.4em;
+
+      margin-left: 5px;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+& {
+  cursor: pointer;
+
+  height: 36px;
+  width: 170px;
+
+  padding: 0;
+
+  border-radius: 9999px;
+
+  display: flex;
+  align-items: center;
+
+  text-align: center;
+
+  background: $lightgrey;
+
+  border: none;
+
+  color: $black;
+
+  font-size: 1em;
+}

@@ -1,0 +1,9 @@
+<div class="my-profile">
+  {{#if user.fetch.isRunning}}
+    <p class="fetching">
+      Récupération des données...
+    </p>
+  {{else}}
+    {{outlet}}
+  {{/if}}
+</div>
