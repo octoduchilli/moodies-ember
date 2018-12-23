@@ -33,7 +33,7 @@ export default Controller.extend({
     }
 
     return {
-      total: this.user.movies.length,
+      total: this.user.movies ? this.user.movies.length : 0,
       totalRuntime: totalRuntime,
     }
   }),

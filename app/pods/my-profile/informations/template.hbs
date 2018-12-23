@@ -49,9 +49,6 @@
         </div>
       {{/if}}
     </div>
-    <div class="section__band-container">
-      <div class="band-container__band" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
-    </div>
   </section>
   <section class="informations__section informations__statistic">
     <h1 class="section__title">Statistiques</h1>
@@ -92,7 +89,8 @@
       <p class="statistic__message">
         Genres les plus appréciés :
       </p>
-      {{#each likedGenres as |genre|}}
+      {{#if likedGenres}}
+        {{#each likedGenres as |genre|}}
         <div class="statistic__little-statistic">
           <p class="little-statistic__message">
             {{genre.name}} :
@@ -100,9 +98,13 @@
           </p>
         </div>
       {{/each}}
-    </div>
-    <div class="section__band-container">
-      <div class="band-container__band" style="{{compute (action "updateUserColorStyle") user.infos.color "background"}}"></div>
+      {{else}}
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            Commencez à ajouter des films !
+          </p>
+        </div>
+      {{/if}}
     </div>
   </section>
 </div>
