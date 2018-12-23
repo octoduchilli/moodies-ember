@@ -3,8 +3,8 @@
 
   position: relative;
 
-  width: 48px;
-  height: 50px;
+  height: 48px;
+  width: 50px;
   overflow-y: hidden;
   overflow-x: visible;
 
@@ -16,7 +16,7 @@
   &.is--checked {
 
     #{$styleNamespace}__switcher {
-      transform: translateY(-32px);
+      transform: translateX(-32px);
     }
   }
 
@@ -27,18 +27,17 @@
     left: 0;
 
     display: flex;
-    flex-direction: column;
     align-items: center;
 
-    width: 100%;
+    height: 100%;
 
     transition: 300ms ease;
 
-    transform: translateY(0);
+    transform: translateX(0);
 
     section {
-      height: 36px;
-      width: 44px;
+      width: 36px;
+      height: 44px;
 
       display: flex;
       justify-content: center;
@@ -62,8 +61,8 @@
     .switcher__button {
       position: relative;
 
-      height: 10px;
-      width: 40px;
+      width: 10px;
+      height: 40px;
     }
 
     .switcher__button::after {
@@ -96,8 +95,8 @@
       top: 50%;
       left: 50%;
 
-      height: 1px;
-      width: 70%;
+      width: 1px;
+      height: 70%;
 
       background: rgba(black, .3);
 
