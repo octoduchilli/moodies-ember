@@ -12,6 +12,8 @@ export default Controller.extend({
 
   genresItems: null,
 
+  imgDataPathToCenter: null,
+
   errorPseudo: '',
   pseudo: computed('user.infos.pseudo', function () {
     if (this.user.infos) {
@@ -134,8 +136,17 @@ export default Controller.extend({
       await this.user.updateInfos({ [img]: null })
 
       set(this.user.infos, img, null)
+    },
+    updateUserProfileImgPos (x, y, scale) {
+      return htmlSafe(`transform: translate(calc(-50% + ${x * (50 / 150)}px), calc(-50% + ${y * (50 / 150)}px)) scale(${scale})`)
     }
   },
+
+  saveCenterImg: task(function*() {
+    yield timeout(750)
+
+    set(this, 'imgDataPathToCenter', null)
+  }),
 
   updateColorSetting: task(function*(color) {
     yield timeout(750)

@@ -138,7 +138,16 @@
       }
 
       .setting__user-img {
+        cursor: pointer;
+
         height: 50px;
+
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
       }
 
       .setting__user-profile-img-container {
@@ -153,14 +162,20 @@
 
         margin-left: auto;
 
-        .setting__user-img {
-          position: absolute;
+        background: $black;
+      }
 
-          top: 50%;
-          left: 50%;
+      .setting__user-cover-img-container {
+        position: relative;
 
-          transform: translate(-50%, -50%);
-        }
+        height: 50px;
+        width: 89px;
+
+        overflow: hidden;
+
+        margin-left: auto;
+
+        background: $black;
       }
 
       .setting__no-user-img {
