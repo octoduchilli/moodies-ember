@@ -95,8 +95,18 @@ export default Component.extend({
 
       this.__updatePlusIsSelected()
     },
-    openOtherLists () {
+    toggleOtherLists () {
       this.toggleProperty('otherListsOpen')
+
+      setTimeout(() => {
+        const otherListsEl = document.getElementsByClassName('other-lists')[0]
+
+        if (this.element.parentNode.offsetLeft + otherListsEl.offsetWidth / 2 > window.innerWidth) {
+          otherListsEl.style.transform = 'translateX(-100%)'
+        } else {
+          otherListsEl.style.transform = 'translateX(-50%)'
+        }
+      })
     },
     listColor (isSelected, color) {
       if (!isSelected) {
