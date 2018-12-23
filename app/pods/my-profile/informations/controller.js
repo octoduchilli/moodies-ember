@@ -23,7 +23,9 @@ export default Controller.extend({
     return null
   }),
 
-  totalMovies: computed('user.movies.length', function () {
+  //TODO computed user.movies.@each not actualised in deep when movie.lists is updated
+
+  totalMovies: computed('user.movies.@each', function () {
     let totalRuntime = 0
 
     if (this.user.movies) {
@@ -40,7 +42,7 @@ export default Controller.extend({
     }
   }),
 
-  totalViewedMovies: computed('user.movies.length', function () {
+  totalViewedMovies: computed('user.movies.@each', function () {
     let total = 0
     let totalRuntime = 0
 
@@ -61,7 +63,7 @@ export default Controller.extend({
     }
   }),
 
-  totalFavoriteMovies: computed('user.movies.length', function () {
+  totalFavoriteMovies: computed('user.movies.@each', function () {
     let total = 0
     let totalRuntime = 0
 
@@ -82,7 +84,7 @@ export default Controller.extend({
     }
   }),
 
-  likedGenres: computed('user.movies.length', function () {
+  likedGenres: computed('user.movies.@each', function () {
     let genresCounter = {}
 
     if (this.user.movies) {
