@@ -1,0 +1,151 @@
+& {
+  $styleNamespace: &;
+
+  display: flex;
+  flex-direction: column;
+
+  &.circle {
+
+    #{$styleNamespace}__img-container {
+      height: 150px;
+      width: 150px;
+
+      border-radius: 50%;
+
+      .img-container__img {
+        height: 150px;
+      }
+
+      .img-container__mouse-tracker {
+        border-radius: 50%;
+      }
+    }
+
+    #{$styleNamespace}__bg-img {
+      height: 150px;
+    }
+  }
+
+  &.rect {
+
+    #{$styleNamespace}__img-container {
+      height: 150px;
+      width: 268px;
+
+      .img-container__img {
+        height: 150px;
+      }
+    }
+
+    #{$styleNamespace}__bg-img {
+      height: 150px;
+    }
+  }
+
+  &__container {
+    position: relative;
+
+    overflow: hidden;
+
+    display: flex;
+
+    height: 250px;
+    width: 100%;
+
+    &::after {
+      content: "";
+
+      position: absolute;
+
+      z-index: 2;
+
+      top: 0;
+      left: 0;
+
+      height: 100%;
+      width: 100%;
+
+      background: rgba(black, .7);
+    }
+  }
+
+  &__bg-img {
+    position: absolute;
+
+    z-index: 1;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    height: 200px;
+  }
+
+  &__img-container {
+    position: absolute;
+
+    z-index: 3;
+
+    top: 50%;
+    left: 50%;
+
+    display: flex;
+
+    transform: translate(-50%, -50%);
+
+    overflow: hidden;
+
+    background: $white;
+
+    cursor: grab;
+
+    .img-container__img {
+      position: absolute;
+
+      top: 50%;
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+
+      cursor: auto;
+    }
+
+    .img-container__mouse-tracker {
+      height: 100%;
+      width: 100%;
+
+      z-index: 4;
+    }
+  }
+
+  &__pannel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .pannel__button {
+      cursor: pointer;
+
+      height: 30px;
+      width: 30px;
+
+      margin: 5px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 5px;
+
+      background: $black;
+      color: $white;
+
+      font-size: 1.2em;
+
+      &:first-child {
+        margin-left: 20px;
+      }
+    }
+  }
+}
