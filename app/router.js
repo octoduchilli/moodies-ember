@@ -22,6 +22,8 @@ Router.map(function() {
   this.route('community');
   this.route('home');
   this.route('search');
+  this.route('images', { path: 'images/:id' });
+  this.route('videos', { path: 'videos/:id' });
 });
 
 export default Router;
