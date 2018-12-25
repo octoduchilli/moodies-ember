@@ -5,7 +5,7 @@ const defaultQuery = {
   include_adult: false,
   language: 'fr-FR',
   region: 'fr',
-  append_to_response: 'images,releases,recommendations,credits,videos'
+  append_to_response: 'releases,recommendations,credits,videos'
 }
 
 export default tmdb.extend({
