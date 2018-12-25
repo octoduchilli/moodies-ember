@@ -7,15 +7,7 @@ export default Mixin.create({
 
   paths: null,
 
-  tick (promise, index) {
-    const progress = Math.round((index / this.paths.length) * 90)
-
-    this.progress.update(progress)
-
-    return promise
-  },
-
-  preloadTMDBImg(paths, progress) {
+  preloadTMDBImg(paths) {
     set(this, 'paths', paths)
 
     let promises = paths.map(path => {
@@ -29,10 +21,6 @@ export default Mixin.create({
         })
       }
     })
-
-    if (progress) {
-      return Promise.all(promises.map((promise, index) => this.tick(promise, index)))
-    }
 
     return Promise.all(promises)
   }

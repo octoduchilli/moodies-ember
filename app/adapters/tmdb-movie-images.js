@@ -2,10 +2,8 @@ import tmdb from './tmdb';
 
 const defaultQuery = {
   api_key: '3836694fa8a7ae3ea69b5ff360b3be0b',
-  include_adult: false,
   language: 'fr-FR',
-  region: 'fr',
-  append_to_response: 'releases,recommendations,credits,videos'
+  include_image_language: 'fr,en'
 }
 
 export default tmdb.extend({
@@ -15,6 +13,8 @@ export default tmdb.extend({
 
   findRecord (store, type, id, snapshot) {
     let url = this.buildURL(type.modelName, id, snapshot, 'findRecord');
+
+    url += '/images'
 
     return this.ajax(url, 'GET', { data: defaultQuery });
   }

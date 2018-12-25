@@ -19,6 +19,10 @@ export default Component.extend({
 
   movie: null,
 
+  mouseLeave () {
+    set(this, 'otherListsOpen', false)
+  },
+
   init () {
     this._super(...arguments)
 
@@ -101,8 +105,8 @@ export default Component.extend({
       setTimeout(() => {
         const otherListsEl = document.getElementsByClassName('other-lists')[0]
 
-        if (this.element.parentNode.offsetLeft + otherListsEl.offsetWidth / 2 > window.innerWidth) {
-          otherListsEl.style.transform = 'translateX(-100%)'
+        if (this.element.parentNode.offsetLeft + this.element.parentNode.offsetWidth + otherListsEl.offsetWidth / 2 > window.innerWidth) {
+          otherListsEl.style.transform = 'translateX(calc(-100% + 20px))'
         } else {
           otherListsEl.style.transform = 'translateX(-50%)'
         }
