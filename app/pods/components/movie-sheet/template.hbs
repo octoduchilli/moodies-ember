@@ -45,7 +45,7 @@
   <div class="{{styleNamespace}}__top-part">
     <div class="top-part__section top-part__poster-section">
       <img class="poster-section__poster" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.onerror=''">
-      {{#link-to 'images' movie.id (query-params type="movie") class="poster-section__button"}}
+      {{#link-to 'images' movie.id (query-params images_type="movie") class="poster-section__button"}}
         {{images.posters.length}} affiches et {{images.backdrops.length}} fonds d'écran
       {{/link-to}}
       {{#link-to 'videos' movie.id class="poster-section__button"}}
