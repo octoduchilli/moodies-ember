@@ -4,5 +4,12 @@ import { inject as service } from '@ember/service'
 export default Component.extend({
   tagName: 'ul',
 
-  user: service('current-user')
+  router: service(),
+  user: service('current-user'),
+
+  actions: {
+    transitionToActivity (activity) {
+      this.router.transitionTo(activity.type, activity.id, { queryParams: activity.query})
+    }
+  }
 })
