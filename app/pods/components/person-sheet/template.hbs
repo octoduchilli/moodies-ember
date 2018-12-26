@@ -1,4 +1,4 @@
-{{#if __fetchData.isRunning}}
+{{!-- {{#if __fetchData.isRunning}}
   <div class="{{styleNamespace}}__topbar-skeleton flex ali-start work">
     <div class="div-poster"></div>
     <div class="left--content-poster flex col">
@@ -45,5 +45,296 @@
     {{else}}
       <p class="no-results">Aucun film</p>
     {{/if}}
+  </div>
+{{/if}} --}}
+
+{{#if fetch.isRunning}}
+  <div class="{{styleNamespace}}__top-part-skeleton">
+    <div class="top-part-skeleton__section top-part-skeleton__poster-section">
+      <div class="poster-section__poster"></div>
+      <div class="poster-section__button">... photos de profil</div>
+    </div>
+    <div class="top-part-skeleton__section top-part-skeleton__informations-section work">
+      <h1 class="informations-section__person-name"></h1>
+      <p class="informations-section__little-information first-child">Connu pour <span class="value">...</span></p>
+      <p class="informations-section__little-information">Date de naissance <span class="value">...</span></p>
+      <p class="informations-section__little-information last-child">Lieu de naissance <span class="value">...</span></p>
+      <div class="informations-section__information">
+        <h1 class="information__title">Biographie :</h1>
+        <p class="information__overview"></p>
+      </div>
+    </div>
+  </div>
+{{else}}
+  <div class="{{styleNamespace}}__main-background" style="background-image: url(https://image.tmdb.org/t/p/original{{backgroundPath}})"></div>
+  <div class="{{styleNamespace}}__top-part">
+    <div class="top-part__section top-part__poster-section">
+      <img class="poster-section__poster" src="https://image.tmdb.org/t/p/w500{{person.profile_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.onerror=''">
+      {{#link-to 'images' person.id (query-params images_type="person") class="poster-section__button"}}
+        {{images.profiles.length}} photos de profil
+      {{/link-to}}
+    </div>
+    <div class="top-part__section top-part__informations-section work">
+      <h1 class="informations-section__person-name josefin">{{person.name}}</h1>
+      <p class="informations-section__little-information first-child">Connu pour <span class="value">{{compute (action "knownFor") person.known_for_department}}</span></p>
+      <p class="informations-section__little-information">Date de naissance <span class="value">{{if person.birthday (moment-format person.birthday "Do MMMM YYYY") 'Inconnue'}}</span></p>
+      <p class="informations-section__little-information last-child">Lieu de naissance <span class="value">{{if person.place_of_birth person.place_of_birth 'Inconnu'}}</span></p>
+      <div class="informations-section__information">
+        <h1 class="information__title">Biographie :</h1>
+        <p class="information__overview josefin">{{if person.overview person.overview 'Aucune biographie disponible'}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="{{styleNamespace}}__person-part work">
+    <div class="person-part__section person-part__cast-section">
+      <h1 class="section__title">Tête d'affiches - Casting</h1>
+      <ul class="section__person-list">
+        {{#if (not-eq 0 slicedCast.length)}}
+          {{#each slicedCast as |person|}}
+            {{#if (and (eq slicedCast.length 5) (gte movie.credits.cast.length 5))}}
+              {{#if person.profile_path}}
+                {{#link-to 'person' person.id}}
+                  <li class="person-list__person">
+                    <div class="person__poster">
+                      <img class="poster__img" src="https://image.tmdb.org/t/p/w500{{person.profile_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''">
+                    </div>
+                    <div class="person__informations">
+                      <p class="informations__name">{{person.name}}</p>
+                      <p class="informations__job-name">{{person.character}}</p>
+                    </div>
+                  </li>
+                {{/link-to}}
+              {{/if}}
+            {{else}}
+              {{#link-to 'person' person.id}}
+                <li class="person-list__person">
+                  <div class="person__poster">
+                    <img class="poster__img" src="https://image.tmdb.org/t/p/w500{{person.profile_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''">
+                  </div>
+                  <div class="person__informations">
+                    <p class="informations__name">{{person.name}}</p>
+                    <p class="informations__job-name">{{person.character}}</p>
+                  </div>
+                </li>
+              {{/link-to}}
+            {{/if}}
+          {{/each}}
+          {{#if (not-eq movie.credits.cast.length slicedCast.length)}}
+            <li class="person-list__person" {{action "showMorePerson" movie.credits.cast sliceCast "sliceCast" on="click"}}>
+              <div class="person__poster">
+                <div class="poster__show-button">
+                  voir plus
+                </div>
+              </div>
+            </li>
+            <li class="person-list__person" {{action "showAllPerson" movie.credits.cast "sliceCast" on="click"}}>
+              <div class="person__poster">
+                <div class="poster__show-button">
+                  tout voir - {{movie.credits.cast.length}}
+                </div>
+              </div>
+            </li>
+            {{#if (gt slicedCast.length 5)}}
+                <li class="person-list__person" {{action "resetPerson" "sliceCast" "person-part__cast-section" on="click"}}>
+                  <div class="person__poster">
+                    <div class="poster__show-button">
+                      tout cacher
+                    </div>
+                  </div>
+                </li>
+            {{/if}}
+          {{else if (gt movie.credits.cast.length 5)}}
+            <li class="person-list__person" {{action "resetPerson" "sliceCast" "person-part__cast-section" on="click"}}>
+              <div class="person__poster">
+                <div class="poster__show-button">
+                  tout cacher
+                </div>
+              </div>
+            </li>
+          {{/if}}
+        {{else}}
+          <li class="person-list__person">
+            <div class="person__poster">
+              <div class="poster__show-button">
+                Aucun
+              </div>
+            </div>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+    <div class="person-part__section person-part__crew-section">
+      <h1 class="section__title">Équipe technique en vedette</h1>
+      <ul class="section__person-list">
+        {{#if (not-eq 0 slicedCrew.length)}}
+          {{#each slicedCrew as |person|}}
+            {{#if (and (eq slicedCrew.length 5) (gte movie.credits.crew.length 5))}}
+              {{#if person.profile_path}}
+                {{#link-to 'person' person.id}}
+                  <li class="person-list__person">
+                    <div class="person__poster">
+                      <img class="poster__img" src="https://image.tmdb.org/t/p/w500{{person.profile_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''">
+                    </div>
+                    <div class="person__informations">
+                      <p class="informations__name">{{person.name}}</p>
+                      <p class="informations__job-name">{{person.job}}</p>
+                    </div>
+                  </li>
+                {{/link-to}}
+              {{/if}}
+            {{else}}
+              {{#link-to 'person' person.id}}
+                <li class="person-list__person">
+                  <div class="person__poster">
+                    <img class="poster__img" src="https://image.tmdb.org/t/p/w500{{person.profile_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''">
+                  </div>
+                  <div class="person__informations">
+                    <p class="informations__name">{{person.name}}</p>
+                    <p class="informations__job-name">{{person.job}}</p>
+                  </div>
+                </li>
+              {{/link-to}}
+            {{/if}}
+          {{/each}}
+          {{#if (not-eq movie.credits.crew.length slicedCrew.length)}}
+            <li class="person-list__person" {{action "showMorePerson" movie.credits.crew sliceCrew "sliceCrew" on="click"}}>
+              <div class="person__poster">
+                <div class="poster__show-button">
+                  voir plus
+                </div>
+              </div>
+            </li>
+            <li class="person-list__person" {{action "showAllPerson" movie.credits.crew "sliceCrew" on="click"}}>
+              <div class="person__poster">
+                <div class="poster__show-button">
+                  tout voir - {{movie.credits.crew.length}}
+                </div>
+              </div>
+            </li>
+            {{#if (gt slicedCrew.length 5)}}
+                <li class="person-list__person" {{action "resetPerson" "sliceCrew" "person-part__crew-section" on="click"}}>
+                  <div class="person__poster">
+                    <div class="poster__show-button">
+                      tout cacher
+                    </div>
+                  </div>
+                </li>
+            {{/if}}
+          {{else if (gt movie.credits.crew.length 5)}}
+            <li class="person-list__person" {{action "resetPerson" "sliceCrew" "person-part__crew-section" on="click"}}>
+              <div class="person__poster">
+                <div class="poster__show-button">
+                  tout cacher
+                </div>
+              </div>
+            </li>
+          {{/if}}
+        {{else}}
+          <li class="person-list__person">
+            <div class="person__poster">
+              <div class="poster__show-button">
+                Aucun
+              </div>
+            </div>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+  <div class="{{styleNamespace}}__movie-list-part work">
+    <h1 class="movie-list-part__title">À également joué</h1>
+    <ul class="movie-list-part__movie-list movie-list-part__movie-cast-list">
+      {{#if (not-eq 0 slicedMoviesCast.length)}}
+        {{#each slicedMoviesCast as |movie|}}
+          {{#link-to 'movie' movie.id}}
+            <li class="movie-list__movie">
+              <img class="movie__poster" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''">
+              <p class="movie__information"><span class="value information__vote-average" style="{{compute (action "voteAverageBorderColorStyle") movie.vote_average}}">{{movie.vote_average}} / 10</span> sur <span class="value">{{movie.vote_count}}</span> votes</p>
+              <p class="movie__information"><span class="value">{{movie.character}}</span></p>
+              <p class="movie__information">sortie le <span class="value">{{if movie.release_date (moment-format movie.release_date "Do MMMM YYYY") "Date inconnue"}}</span></p>
+            </li>
+          {{/link-to}}
+        {{/each}}
+        {{#if (not-eq person.credits.cast.length slicedMoviesCast.length)}}
+          <li class="movie-list__movie" {{action "showMoreMovies" person.credits.cast sliceMoviesCast "sliceMoviesCast" on="click"}}>
+            <div class="movie__show-button">
+              voir plus
+            </div>
+          </li>
+          <li class="movie-list__movie" {{action "showAllMovies" person.credits.cast "sliceMoviesCast" on="click"}}>
+            <div class="movie__show-button">
+              tout voir - {{person.credits.cast.length}}
+            </div>
+          </li>
+          {{#if (gt slicedMoviesCast.length 10)}}
+            <li class="movie-list__movie" {{action "resetMovies" "sliceMoviesCast" "movie-list-part__movie-cast-list" on="click"}}>
+              <div class="movie__show-button">
+                tout cacher
+              </div>
+            </li>
+          {{/if}}
+        {{else if (gt person.credits.cast.length 10)}}
+          <li class="movie-list__movie" {{action "resetMovies" "sliceMoviesCast" "movie-list-part__movie-cast-list" on="click"}}>
+            <div class="movie__show-button">
+              tout cacher
+            </div>
+          </li>
+        {{/if}}
+      {{else}}
+        <li class="movie-list__movie">
+          <div class="movie__show-button">
+            Aucun
+          </div>
+        </li>
+      {{/if}}
+    </ul>
+  </div>
+  <div class="{{styleNamespace}}__movie-list-part work">
+    <h1 class="movie-list-part__title">À contribué à</h1>
+    <ul class="movie-list-part__movie-list movie-list-part__movie-crew-list">
+      {{#if (not-eq 0 slicedMoviesCrew.length)}}
+        {{#each slicedMoviesCrew as |movie|}}
+          {{#link-to 'movie' movie.id}}
+            <li class="movie-list__movie">
+              <img class="movie__poster" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''">
+              <p class="movie__information"><span class="value information__vote-average" style="{{compute (action "voteAverageBorderColorStyle") movie.vote_average}}">{{movie.vote_average}} / 10</span> sur <span class="value">{{movie.vote_count}}</span> votes</p>
+              <p class="movie__information"><span class="value">{{compute (action "knownFor") movie.department}}</span></p>
+              <p class="movie__information">sortie le <span class="value">{{if movie.release_date (moment-format movie.release_date "Do MMMM YYYY") "Date inconnue"}}</span></p>
+            </li>
+          {{/link-to}}
+        {{/each}}
+        {{#if (not-eq person.credits.crew.length slicedMoviesCrew.length)}}
+          <li class="movie-list__movie" {{action "showMoreMovies" person.credits.crew sliceMoviesCrew "sliceMoviesCrew" on="click"}}>
+            <div class="movie__show-button">
+              voir plus
+            </div>
+          </li>
+          <li class="movie-list__movie" {{action "showAllMovies" person.credits.crew "sliceMoviesCrew" on="click"}}>
+            <div class="movie__show-button">
+              tout voir - {{person.credits.crew.length}}
+            </div>
+          </li>
+          {{#if (gt slicedMoviesCrew.length 10)}}
+            <li class="movie-list__movie" {{action "resetMovies" "sliceMoviesCrew" "movie-list-part__movie-crew-list" on="click"}}>
+              <div class="movie__show-button">
+                tout cacher
+              </div>
+            </li>
+          {{/if}}
+        {{else if (gt person.credits.crew.length 10)}}
+          <li class="movie-list__movie" {{action "resetMovies" "sliceMoviesCrew" "movie-list-part__movie-crew-list" on="click"}}>
+            <div class="movie__show-button">
+              tout cacher
+            </div>
+          </li>
+        {{/if}}
+      {{else}}
+        <li class="movie-list__movie">
+          <div class="movie__show-button">
+            Aucun
+          </div>
+        </li>
+      {{/if}}
+    </ul>
   </div>
 {{/if}}

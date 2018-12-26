@@ -516,14 +516,18 @@
 
         background: rgba(black, .5);
 
+        min-height: 390px;
+
         .movie__poster {
           width: 180px;
+
+          margin: 0 auto auto auto;
         }
 
         .movie__information {
           white-space: nowrap;
 
-          color: $white;
+          color: lightgray;
 
           margin: 15px 0;
 
@@ -531,6 +535,12 @@
             padding: 5px;
 
             border-radius: 2.5px 5px;
+          }
+
+          .value {
+            font-size: 1.1em;
+
+            color: $white;
           }
         }
       }

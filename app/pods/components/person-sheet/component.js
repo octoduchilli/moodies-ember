@@ -1,11 +1,13 @@
 import Component from '@ember/component';
-import preloadImg from 'moodies-ember/mixins/preload-tmdb-img';
+import preloadImg from 'moodies-ember/mixins/preload-tmdb-img'
+import lerpColor from 'moodies-ember/mixins/lerp-color'
 import { inject as service } from '@ember/service';
 import { task, timeout, all } from 'ember-concurrency';
-import { computed } from '@ember/object';
+import { computed } from '@ember/object'
+import { htmlSafe } from '@ember/string'
 import { set } from '@ember/object'
 
-export default Component.extend(preloadImg, {
+export default Component.extend(preloadImg, lerpColor, {
   tagName: 'div',
 
   progress: service('page-progress'),
@@ -13,7 +15,9 @@ export default Component.extend(preloadImg, {
   user: service('current-user'),
 
   person: null,
-  isShowingPoster: false,
+  images: null,
+  sliceMoviesCast: 10,
+  sliceMoviesCrew: 10,
 
   backgroundPath: computed('person.images', function () {
     const person = this.person
@@ -33,65 +37,7 @@ export default Component.extend(preloadImg, {
     return null
   }),
 
-  knownFor: computed('person.known_for_department', function () {
-    let person = this.person
-
-    if (person && person.known_for_department) {
-      const knownFor = person.known_for_department
-
-      if (knownFor === 'Costume & Make-Up') {
-        return 'Création de costume et maquillage'
-      }
-
-      if (knownFor === 'Acting') {
-        if (person.gender === 1) {
-          return 'Actrice'
-        }
-
-        return 'Acteur'
-      }
-
-      if (knownFor === 'Production') {
-        return 'Producteur'
-      }
-
-      if (knownFor === 'Sound') {
-        return 'Ingénieur du son'
-      }
-
-      if (knownFor === 'Directing') {
-        return 'Réalisation'
-      }
-
-      if (knownFor === 'Writing') {
-        return 'Écriture'
-      }
-
-      if (knownFor === 'Editing') {
-        return 'Édition'
-      }
-
-      if (knownFor === 'Crew') {
-        return 'Équipe technique'
-      }
-
-      if (knownFor === 'Camera') {
-        return 'Image'
-      }
-
-      if (knownFor === 'Art') {
-        return 'Artistique'
-      }
-
-      if (knownFor === 'Visual Effects') {
-        return 'Effets visuels'
-      }
-    }
-
-    return null
-  }),
-
-  moviesCast: computed('person.credits.cast', function () {
+  slicedMoviesCast: computed('person.credits.cast', 'sliceMoviesCast', function () {
     const person = this.person
 
     if (person && person.credits) {
@@ -101,13 +47,13 @@ export default Component.extend(preloadImg, {
 
       cast = Array.from(cast.reduce((m, t) => m.set(t.id, t), new Map()).values())
 
-      return cast
+      return cast.slice(0, this.sliceMoviesCast)
     }
 
     return null
   }),
 
-  moviesCrew: computed('person.credits.crew', function () {
+  slicedMoviesCrew: computed('person.credits.crew', 'sliceMoviesCrew', function () {
     const person = this.person
 
     if (person && person.credits) {
@@ -117,18 +63,20 @@ export default Component.extend(preloadImg, {
 
       crew = Array.from(crew.reduce((m, t) => m.set(t.id, t), new Map()).values())
 
-      return crew
+      return crew.slice(0, this.sliceMoviesCrew)
     }
 
     return null
   }),
 
-  didReceiveAttrs() {
-    set(this, 'person', null)
+  async init () {
+    this._super(...arguments)
 
-    if (this.personId) {
-      this.__fetchData.perform(this.personId);
-    }
+    this.fetch.perform(this.id)
+  },
+
+  didUpdateAttrs () {
+    this.fetch.perform(this.id)
   },
 
   willDestroyElement () {
@@ -136,45 +84,120 @@ export default Component.extend(preloadImg, {
   },
 
   actions: {
-    togglePoster () {
-      this.toggleProperty('isShowingPoster')
+    voteAverageBorderColorStyle (average) {
+      if (average !== null) {
+        return htmlSafe(`border: 2px solid ${this.lerpColor({r: 255, g: 0, b: 0}, {r: 0, g: 255, b: 0}, average / 10)}`)
+      }
     },
-    scrollTop () {
-      window.scroll({
-        top: 0
+    showMoreMovies (array, slice, sliceKey) {
+      if (array.length > slice) {
+        set(this, sliceKey, slice + 10)
+      }
+    },
+    showAllMovies (array, sliceKey) {
+      set(this, sliceKey, array.length)
+    },
+    resetMovies (sliceKey, className) {
+      set(this, sliceKey, 10)
+
+      setTimeout(() => {
+        window.scroll({
+          top: document.getElementsByClassName(className)[0].offsetTop - 150,
+          behavior: 'smooth'
+        })
       })
+    },
+    knownFor (department) {
+      let person = this.person
+
+      if (person && department) {
+        if (department === 'Costume & Make-Up') {
+          return 'Costume et maquillage'
+        }
+
+        if (department === 'Acting') {
+          if (person.gender === 1) {
+            return 'Actrice'
+          }
+
+          return 'Acteur'
+        }
+
+        if (department === 'Production') {
+          if (person.gender === 1) {
+            return 'Productrice'
+          }
+
+          return 'Producteur'
+        }
+
+        if (department === 'Sound') {
+          return 'Ingénieur du son'
+        }
+
+        if (department === 'Directing') {
+          return 'Réalisation'
+        }
+
+        if (department === 'Writing') {
+          return 'Écriture'
+        }
+
+        if (department === 'Editing') {
+          return 'Édition'
+        }
+
+        if (department === 'Crew') {
+          return 'Équipe technique'
+        }
+
+        if (department === 'Camera') {
+          return 'Image'
+        }
+
+        if (department === 'Art') {
+          return 'Artistique'
+        }
+
+        if (department === 'Visual Effects') {
+          return 'Effets visuels'
+        }
+      }
+
+      return 'Inconnu'
     }
   },
 
-  __fetchData: task(function* (personId) {
+  fetch: task(function* (id) {
     this.progress.reset()
+
+    this.progress.update(40)
 
     yield all([
       timeout(500),
-      this.__fetchPerson(personId)
+      this.fetchPerson.perform(id)
     ])
+
+    this.progress.update(80)
+
+    yield this.preloadTMDBImg(this.__getPaths(this.person), true)
 
     return this.progress.update(100)
   }).restartable(),
 
-  async __fetchPerson (personId) {
-    let person = null
-
-    await this.store.find('tmdb-person', personId).then(_ => {
-      person = _
+  fetchPerson: task(function*(id) {
+    yield this.store.find('tmdb-person', id).then(person => {
+      set(this, 'person', person)
+      set(this, 'images', person.images)
     })
 
     this.user.addActivity({
-      id: person.id,
-      name: person.name,
+      id: this.person.id,
+      name: this.person.name,
       icon: 'search',
       type: 'person'
     })
-
-    await this.preloadTMDBImg(this.__getPaths(person), true)
-
-    return set(this, 'person', person)
-  },
+  }),
 
   __getPaths (person) {
     let paths = []
