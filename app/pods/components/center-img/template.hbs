@@ -2,7 +2,7 @@
   <img class="{{styleNamespace}}__bg-img" src="https://image.tmdb.org/t/p/w500{{imgPath}}" alt=" ">
   <div class="{{styleNamespace}}__img-container">
     <img class="img-container__img" src="https://image.tmdb.org/t/p/w500{{imgPath}}" alt=" ">
-    <div class="img-container__mouse-tracker" {{action (mut mouseIsDown) false on="mouseUp"}} {{action (mut mouseIsDown) true on="mouseDown"}} {{action "changeImgPos" event on="mouseMove"}}></div>
+    <div class="img-container__mouse-tracker" {{action (pipe-action (action "changeImgPos" event) (action (mut mouseIsDown) false)) on="mouseUp"}} {{action (mut mouseIsDown) true on="mouseDown"}} {{action "changeImgPos" event on="mouseMove"}}></div>
   </div>
 </div>
 <div class="{{styleNamespace}}__pannel">
