@@ -283,12 +283,12 @@
       <h1 class="movie-list-part__title">{{movie.collection.name}}</h1>
       <p class="movie-list-part__overview josefin">{{movie.collection.overview}}</p>
       <ul class="movie-list-part__movie-list">
-        {{#each  (sort-by "release_date" movie.collection.parts) as |collection|}}
+        {{#each collection as |collection|}}
           {{#link-to 'movie' collection.id}}
             <li class="movie-list__movie">
               <img class="movie__poster" src="https://image.tmdb.org/t/p/w500{{collection.poster_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''">
               <p class="movie__information"><span class="value information__vote-average" style="{{compute (action "voteAverageBorderColorStyle") collection.vote_average}}">{{collection.vote_average}} / 10</span> sur <span class="value">{{collection.vote_count}}</span> votes</p>
-              <p class="movie__information">sortie le <span class="value">{{if collection.release_date (moment-format colletion.release_date "Do MMMM YYYY") "Date inconnue"}}</span></p>
+              <p class="movie__information">sortie le <span class="value">{{if collection.release_date (moment-format collection.release_date "Do MMMM YYYY") "Date inconnue"}}</span></p>
             </li>
           {{/link-to}}
         {{/each}}

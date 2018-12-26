@@ -65,6 +65,18 @@ export default Component.extend(preloadImg, lerpColor, {
     }
   }),
 
+  collection: computed('movie.collection.parts', function () {
+    if (this.movie.collection) {
+      return this.movie.collection.parts.sort((a, b) => {
+        if (a.release_date && b.release_date) {
+          return ('' + a.release_date).localeCompare(b.release_date)
+        }
+      })
+    }
+
+    return null
+  }),
+
   async init () {
     this._super(...arguments)
 
@@ -108,10 +120,32 @@ export default Component.extend(preloadImg, lerpColor, {
 
       await this.firebaseApp.database().ref(`users/${get(this.session, 'uid')}/vote/${this.movie.id}`).update(payload)
 
+      payload.id = this.movie.id
+
+      const vote = this.user.votes.findBy('id', this.movie.id)
+
+      if (vote) {
+        set(vote, 'average', average)
+        set(vote, 'modifiedAt', payload.modifiedAt)
+      } else {
+        this.user.votes.push({
+          id: this.movie.id,
+          average: payload.average,
+          createdAt: payload.createdAt,
+          modifiedAt: payload.modifiedAt
+        })
+      }
+
       set(this, 'voteAverage', average)
     },
     async deleteVote () {
       await this.firebaseApp.database().ref(`users/${get(this.session, 'uid')}/vote/${this.movie.id}`).set(null)
+
+      const vote = this.user.votes.findBy('id', this.movie.id)
+
+      if (vote) {
+        this.user.votes.removeObject(vote)
+      }
 
       set(this, 'voteAverage', null)
     },
