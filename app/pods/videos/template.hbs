@@ -1,1 +1,18 @@
-{{outlet}}
+<div class="videos work">
+  <div class="videos__section">
+    <h1 class="section__title">Vidéos YouTube - {{model.videos.length}}</h1>
+    <ul class="section__video-list">
+      {{#each model.videos as |video|}}
+        {{#if (eq video.site "YouTube")}}
+          <li class="video-list__video" {{action (mut showVideo) video.key on="click"}}>{{video.name}}</li>
+        {{/if}}
+      {{/each}}
+    </ul>
+  </div>
+  {{#if showVideo}}
+    <div class="videos__show-video" {{action (mut showVideo) null on="click"}}>
+      <iframe class="show-video__video" src="https://www.youtube.com/embed/{{showVideo}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <div class="show-video__close-message">fermer</div>
+    </div>
+  {{/if}}
+</div>
