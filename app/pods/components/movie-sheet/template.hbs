@@ -79,6 +79,7 @@
       <div class="actions-container__vote-action">
         <div class="vote-action__container">
           <div class="vote-action__mouse-tracker" {{action "updateVoteAverage" on="mouseMove"}} {{action (mut newVoteAverage) null on="mouseLeave"}} {{action "saveVote" newVoteAverage on="click"}}></div>
+          <div class="vote-action__bg" style="{{compute (action "voteAverageBgStyle") (if (not-eq null newVoteAverage) newVoteAverage voteAverage)}}"></div>
           {{#if (not-eq newVoteAverage null)}}
             <p class="vote-action__message" style="{{compute (action "voteAverageBorderColorStyle") newVoteAverage}}">
               <span class="grey-color">J'attribue la note de</span>

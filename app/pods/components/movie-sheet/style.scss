@@ -274,6 +274,25 @@
 
           height: 100%;
           width: 100%;
+
+          z-index: 3;
+        }
+
+        .vote-action__bg {
+          position: absolute;
+
+          top: 0;
+          left: 0;
+
+          height: 100%;
+
+          z-index: 1;
+
+          transition: 300ms ease;
+
+          opacity: .3;
+
+          border-radius: 5px;
         }
 
         .vote-action__message {
@@ -293,6 +312,8 @@
           border: 2px solid $white;
 
           text-align: center;
+
+          z-index: 2;
 
           .grey-color {
             color: lightgray;
@@ -336,7 +357,7 @@
     margin: 20px 0;
     padding: 20px;
 
-    z-index: 3;
+    z-index: 2;
 
     .trailer-part__title {
       font-size: 1.5em;

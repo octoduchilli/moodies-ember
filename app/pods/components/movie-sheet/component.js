@@ -85,6 +85,13 @@ export default Component.extend(preloadImg, lerpColor, {
         return htmlSafe(`border: 2px solid ${this.lerpColor({r: 255, g: 0, b: 0}, {r: 0, g: 255, b: 0}, average / 10)}`)
       }
     },
+    voteAverageBgStyle (average) {
+      if (!average) {
+        return htmlSafe(`width: 0; backgroud: rgba(0, 0, 0, 0)`)
+      } else {
+        return htmlSafe(`width: ${(average / 10) * 100}%; background: ${this.lerpColor({r: 255, g: 0, b: 0}, {r: 0, g: 255, b: 0}, average / 10)}`)
+      }
+    },
     updateVoteAverage () {
       set(this, 'newVoteAverage', Math.round((event.offsetX / event.target.offsetWidth) * 10))
     },
