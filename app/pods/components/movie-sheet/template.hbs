@@ -49,7 +49,7 @@
         {{images.posters.length}} affiches et {{images.backdrops.length}} fonds d'écran
       {{/link-to}}
       {{#link-to 'videos' movie.id class="poster-section__button"}}
-        {{movie.videos.results.length}} vidéos disponibles
+        {{videos.length}} vidéos disponibles
       {{/link-to}}
     </div>
     <div class="top-part__section top-part__informations-section work">
@@ -113,6 +113,14 @@
       </div>
     </div>
   </div>
+  {{#if (not (is-empty videos))}}
+    {{#if (eq videos.firstObject.type "Trailer")}}
+      <div class="{{styleNamespace}}__trailer-part work">
+        <h1 class="trailer-part__title">{{videos.firstObject.name}}</h1>
+        <iframe class="trailer-part__video" src="https://www.youtube.com/embed/{{videos.firstObject.key}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+    {{/if}}
+  {{/if}}
   <div class="{{styleNamespace}}__person-part work">
     <div class="person-part__section person-part__cast-section">
       <h1 class="section__title">Tête d'affiches - Casting</h1>

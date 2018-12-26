@@ -327,6 +327,44 @@
     }
   }
 
+  &__trailer-part {
+    display: flex;
+    flex-direction: column;
+
+    background: rgba(black, .45);
+
+    margin: 20px 0;
+    padding: 20px;
+
+    z-index: 3;
+
+    .trailer-part__title {
+      font-size: 1.5em;
+
+      padding: 5px 0;
+
+      color: lightgray;
+
+      margin-bottom: 15px;
+
+      white-space: nowrap;
+
+      text-overflow: ellipsis;
+
+      overflow: hidden;
+    }
+
+    .trailer-part__video {
+      width: calc(90vw - 240px);
+      height: calc((90vw - 240px) * 0.5555555);
+
+      max-height: 430px;
+      max-width: 800px;
+
+      margin: 20px auto;
+    }
+  }
+
   &__person-part {
     display: flex;
     flex-wrap: wrap;
