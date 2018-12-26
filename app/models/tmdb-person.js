@@ -12,4 +12,5 @@ export default DS.Model.extend({
   known_for_department: attr('string'),
   credits: attr(''),
   profile_path: attr('string'),
+  gender: attr('number')
 });
