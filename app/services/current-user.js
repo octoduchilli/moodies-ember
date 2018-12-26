@@ -2,7 +2,7 @@ import Service from '@ember/service'
 import firebase from 'firebase'
 import { inject as service } from '@ember/service'
 import { set, get } from '@ember/object'
-import { task, all } from 'ember-concurrency'
+import { task, all, timeout } from 'ember-concurrency'
 
 export default Service.extend({
   session: service(),
@@ -13,6 +13,7 @@ export default Service.extend({
   infos: null,
   lists: null,
   movies: null,
+  votes: null,
   moviesData: null,
 
   activities: null,
@@ -22,6 +23,7 @@ export default Service.extend({
 
     this.activities = []
     this.moviesData = []
+    this.votes = []
   },
 
   addActivity (obj) {
@@ -54,6 +56,27 @@ export default Service.extend({
       this.fetchLists.perform(),
       this.fetchMovies.perform()
     ])
+  }),
+
+  fetchVotes: task(function* () {
+    while (!get(this.session, 'isAuthenticated')) {
+      yield timeout(500)
+    }
+
+    yield firebase.database().ref(`users/${get(this.session, 'uid')}/vote`).once('value', snap => {
+      let votes = []
+
+      snap.forEach(vote => {
+        votes.push({
+          id: vote.key,
+          average: vote.val().average,
+          createdAt: vote.val().createdAt,
+          modifiedAt: vote.val().modifiedAt
+        })
+      })
+
+      set(this, 'votes', votes)
+    })
   }),
 
   fetchInfos: task(function* () {

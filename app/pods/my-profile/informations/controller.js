@@ -114,10 +114,30 @@ export default Controller.extend({
     })
   }),
 
+  totalVotes: computed('user.votes.@each.average', function () {
+    let total = 0
+    let average = null
+
+    if (this.user.votes) {
+      total = this.user.votes.length
+
+      if (total) {
+        average = this.user.votes.map(vote => vote.average).reduce((a, b) => a + b) / total
+      }
+    }
+
+    return {
+      total: total,
+      average: average
+    }
+  }),
+
   init () {
     this._super(...arguments)
 
     this.genresItems = genres
+
+    this.user.fetchVotes.perform()
   },
 
   actions: {
