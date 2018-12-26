@@ -39,6 +39,20 @@ export default Component.extend(preloadImg, lerpColor, {
     return '0 h 00'
   }),
 
+  videos: computed('movie.videos.results', function () {
+    const videos = this.movie.videos.results
+
+    if (videos) {
+      if (videos.length === 0) {
+        return []
+      } else {
+        return videos.filter(video => video.site === 'YouTube')
+      }
+    }
+
+    return []
+  }),
+
   slicedCast: computed('movie.credits.cast', 'sliceCast', function () {
     if (this.movie.credits && this.movie.credits.cast) {
       return this.movie.credits.cast.slice(0, this.sliceCast)
