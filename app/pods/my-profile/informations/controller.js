@@ -136,8 +136,6 @@ export default Controller.extend({
     this._super(...arguments)
 
     this.genresItems = genres
-
-    this.user.fetchVotes.perform()
   },
 
   actions: {

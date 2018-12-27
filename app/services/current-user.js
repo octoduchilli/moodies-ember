@@ -50,17 +50,48 @@ export default Service.extend({
     return this.fetchInfos.perform()
   },
 
+  async updateMovieData (id) {
+    const movieData = await this.store.find('tmdb-movie', id).then(data => data)
+    const frenchRelease = movieData.releases.countries.find(_ => String(_.iso_3166_1) === 'FR')
+
+    let releaseDate
+
+    if (frenchRelease) {
+      releaseDate = frenchRelease.release_date
+    } else {
+      releaseDate = movieData.release_date
+    }
+
+    const obj = {
+      id: movieData.id,
+      title: movieData.title,
+      poster_path: movieData.poster_path,
+      runtime: movieData.runtime,
+      popularity: movieData.popularity,
+      genres: movieData.genres,
+      release_date: releaseDate,
+      overview: movieData.overview,
+      vote_count: movieData.vote_count,
+      vote_average: movieData.vote_average
+    }
+
+    await firebase.database().ref(`films/added/${id}`).set(obj)
+
+    await this.fetchMoviesData([obj])
+  },
+
   fetch: task(function* () {
     yield all([
       this.fetchInfos.perform(),
       this.fetchLists.perform(),
-      this.fetchMovies.perform()
+      this.fetchMovies.perform(),
+      this.fetchVotes.perform()
     ])
   }),
 
   fetchVotes: task(function* () {
-    while (!get(this.session, 'isAuthenticated')) {
-      yield timeout(500)
+    while (this.fetchMovies.isRunning) {
+      yield timeout(200)
     }
 
     yield firebase.database().ref(`users/${get(this.session, 'uid')}/vote`).once('value', snap => {
@@ -77,6 +108,8 @@ export default Service.extend({
 
       set(this, 'votes', votes)
     })
+
+    yield this.fetchMoviesData(this.votes)
   }),
 
   fetchInfos: task(function* () {
@@ -111,8 +144,26 @@ export default Service.extend({
       set(this, 'movies', movies)
     })
 
-    const promises = yield this.movies.map(movie => this.store.find('fb-movies-data', movie.id).then(_ => _))
+    yield this.fetchMoviesData(this.movies)
+  }),
 
-    yield Promise.all(promises).then(moviesData => set(this, 'moviesData', moviesData))
-  })
+  async fetchMoviesData (items) {
+    if (this.moviesData.length === 0) {
+      const promises = await items.map(item => this.store.find('fb-movies-data', item.id).then(_ => _))
+
+      return await Promise.all(promises).then(moviesData => set(this, 'moviesData', moviesData))
+    } else {
+      let promises = await items.map(item => {
+        const movie = this.moviesData.findBy('id', item.id)
+
+        if (!movie) {
+          return this.store.find('fb-movies-data', item.id).then(_ => _)
+        }
+      })
+
+      promises = promises.filter(promise => promise)
+
+      return await Promise.all(promises).then(moviesData => set(this, 'moviesData', moviesData.concat(this.moviesData)))
+    }
+  }
 })
