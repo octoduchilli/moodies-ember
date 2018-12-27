@@ -149,35 +149,7 @@ export default Component.extend({
         })
       }
     } else {
-      const movieData = await this.store.find('tmdb-movie', this.movie.id).then(data => data)
-      const frenchRelease = movieData.releases.countries.find(_ => String(_.iso_3166_1) === 'FR')
-
-      let releaseDate
-
-      if (frenchRelease) {
-        releaseDate = frenchRelease.release_date
-      } else {
-        releaseDate = movieData.release_date
-      }
-
-      const obj = {
-        id: movieData.id,
-        title: movieData.title,
-        poster_path: movieData.poster_path,
-        runtime: movieData.runtime,
-        popularity: movieData.popularity,
-        genres: movieData.genres,
-        release_date: releaseDate,
-        overview: movieData.overview,
-        vote_count: movieData.vote_count,
-        vote_average: movieData.vote_average
-      }
-
-      await this.firebaseApp.database().ref(`films/added/${this.movie.id}`).set(obj)
-
-      await this.store.find('fb-movies-data', movieData.id)
-
-      this.user.moviesData.pushObject(obj)
+      await this.user.updateMovieData(this.movie.id)
 
       this.user.movies.pushObject({
         id: String(this.movie.id),

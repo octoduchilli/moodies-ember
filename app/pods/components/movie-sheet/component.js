@@ -120,14 +120,14 @@ export default Component.extend(preloadImg, lerpColor, {
 
       await this.firebaseApp.database().ref(`users/${get(this.session, 'uid')}/vote/${this.movie.id}`).update(payload)
 
-      payload.id = this.movie.id
-
       const vote = this.user.votes.findBy('id', this.movie.id)
 
       if (vote) {
         set(vote, 'average', average)
         set(vote, 'modifiedAt', payload.modifiedAt)
       } else {
+        await this.user.updateMovieData(this.movie.id)
+
         this.user.votes.push({
           id: this.movie.id,
           average: payload.average,
