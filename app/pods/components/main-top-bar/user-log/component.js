@@ -41,6 +41,10 @@ export default Component.extend({
       this.user.resetUser()
     },
     styleUserColor (color, attr) {
+      if (!color) {
+        color = '#fbfcff'
+      }
+
       let c = color.substring(1)
       let rgb = parseInt(c, 16)
       let r = (rgb >> 16) & 0xff
