@@ -51,6 +51,10 @@ export default Controller.extend({
       set(this.user.infos, dataPath, {
         path: imgPath
       })
+
+      this.notify.info(`Centrez votre image de ${dataPath === 'profileImg' ? 'profil' : 'couverture'} sur votre page de profile`, {
+        htmlContent: true
+      })
     }
   }
 });
