@@ -277,6 +277,7 @@
         background: rgba(black, .5);
 
         min-height: 430px;
+        min-width: calc(250px - 20px);
 
         .movie__poster {
           width: 180px;
