@@ -27,6 +27,9 @@
         <div class="setting__user-profile-img-container">
           <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.profileImg.posX user.infos.profileImg.posY user.infos.profileImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.profileImg.path}}" alt=" " {{action (mut imgDataPathToCenter) "profileImg" on="click"}}>
         </div>
+        <div class="setting__delete-user-img" {{action (mut imgDataPathToCenter) "profileImg" on="click"}}>
+          Centrer
+        </div>
         <div class="setting__delete-user-img" {{action "removeUserImg" "profileImg" on="click"}}>
           Supprimer
         </div>
@@ -41,6 +44,9 @@
       {{#if user.infos.coverImg}}
         <div class="setting__user-cover-img-container">
           <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.coverImg.posX user.infos.coverImg.posY user.infos.coverImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.coverImg.path}}" alt=" " {{action (mut imgDataPathToCenter) "coverImg" on="click"}}>
+        </div>
+        <div class="setting__delete-user-img" {{action (mut imgDataPathToCenter) "profileImg" on="click"}}>
+          Centrer
         </div>
         <div class="setting__delete-user-img" {{action "removeUserImg" "coverImg" on="click"}}>
           Supprimer
