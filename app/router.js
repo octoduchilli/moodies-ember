@@ -17,6 +17,7 @@ Router.map(function() {
   this.route('my-profile', function() {
     this.route('my-lists');
     this.route('informations');
+    this.route('votes');
   });
 
   this.route('community');
