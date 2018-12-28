@@ -1,0 +1,12 @@
+{{#each (repeat 30) as |nb|}}
+  <li class="{{styleNamespace}}__vote">
+    <div class="vote__poster"></div>
+    <div class="vote__informations">
+      <h1 class="informations__title"></h1>
+      <p class="informations__information">voté le <span class="value">...</span></p>
+      <p class="informations__information last-child">modifié le <span class="value">...</span></p>
+      {{basic-vote-skeleton class="informations__basic-vote"}}
+      <div class="informations__delete-button">Supprimer</div>
+    </div>
+  </li>
+{{/each}}
