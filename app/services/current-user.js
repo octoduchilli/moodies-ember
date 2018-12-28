@@ -80,6 +80,59 @@ export default Service.extend({
     await this.fetchMoviesData([obj])
   },
 
+  async updateVote (id, title, average) {
+    const vote = this.votes.findBy('id', id)
+
+    let payload = {
+      average: average
+    }
+
+    if (!vote) {
+      payload.createdAt = new Date().toString()
+    } else {
+      payload.modifiedAt = new Date().toString()
+    }
+
+    await firebase.database().ref(`users/${get(this.session, 'uid')}/vote/${id}`).update(payload)
+
+    this.addActivity({
+      id: id,
+      name: title,
+      icon: 'star',
+      type: 'movie'
+    })
+
+    if (vote) {
+      set(vote, 'average', average)
+      set(vote, 'modifiedAt', payload.modifiedAt)
+
+      return vote
+    } else {
+      await this.updateMovieData(id)
+
+      const obj = {
+        id: id,
+        average: payload.average,
+        createdAt: payload.createdAt,
+        modifiedAt: payload.modifiedAt
+      }
+
+      this.votes.push(obj)
+
+      return obj
+    }
+  },
+
+  async deleteVote (id) {
+    await firebase.database().ref(`users/${get(this.session, 'uid')}/vote/${id}`).set(null)
+
+    const vote = this.votes.findBy('id', id)
+
+    if (vote) {
+      this.votes.removeObject(vote)
+    }
+  },
+
   fetch: task(function* () {
     yield all([
       this.fetchInfos.perform(),
