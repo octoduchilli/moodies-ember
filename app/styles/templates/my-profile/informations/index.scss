@@ -233,6 +233,21 @@
         }
       }
 
+      .statistic__button {
+        color: $white;
+        background: $black;
+
+        border-radius: 5px;
+
+        padding: 10px 15px;
+
+        margin: 15px auto 0 auto;
+
+        font-size: 0.85em;
+
+        cursor: pointer;
+      }
+
       .statistic__little-statistic {
         display: flex;
         flex-direction: column;
