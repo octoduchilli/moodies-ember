@@ -1,0 +1,14 @@
+{{#each items as |vote|}}
+  <li class="{{styleNamespace}}__vote">
+    {{#link-to 'movie' vote.id}}
+      <img class="vote__poster" src="https://image.tmdb.org/t/p/w500{{vote.poster_path}}" alt="">
+    {{/link-to}}
+    <div class="vote__informations">
+      <h1 class="informations__title josefin">{{vote.title}}</h1>
+      <p class="informations__information">voté le <span class="value">{{moment-format vote.createdAt "Do MMMM YYYY à HH:mm"}}</span></p>
+      <p class="informations__information last-child">modifié le <span class="value">{{if vote.modifiedAt (moment-format vote.modifiedAt "Do MMMM YYYY à HH:mm") 'Non modifié'}}</span></p>
+      {{basic-vote average=vote.average onChange=(action "updateVote" vote) class="informations__basic-vote"}}
+      <div class="informations__delete-button" {{action "deleteVote" vote on="click"}}>Supprimer</div>
+    </div>
+  </li>
+{{/each}}
