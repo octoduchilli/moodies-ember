@@ -1,6 +1,6 @@
 <div class="my-profile__my-lists">
   {{#filters-top-bar lock=filtersBarLock onResize=(action "setTopbarHeight") as |topbar|}}
-    {{#topbar.filters resetFilters=(action "resetFilters") as |filters|}}
+    {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
       {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sortItems value=sort onSelect=(action "sortUpdate")}}
       {{filters.dropdown label="Avec les genres" smallLabel="Genres" items=genresItems multipleSelect=true value=genres onSelect=(action "genresUpdate")}}
       {{filters.dropdown label="Afficher les listes" smallLabel="Afficher" items=listsItems multipleSelect=true value=lists onSelect=(action "listsUpdate")}}

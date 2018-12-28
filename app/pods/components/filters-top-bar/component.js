@@ -62,7 +62,7 @@ export default Component.extend({
       element.style.position = 'fixed'
     } else {
       element.style.top = null
-      element.style.bottom = '20px'
+      element.style.bottom = '10px'
       element.style.position = 'absolute'
     }
   }

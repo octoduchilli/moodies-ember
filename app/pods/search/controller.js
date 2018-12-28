@@ -67,6 +67,9 @@ export default Controller.extend(preloadImg, {
     resetFilters () {
       this.queryFilters.resetQuery()
     },
+    actualiseFilters () {
+      this.__fetchData.perform()
+    },
     setScroll (scrollY) {
       set(this, 'scrollY', scrollY)
 
@@ -155,10 +158,6 @@ export default Controller.extend(preloadImg, {
   },
 
   __fetchData: task(function* () {
-    if (!this.text) {
-      return
-    }
-
     window.scroll({
       top: 0
     })
@@ -168,6 +167,10 @@ export default Controller.extend(preloadImg, {
     set(this, 'scrollY', null)
     set(this, 'items', null)
     set(this, 'page', 1)
+
+    if (!this.text) {
+      return
+    }
 
     return yield all([
       timeout(750),

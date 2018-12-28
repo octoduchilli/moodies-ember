@@ -136,6 +136,9 @@ export default Controller.extend(preloadImg, {
     resetFilters () {
       this.queryFilters.resetQuery()
     },
+    actualiseFilters () {
+      this.__fetchData.perform()
+    },
     setScroll (scrollY) {
       set(this, 'scrollY', scrollY)
 
