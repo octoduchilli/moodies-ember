@@ -3,9 +3,9 @@ import preloadImg from 'moodies-ember/mixins/preload-tmdb-img'
 import lerpColor from 'moodies-ember/mixins/lerp-color'
 import { task, all, timeout } from 'ember-concurrency'
 import { inject as service } from '@ember/service'
-import { computed } from '@ember/object'
 import { htmlSafe } from '@ember/string'
-import { set, get } from '@ember/object'
+import { computed } from '@ember/object'
+import { set } from '@ember/object'
 
 export default Component.extend(preloadImg, lerpColor, {
   tagName: 'div',
@@ -21,7 +21,6 @@ export default Component.extend(preloadImg, lerpColor, {
   movie: null,
   images: null,
   voteAverage: null,
-  newVoteAverage: null,
 
   sliceCast: 5,
   sliceCrew: 5,
@@ -97,55 +96,13 @@ export default Component.extend(preloadImg, lerpColor, {
         return htmlSafe(`border: 2px solid ${this.lerpColor({r: 255, g: 0, b: 0}, {r: 0, g: 255, b: 0}, average / 10)}`)
       }
     },
-    voteAverageBgStyle (average) {
-      if (!average) {
-        return htmlSafe(`width: 0; backgroud: rgba(0, 0, 0, 0)`)
-      } else {
-        return htmlSafe(`width: ${(average / 10) * 100}%; background: ${this.lerpColor({r: 255, g: 0, b: 0}, {r: 0, g: 255, b: 0}, average / 10)}`)
-      }
-    },
-    updateVoteAverage () {
-      set(this, 'newVoteAverage', Math.round((event.offsetX / event.target.offsetWidth) * 10))
-    },
     async saveVote (average) {
-      let payload = {
-        average: average
-      }
-
-      if (!this.voteAverage) {
-        payload.createdAt = new Date().toString()
-      } else {
-        payload.modifiedAt = new Date().toString()
-      }
-
-      await this.firebaseApp.database().ref(`users/${get(this.session, 'uid')}/vote/${this.movie.id}`).update(payload)
-
-      const vote = this.user.votes.findBy('id', this.movie.id)
-
-      if (vote) {
-        set(vote, 'average', average)
-        set(vote, 'modifiedAt', payload.modifiedAt)
-      } else {
-        await this.user.updateMovieData(this.movie.id)
-
-        this.user.votes.push({
-          id: this.movie.id,
-          average: payload.average,
-          createdAt: payload.createdAt,
-          modifiedAt: payload.modifiedAt
-        })
-      }
+      await this.user.updateVote(this.movie.id, this.movie.title, average)
 
       set(this, 'voteAverage', average)
     },
     async deleteVote () {
-      await this.firebaseApp.database().ref(`users/${get(this.session, 'uid')}/vote/${this.movie.id}`).set(null)
-
-      const vote = this.user.votes.findBy('id', this.movie.id)
-
-      if (vote) {
-        this.user.votes.removeObject(vote)
-      }
+      await this.user.deleteVote(this.movie.id)
 
       set(this, 'voteAverage', null)
     },

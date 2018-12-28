@@ -28,7 +28,7 @@
           <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.profileImg.posX user.infos.profileImg.posY user.infos.profileImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.profileImg.path}}" alt=" " {{action (mut imgDataPathToCenter) "profileImg" on="click"}}>
         </div>
         <div class="setting__delete-user-img" {{action (mut imgDataPathToCenter) "profileImg" on="click"}}>
-          Centrer
+          Recadrer
         </div>
         <div class="setting__delete-user-img" {{action "removeUserImg" "profileImg" on="click"}}>
           Supprimer
@@ -46,7 +46,7 @@
           <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.coverImg.posX user.infos.coverImg.posY user.infos.coverImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.coverImg.path}}" alt=" " {{action (mut imgDataPathToCenter) "coverImg" on="click"}}>
         </div>
         <div class="setting__delete-user-img" {{action (mut imgDataPathToCenter) "profileImg" on="click"}}>
-          Centrer
+          Recadrer
         </div>
         <div class="setting__delete-user-img" {{action "removeUserImg" "coverImg" on="click"}}>
           Supprimer
@@ -60,77 +60,133 @@
   </section>
   <section class="informations__section informations__statistic">
     <h1 class="section__title">Statistiques</h1>
-    <div class="statistic">
-      <p class="statistic__message">
-        Nombre total de films :
-        <span class="message__value">{{totalMovies.total}}</span>
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          {{compute (action "minToMDHM") totalMovies.totalRuntime}}
+    {{#if initStatistics.isRunning}}
+      <div class="statistic">
+        <p class="statistic__message">
+          Actualisation des statistiques
         </p>
-      </div>
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Nombre total de films visionnés :
-        <span class="message__value">{{totalViewedMovies.total}}</span>
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          {{compute (action "minToMDHM") totalViewedMovies.totalRuntime}}
-        </p>
-      </div>
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Nombre total de films favoris :
-        <span class="message__value">{{totalFavoriteMovies.total}}</span>
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          {{compute (action "minToMDHM") totalFavoriteMovies.totalRuntime}}
-        </p>
-      </div>
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Genres les plus appréciés :
-      </p>
-      {{#if likedGenres}}
-        {{#each likedGenres as |genre|}}
         <div class="statistic__little-statistic">
           <p class="little-statistic__message">
-            {{genre.name}} :
-            <span class="message__value">{{genre.total}}</span>
+            Un instant...
           </p>
         </div>
-      {{/each}}
-      {{else}}
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Actualisation des statistiques
+        </p>
         <div class="statistic__little-statistic">
           <p class="little-statistic__message">
-            Commencez à ajouter des films !
+            Un instant...
           </p>
         </div>
-      {{/if}}
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Nombre total de votes :
-        <span class="message__value">{{totalVotes.total}}</span>
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          moyenne des votes :
-          <span class="message__value">{{if (not-eq null totalVotes.average) totalVotes.average 'Non disponible'}} / 10</span>
-        </p>
       </div>
-    </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Actualisation des statistiques
+        </p>
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            Un instant...
+          </p>
+        </div>
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Actualisation des statistiques
+        </p>
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            Un instant...
+          </p>
+        </div>
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Actualisation des statistiques
+        </p>
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            Un instant...
+          </p>
+        </div>
+      </div>
+    {{else}}
+      <div class="statistic">
+        <p class="statistic__message">
+          Nombre total de films :
+          <span class="message__value">{{totalMovies.total}}</span>
+        </p>
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            {{compute (action "minToMDHM") totalMovies.totalRuntime}}
+          </p>
+        </div>
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Nombre total de films visionnés :
+          <span class="message__value">{{totalViewedMovies.total}}</span>
+        </p>
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            {{compute (action "minToMDHM") totalViewedMovies.totalRuntime}}
+          </p>
+        </div>
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Nombre total de films favoris :
+          <span class="message__value">{{totalFavoriteMovies.total}}</span>
+        </p>
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            {{compute (action "minToMDHM") totalFavoriteMovies.totalRuntime}}
+          </p>
+        </div>
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Genres les plus appréciés :
+        </p>
+        {{#if likedGenres}}
+          {{#each likedGenres as |genre|}}
+          <div class="statistic__little-statistic">
+            <p class="little-statistic__message">
+              {{genre.name}} :
+              <span class="message__value">{{genre.total}}</span>
+            </p>
+          </div>
+        {{/each}}
+        {{else}}
+          <div class="statistic__little-statistic">
+            <p class="little-statistic__message">
+              Commencez à ajouter des films !
+            </p>
+          </div>
+        {{/if}}
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Nombre total de votes :
+          <span class="message__value">{{totalVotes.total}}</span>
+        </p>
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            moyenne des votes :
+            <span class="message__value">{{if (not-eq null totalVotes.average) totalVotes.average 'Non disponible'}} / 10</span>
+          </p>
+        </div>
+        {{#link-to 'my-profile.votes' class="statistic__button"}}
+          Gérer les votes
+        {{/link-to}}
+      </div>
+    {{/if}}
   </section>
 </div>
 
 {{#if imgDataPathToCenter}}
-  {{#basic-popup title="Centrer l'image" confirmLabel="Sauvegarder" confirmIcon="check" pending=saveCenterImg.isRunning close=(action (mut imgDataPathToCenter) null) confirm=(perform saveCenterImg) as |popup|}}
+  {{#basic-popup title="Recadrer l'image" confirmLabel="Sauvegarder" confirmIcon="check" pending=saveCenterImg.isRunning close=(action (mut imgDataPathToCenter) null) confirm=(perform saveCenterImg) as |popup|}}
     {{center-img imgDataPath=imgDataPathToCenter save=saveCenterImg.isRunning}}
   {{/basic-popup}}
 {{/if}}

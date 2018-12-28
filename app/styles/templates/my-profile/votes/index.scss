@@ -1,0 +1,36 @@
+.my-profile__votes {
+  padding-top: 70px;
+
+  display: flex;
+  flex-direction: column;
+
+  color: $white;
+
+  .votes__total-results {
+    margin-bottom: 10px;
+
+    min-height: 70px;
+
+    background: $darkblue4;
+
+    padding-left: 10px;
+
+    font-family: 'Work Sans';
+
+    color: white;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .total {
+      margin: 20px 10px 20px 0;
+
+      .higher {
+        font-size: 1.4em;
+
+        margin-left: 5px;
+      }
+    }
+  }
+}

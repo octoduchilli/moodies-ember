@@ -286,8 +286,6 @@
         }
 
         .movie__information {
-          white-space: nowrap;
-
           color: lightgray;
 
           margin: 15px 0;
@@ -322,6 +320,8 @@
           background: $black;
 
           cursor: pointer;
+
+          margin: auto;
         }
       }
     }

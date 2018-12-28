@@ -76,32 +76,10 @@
   <div class="{{styleNamespace}}__action-part work">
     <h1 class="action-part__title">Intéragissez avec le film {{movie.title}}</h1>
     <div class="action-part__actions-container">
-      <div class="actions-container__vote-action">
-        <div class="vote-action__container">
-          <div class="vote-action__mouse-tracker" {{action "updateVoteAverage" on="mouseMove"}} {{action (mut newVoteAverage) null on="mouseLeave"}} {{action "saveVote" newVoteAverage on="click"}}></div>
-          <div class="vote-action__bg" style="{{compute (action "voteAverageBgStyle") (if (not-eq null newVoteAverage) newVoteAverage voteAverage)}}"></div>
-          {{#if (not-eq newVoteAverage null)}}
-            <p class="vote-action__message" style="{{compute (action "voteAverageBorderColorStyle") newVoteAverage}}">
-              <span class="grey-color">J'attribue la note de</span>
-              <span class="value">{{newVoteAverage}}</span>
-              sur 10
-            </p>
-          {{else if (not-eq voteAverage null)}}
-            <p class="vote-action__message" style="{{compute (action "voteAverageBorderColorStyle") voteAverage}}">
-              <span class="grey-color">Vous avez noté</span>
-              <span class="value">{{voteAverage}}</span>
-              sur 10
-            </p>
-          {{else}}
-            <p class="vote-action__message">
-              <span>Attribuez une note sur 10</span>
-            </p>
-          {{/if}}
-        </div>
-        {{#if (not-eq voteAverage null)}}
-          <p class="vote-action__delete-vote" {{action "deleteVote" on="click"}}>Supprimer le vote</p>
-        {{/if}}
-      </div>
+      {{basic-vote average=voteAverage onChange=(action "saveVote") class="actions-container__vote-action"}}
+      {{#if (not-eq voteAverage null)}}
+        <p class="actions-container__delete-vote" {{action "deleteVote" on="click"}}>Supprimer le vote</p>
+      {{/if}}
       <div class="actions-container__lists-action">
         <p class="lists-action__message">Ajoutez à vos listes</p>
         {{#if (and session.isAuthenticated (not user.fetch.isRunning))}}

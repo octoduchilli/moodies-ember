@@ -30,7 +30,6 @@ export default Controller.extend(preloadImg, {
   sort: null,
 
   movies: null,
-
   moviesContentSliced: null,
 
   listsItems: computed('user.lists', function () {
@@ -98,6 +97,8 @@ export default Controller.extend(preloadImg, {
   init () {
     this._super(...arguments)
 
+    this.moviesContentSliced = []
+
     this.genresItems = genres
 
     this.sortItems = [
@@ -144,10 +145,7 @@ export default Controller.extend(preloadImg, {
     ]
 
     this.queryKeys = ['with_genres', 'sort_by', 'show_lists', 'refine_by']
-
     this.queryFilters.setKeys(this, this.queryKeys)
-
-    this.moviesContentSliced = []
   },
 
   actions: {
@@ -203,6 +201,9 @@ export default Controller.extend(preloadImg, {
       this.__updateMovies.perform()
 
       this.__updateMoviesContentSliced(this.page)
+    },
+    actualiseFilters () {
+      this.__updateMovies.perform()
     },
     setScroll (scrollY) {
       set(this, 'scrollY', scrollY)

@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
 
 export default Component.extend(lerpColor, {
-  progress: service('page-progress'),
   session: service(),
   notify: service('notification-messages'),
   user: service('current-user'),
