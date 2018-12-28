@@ -1,0 +1,17 @@
+<div class="my-profile__votes work">
+  {{#filters-top-bar lock=filtersBarLock onResize=(action "setTopbarHeight") as |topbar|}}
+    {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
+      {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sortItems value=sort onSelect=(action "sortUpdate")}}
+    {{/topbar.filters}}
+  {{/filters-top-bar}}
+
+  <div class="votes__total-results">
+    <p class="total">Total des votes : <span class="higher">{{if (or (not initVotes.performCount) initVotes.isRunning) '...' (if votes.length votes.length 'Aucun')}}</span></p>
+  </div>
+
+  {{#if initVotes.isRunning}}
+    {{vote-list-skeleton}}
+  {{else}}
+    {{vote-list class="vote-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") deleteItem=(action "removeVote") items=votesSliced}}
+  {{/if}}
+</div>
