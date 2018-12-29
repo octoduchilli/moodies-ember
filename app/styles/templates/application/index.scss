@@ -1,11 +1,13 @@
 #app {
   padding: 70px 0 0 200px;
+
+  overflow-x: hidden;
 }
 
 #main-progress-bar {
   position: fixed;
 
-  z-index: 20000;
+  z-index: 999;
 
   top: 0;
   left: 0;
@@ -45,4 +47,18 @@
   opacity: .8;
 
   z-index: 20;
+}
+
+@media (max-width: 700px) {
+  #app {
+    padding: 70px 0 0 0;
+
+    transition: 500ms ease;
+
+    &.side--bar-is-open {
+      transform: translateX(200px);
+
+      opacity: .3;
+    }
+  }
 }

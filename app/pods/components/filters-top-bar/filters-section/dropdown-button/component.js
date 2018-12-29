@@ -7,6 +7,7 @@ export default Component.extend({
   classNameBindings: ['isOpen:is--opened:is--closed'],
 
   isOpen: false,
+  lockClose: false,
 
   type: null,
 
@@ -24,7 +25,9 @@ export default Component.extend({
   onResize () {},
 
   mouseLeave () {
-    set(this, 'isOpen', false)
+    if (!this.lockClose) {
+      set(this, 'isOpen', false)
+    }
 
     this.__updateMinWidth()
     this.onResize()
@@ -85,6 +88,14 @@ export default Component.extend({
     },
     openOrClose () {
       this.toggleProperty('isOpen')
+
+      if (this.isOpen) {
+        set(this, 'lockClose', true)
+
+        setTimeout(() => {
+          set(this, 'lockClose', false)
+        }, 300)
+      }
 
       this.__updateMinWidth()
       this.onResize()

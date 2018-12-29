@@ -133,6 +133,34 @@
 
       min-height: 60px;
 
+      &.disconnect {
+        display: none;
+
+        .setting__message {
+          cursor: pointer;
+
+          text-decoration: underline;
+        }
+      }
+
+      &.little-device {
+        display: none;
+
+        flex-direction: column;
+
+        .setting__message {
+          margin: 20px 0;
+        }
+
+        .setting__user-profile-img-container, .setting__user-cover-img-container {
+          margin: 0;
+        }
+
+        .setting__button-user-img {
+          margin: 20px 15px;
+        }
+      }
+
       .setting__message {
         margin: 0 20px;
       }
@@ -163,6 +191,8 @@
         margin-left: auto;
 
         background: $black;
+
+        cursor: pointer;
       }
 
       .setting__user-cover-img-container {
@@ -176,6 +206,8 @@
         margin-left: auto;
 
         background: $black;
+
+        cursor: pointer;
       }
 
       .setting__no-user-img {
@@ -195,7 +227,7 @@
         }
       }
 
-      .setting__delete-user-img {
+      .setting__button-user-img {
         cursor: pointer;
 
         text-decoration: underline;
@@ -269,6 +301,25 @@
 
             margin-left: 15px;
           }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .my-profile__informations {
+
+    .informations__settings {
+
+      .setting {
+
+        &.large-device {
+          display: none;
+        }
+
+        &.disconnect, &.little-device {
+          display: flex;
         }
       }
     }

@@ -498,3 +498,20 @@
     }
   }
 }
+
+@media (max-width: 700px) {
+  & {
+
+    &__main-background {
+      left: 0;
+    }
+
+    &__trailer-part {
+
+      .trailer-part__video {
+        width: 90vw;
+        height: calc(90vw * 0.5555555);
+      }
+    }
+  }
+}

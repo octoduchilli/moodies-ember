@@ -18,6 +18,8 @@ export default Service.extend({
 
   activities: null,
 
+  lockFiltersTopBar: true,
+
   init () {
     this._super(...arguments)
 

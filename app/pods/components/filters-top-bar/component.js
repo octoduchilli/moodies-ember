@@ -1,9 +1,12 @@
-import Component from '@ember/component';
+import Component from '@ember/component'
+import { inject as service } from '@ember/service'
 
 export default Component.extend({
+  user: service('current-user'),
+
   tagName: 'div',
   classNames: 'flex wrap work',
-  classNameBindings: ['lock:is--locked'],
+  classNameBindings: ['user.lockFiltersTopBar:is--locked'],
 
   lock: null,
 
@@ -21,8 +24,6 @@ export default Component.extend({
     window.addEventListener('resize', this.__resize, false)
 
     this.__onResize()
-
-    this.__updateLockPos(true)
   },
 
   willDestroyElement () {
@@ -34,9 +35,7 @@ export default Component.extend({
       this.__onResize()
     },
     toggleLock () {
-      this.toggleProperty('lock')
-
-      this.__updateLockPos()
+      this.toggleProperty('user.lockFiltersTopBar')
     }
   },
 
@@ -47,23 +46,5 @@ export default Component.extend({
     setTimeout(() => {
       this.onResize(this.element.offsetHeight)
     }, 40)
-  },
-
-  __updateLockPos(firstInit) {
-    const element = document.getElementsByClassName('div-lock-icon')[0]
-
-    if (this.lock) {
-      if (!firstInit) {
-        element.style.top = `${element.offsetTop + 70}px`
-      } else {
-        element.style.top = `${element.offsetTop + 6}px`
-      }
-      element.style.bottom = null
-      element.style.position = 'fixed'
-    } else {
-      element.style.top = null
-      element.style.bottom = '10px'
-      element.style.position = 'absolute'
-    }
   }
 });

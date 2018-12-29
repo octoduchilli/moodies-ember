@@ -6,7 +6,16 @@
   </div>
 </div>
 <div class="{{styleNamespace}}__pannel">
-  Zoom
-  <button class="pannel__button pannel__zoom-less" {{action "updateImgLarger" "less" on="click"}}>-</button>
-  <button class="pannel__button pannel__zoom-more" {{action "updateImgLarger" "more" on="click"}}>+</button>
+  {{#if (not media.isMobile)}}
+    Zoom
+    <button class="pannel__button pannel__zoom-less" {{action "updateImgLarger" "less" on="click"}}>-</button>
+    <button class="pannel__button pannel__zoom-more" {{action "updateImgLarger" "more" on="click"}}>+</button>
+  {{else}}
+    <button class="pannel__button pannel__zoom-less" {{action "updateImgLarger" "less" on="click"}}>-</button>
+    <button class="pannel__button pannel__zoom-more" {{action "updateImgLarger" "more" on="click"}}>+</button>
+    <button class="pannel__button pannel__zoom-less" {{action "updateImgLarger" "up" on="click"}}>↑</button>
+    <button class="pannel__button pannel__zoom-more" {{action "updateImgLarger" "down" on="click"}}>↓</button>
+    <button class="pannel__button pannel__zoom-less" {{action "updateImgLarger" "left" on="click"}}>←</button>
+    <button class="pannel__button pannel__zoom-more" {{action "updateImgLarger" "right" on="click"}}>→</button>
+  {{/if}}
 </div>

@@ -9,11 +9,10 @@ import { get, set, computed } from '@ember/object'
 export default Controller.extend(preloadImg, {
   queryFilters: service(),
   notify: service('notification-messages'),
+  media: service(),
   view: service(),
   user: service('current-user'),
   queryKeys: null,
-
-  filtersBarLock: false,
 
   topbarHeight: 0,
   scrollY: null,

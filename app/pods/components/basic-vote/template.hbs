@@ -1,5 +1,5 @@
 <div class="{{styleNamespace}}__container">
-  <div class="{{styleNamespace}}__mouse-tracker" {{action "updateVoteAverage" on="mouseMove"}} {{action (mut newAverage) null on="mouseLeave"}} {{action onChange newAverage on="click"}}></div>
+  <div class="{{styleNamespace}}__mouse-tracker" {{action (if media.isMobile (pipe-action (action "updateVoteAverage") (action onChange newAverage)) (action "updateVoteAverage")) on="mouseMove"}} {{action (mut newAverage) null on="mouseLeave"}} {{action onChange newAverage on="click"}}></div>
   <div class="{{styleNamespace}}__bg" style="{{compute (action "voteAverageBgStyle") (if (not-eq null newAverage) newAverage average)}}"></div>
   {{#if (not-eq newAverage null)}}
     <p class="{{styleNamespace}}__message" style="{{compute (action "voteAverageBorderColorStyle") newAverage}}">

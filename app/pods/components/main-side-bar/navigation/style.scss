@@ -41,3 +41,16 @@
     }
   }
 }
+
+@media (max-width: 700px) {
+  & {
+
+    .side-bar__link {
+      font-size: 1em;
+    }
+
+    #active-link-bar {
+      height: 46px;
+    }
+  }
+}

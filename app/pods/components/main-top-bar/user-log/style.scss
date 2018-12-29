@@ -12,7 +12,7 @@
     cursor: pointer;
   }
 
-  &__sign-in, &__profile-link {
+  &__sign-in, &__profile-link, &__little-profile-link {
     cursor: pointer;
 
     display: flex;
@@ -28,6 +28,15 @@
     margin-left: 10px;
 
     min-width: 125px;
+  }
+
+  &__sign-in {
+
+    &.little-device {
+      display: none;
+
+      min-width: 50px;
+    }
   }
 
   &__profile-link {
@@ -66,6 +75,22 @@
       }
     }
   }
+
+  &__little-profile-link {
+    display: none;
+
+    min-width: 50px;
+  }
+
+  .sign-in-popup__sign-up {
+    margin: 20px auto 0 auto;
+
+    text-decoration: underline;
+
+    cursor: pointer;
+
+    display: none;
+  }
 }
 
 @keyframes shine-container {
@@ -99,5 +124,36 @@
 
   15% {
     transform: skew(25deg) translateX(calc(-197px));
+  }
+}
+
+@media (max-width: 1000px) {
+  & {
+    &__little-profile-link {
+      display: flex;
+    }
+
+    &__sign-out, &__sign-up, &__profile-link {
+      display: none;
+    }
+
+    &__sign-in {
+
+      &.large-device {
+        display: none;
+      }
+
+      &.little-device {
+        display: flex;
+      }
+    }
+
+    &__connect {
+      font-size: .7em;
+    }
+
+    .sign-in-popup__sign-up {
+      display: flex;
+    }
   }
 }

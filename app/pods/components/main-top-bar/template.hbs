@@ -1,3 +1,7 @@
+<div class="{{styleNamespace}}__toggle-side-bar work" {{action "toggleSideBar" on="click"}}>
+  {{fa-icon (if sideBarIsOpen "times" "bars") color="#274556" class="toggle-side-bar__icon"}}
+  <p class="toggle-side-bar__current-route-name">{{currentRouteName}}</p>
+</div>
 <div class="moodies-title josefin">
   <div class="shine-container">
     <h1 class="shine-title">moodies</h1>
@@ -7,7 +11,9 @@
 
 {{main-top-bar/search-input searchType=searchType text=searchText onClick=(action "search") onChange=(action "search") totalResults=fetch.total_results}}
 
-{{basic-options class="type-options" selected=searchType options=typeOptions onChange=(action "search")}}
+{{#if (not media.isMobile)}}
+  {{basic-options class="type-options" selected=searchType options=typeOptions onChange=(action "search")}}
+{{/if}}
 
 {{main-top-bar/search-results type=searchType items=fetch.results click=(action "resetFetch")}}
 

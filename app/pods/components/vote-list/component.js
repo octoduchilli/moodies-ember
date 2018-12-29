@@ -25,8 +25,10 @@ export default Component.extend({
 
     window.addEventListener('scroll', this.__scroll, false)
 
-    window.scroll({
-      top: this.scrollY
+    setTimeout(() => {
+      window.scroll({
+        top: this.scrollY
+      })
     })
 
     this.updatedItems(this.items)

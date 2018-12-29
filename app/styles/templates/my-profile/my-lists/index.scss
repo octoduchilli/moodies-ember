@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
 
-  .total-results {
+  .total-results, .little-total-results {
     margin-bottom: 10px;
 
     min-height: 70px;
@@ -32,6 +32,10 @@
     }
   }
 
+  .little-total-results {
+    display: none;
+  }
+
   .no-movies {
     padding: 15px 25px;
 
@@ -45,5 +49,34 @@
 
     margin: auto;
     margin-top: 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .my-profile__my-lists {
+
+    .total-results {
+      display: none;
+    }
+
+    .little-total-results {
+      display: flex;
+      padding: 0;
+
+      .total {
+        font-size: 0.9em;
+
+        text-align: center;
+
+        margin: auto;
+
+        .higher {
+          font-size: 0.9em;
+          line-height: 1.3em;
+
+          margin-left: 5px;
+        }
+      }
+    }
   }
 }

@@ -11,6 +11,12 @@ export default Route.extend({
     }
   },
 
+  beforeModel () {
+    window.scroll({
+      top: 0
+    })
+  },
+
   async model ({ id }, { queryParams }) {
     return await this.store.find(`tmdb-${queryParams.images_type}-images`, id).then(async images => {
       set(images, 'images_type', queryParams.images_type)

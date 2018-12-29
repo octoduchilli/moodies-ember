@@ -1,5 +1,5 @@
 <div class="my-profile__votes work">
-  {{#filters-top-bar lock=filtersBarLock onResize=(action "setTopbarHeight") as |topbar|}}
+  {{#filters-top-bar onResize=(action "setTopbarHeight") as |topbar|}}
     {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
       {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sortItems value=sort onSelect=(action "sortUpdate")}}
     {{/topbar.filters}}

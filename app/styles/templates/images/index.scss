@@ -146,6 +146,8 @@
 
           color: gray;
 
+          background: $white;
+
           &.not--connected {
             opacity: .6;
           }
@@ -164,6 +166,38 @@
             color: $black;
 
             font-size: 1.2em;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .images {
+
+    .images__section {
+      margin: 5px;
+      padding: 5px;
+
+      .section__image-list {
+        justify-content: center;
+
+        .image-list__image {
+
+          .image__show-poster {
+            left: 0;
+
+            width: 100vw;
+
+            z-index: 1000;
+
+            .show-poster__container {
+
+              .container__img {
+                max-width: 90%;
+              }
+            }
           }
         }
       }

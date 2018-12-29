@@ -7,6 +7,7 @@ import { htmlSafe } from '@ember/string'
 export default Component.extend(lerpColor, {
   session: service(),
   notify: service('notification-messages'),
+  media: service(),
   user: service('current-user'),
   view: service(),
 
@@ -29,8 +30,10 @@ export default Component.extend(lerpColor, {
 
     window.addEventListener('scroll', this.__scroll, false)
 
-    window.scroll({
-      top: this.scrollY
+    setTimeout(() => {
+      window.scroll({
+        top: this.scrollY
+      })
     })
 
     this.updatedItems(this.items)
