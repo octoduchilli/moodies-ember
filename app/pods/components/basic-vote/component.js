@@ -1,9 +1,12 @@
 import Component from '@ember/component'
 import lerpColor from 'moodies-ember/mixins/lerp-color'
+import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
 import { set } from '@ember/object'
 
 export default Component.extend(lerpColor, {
+  media: service(),
+
   tagName: 'div',
   classNames: 'work',
 

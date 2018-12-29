@@ -67,7 +67,7 @@
 
     transition: 500ms ease;
 
-    font-size: 13px;
+    font-size: .8em;
   }
 
   &__input {
@@ -91,6 +91,20 @@
 
     &:disabled {
       cursor: not-allowed;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  & {
+    margin: 14px 0;
+
+    &__label {
+      font-size: .8em;
+    }
+
+    &__input {
+      padding: 10px 10px;
     }
   }
 }

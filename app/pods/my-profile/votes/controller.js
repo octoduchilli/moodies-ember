@@ -9,7 +9,6 @@ export default Controller.extend({
   user: service('current-user'),
 
   isFetchingNextPage: false,
-  filtersBarLock: false,
   isLeaving: false,
   scrollY: null,
   page: 1,

@@ -4,6 +4,7 @@ import { task, timeout } from 'ember-concurrency'
 import { set, get, computed } from '@ember/object'
 
 export default Component.extend({
+  media: service(),
   user: service('current-user'),
 
   classNameBindings: ['frameType'],
@@ -89,10 +90,18 @@ export default Component.extend({
         const scale = this.scale + 0.2
 
         set(this, 'scale', Number(scale.toFixed(1)))
-      } else if (this.scale > 1) {
+      } else if (larger === 'less' && this.scale > 1) {
         const scale = this.scale - 0.2
 
         set(this, 'scale', Number(scale.toFixed(1)))
+      } else if (larger === 'up') {
+        set(this, 'imgY', this.imgY + document.getElementsByClassName('img-container__mouse-tracker')[0].offsetHeight / 20)
+      } else if (larger === 'down') {
+        set(this, 'imgY', this.imgY - document.getElementsByClassName('img-container__mouse-tracker')[0].offsetHeight / 20)
+      } else if (larger === 'left') {
+        set(this, 'imgX', this.imgX + document.getElementsByClassName('img-container__mouse-tracker')[0].offsetWidth / 20)
+      } else if (larger === 'right') {
+        set(this, 'imgX', this.imgX - document.getElementsByClassName('img-container__mouse-tracker')[0].offsetWidth / 20)
       }
 
       this.__updateImgStyle(this.imgX, this.imgY, this.scale)

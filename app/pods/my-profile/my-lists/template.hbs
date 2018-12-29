@@ -1,5 +1,5 @@
 <div class="my-profile__my-lists">
-  {{#filters-top-bar lock=filtersBarLock onResize=(action "setTopbarHeight") as |topbar|}}
+  {{#filters-top-bar onResize=(action "setTopbarHeight") as |topbar|}}
     {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
       {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sortItems value=sort onSelect=(action "sortUpdate")}}
       {{filters.dropdown label="Avec les genres" smallLabel="Genres" items=genresItems multipleSelect=true value=genres onSelect=(action "genresUpdate")}}
@@ -8,7 +8,9 @@
       {{filters.input placeholder="Titre" type="text" value=title onInput=(action "titleUpdate")}}
     {{/topbar.filters}}
     {{#topbar.options as |options|}}
-      {{options.option onChange=(action "warnViewUserButton") selected=view.userButton options=view.userButtonOptions}}
+      {{#if (not media.isMobile)}}
+        {{options.option onChange=(action "warnViewUserButton") selected=view.userButton options=view.userButtonOptions}}
+      {{/if}}
       {{options.option selected=view.list options=view.listOptions}}
     {{/topbar.options}}
   {{/filters-top-bar}}
@@ -18,6 +20,14 @@
       <p class="total">Temps accumulés : <span class="higher">...</span></p>
     {{else}}
       <p class="total">Temps accumulés : <span class="higher">{{compute (action "minToMDHM") (or movies.totalRuntime 0)}} - {{movies.total}} titres</span></p>
+    {{/if}}
+  </div>
+
+  <div class="little-total-results">
+    {{#if (or __updateMovies.isRunning (not __updateMovies.performCount))}}
+      <p class="total"><span class="higher">...</span></p>
+    {{else}}
+      <p class="total"><span class="higher">{{compute (action "minToMDHM") (or movies.totalRuntime 0)}} - {{movies.total}}</span> titres</p>
     {{/if}}
   </div>
 

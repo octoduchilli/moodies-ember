@@ -1,11 +1,14 @@
 import Component from '@ember/component'
-import { set } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { inject as service } from '@ember/service'
+import { set, computed } from '@ember/object'
 
 export default Component.extend({
   tagName: 'div',
   classNames: 'flex ali-center',
 
+  sideBar: service(),
+  router: service(),
+  media: service(),
   store: service(),
 
   searchText: '',
@@ -14,6 +17,33 @@ export default Component.extend({
   typeOptions: null,
 
   fetch: null,
+
+  currentRouteName: computed('router.currentRouteName', function () {
+    const name = this.router.currentRouteName
+    if (name === 'search') {
+      return 'Recherche'
+    } else if (name === 'discover') {
+      return 'Bibliothèque'
+    } else if (name === 'my-profile.my-lists') {
+      return 'Mes listes'
+    } else if (name === 'my-profile.informations') {
+      return 'Mon profil'
+    } else if (name === 'community') {
+      return 'Communauté'
+    } else if (name === 'images') {
+      return 'Images'
+    } else if (name === 'movie') {
+      return 'Fiche de film'
+    } else if (name === 'my-profile.votes') {
+      return 'Mes votes'
+    } else if (name === 'videos') {
+      return 'Vidéos'
+    } else if (name === 'person') {
+      return 'Personnalité'
+    }
+
+    return ''
+  }),
 
   init () {
     this._super(...arguments)
@@ -47,6 +77,9 @@ export default Component.extend({
     },
     resetFetch () {
       set(this, 'fetch', null)
+    },
+    toggleSideBar () {
+      this.sideBar.toggle()
     }
   }
 })

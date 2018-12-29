@@ -9,6 +9,7 @@ export default Component.extend({
 
   firebaseApp: service(),
   session: service(),
+  media: service(),
   store: service(),
   user: service('current-user'),
 
@@ -103,7 +104,7 @@ export default Component.extend({
       this.toggleProperty('otherListsOpen')
 
       setTimeout(() => {
-        const otherListsEl = document.getElementsByClassName('other-lists')[0]
+        const otherListsEl = document.getElementsByClassName(`${this.movie.id}__other-lists`)[0]
 
         if (this.element.parentNode.offsetLeft + this.element.parentNode.offsetWidth + otherListsEl.offsetWidth / 2 > window.innerWidth) {
           otherListsEl.style.transform = 'translateX(calc(-100% + 20px))'

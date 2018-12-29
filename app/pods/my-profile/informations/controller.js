@@ -8,6 +8,7 @@ import { htmlSafe } from '@ember/string'
 export default Controller.extend({
   firebaseApp: service(),
   session: service(),
+  media: service(),
   user: service('current-user'),
 
   genresItems: null,
@@ -56,6 +57,17 @@ export default Controller.extend({
     },
     updateUserProfileImgPos (x, y, scale) {
       return htmlSafe(`transform: translate(calc(-50% + ${x * (50 / 150)}px), calc(-50% + ${y * (50 / 150)}px)) scale(${scale})`)
+    },
+    async signOut () {
+      await this.session.close()
+
+      this.user.resetUser()
+    },
+    openCenterImg (path) {
+      set(this, 'imgDataPathToCenter', path)
+    },
+    closeCenterImg () {
+      set(this, 'imgDataPathToCenter', null)
     }
   },
 

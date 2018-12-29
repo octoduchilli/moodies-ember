@@ -34,9 +34,9 @@ export default Controller.extend({
 
   actions: {
     setPosterLarger (width, height) {
-      const ratio = 300 / width
+      const ratio = 270 / width
 
-      return htmlSafe(`width: 300px; height: ${height * ratio}px`)
+      return htmlSafe(`width: 270px; height: ${height * ratio}px`)
     },
     notifyNotConnected () {
       this.notify.info(`Vous n'êtes pas connecté...`)

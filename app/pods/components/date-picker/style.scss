@@ -100,3 +100,17 @@
     font-family: 'Work Sans'
   }
 }
+
+@media (max-width: 700px) {
+  & {
+
+    .picker {
+
+      .picker__holder {
+        left: 0;
+
+        min-width: 100vw;
+      }
+    }
+  }
+}

@@ -4,6 +4,6 @@
     options=(component "filters-top-bar/options-section")
   )}}
   <div class="div-lock-icon" {{action "toggleLock" on="click"}}>
-    {{fa-icon (if lock "lock" "unlock") color="white"}}
+    {{fa-icon (if user.lockFiltersTopBar "lock" "unlock") color="white"}}
   </div>
 </div>

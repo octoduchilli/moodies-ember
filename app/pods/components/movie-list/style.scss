@@ -168,3 +168,42 @@
     }
   }
 }
+
+@media (max-width: 700px) {
+  & {
+
+    &__item {
+      margin: 2px;
+
+      .item__link {
+
+        .link__poster {
+          height: 150px;
+          width: 100px;
+          min-height: 150px;
+          min-width: 100px;
+
+          &.bigger {
+            height: 220px;
+            width: 140px;
+            min-height: 220px;
+            min-width: 140px;
+          }
+        }
+      }
+
+      &.is--detailed {
+        flex-direction: column;
+      }
+
+      .item__details {
+        min-width: 300px;
+        max-width: 300px;
+      }
+    }
+
+    .div-buttons-lists {
+      min-width: 0;
+    }
+  }
+}
