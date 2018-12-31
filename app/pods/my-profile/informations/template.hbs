@@ -14,6 +14,16 @@
   <section class="informations__section informations__settings">
     <h1 class="section__title">Paramètres</h1>
     <div class="setting">
+      {{#link-to 'my-profile.lists-pannel.new' class="setting__button"}}
+        Créer / Gérer les listes
+      {{/link-to}}
+    </div>
+    <div class="setting">
+      {{#link-to 'my-profile.votes' class="setting__button"}}
+        Gérer les votes
+      {{/link-to}}
+    </div>
+    <div class="setting">
       <p class="setting__message">Profil privé</p>
       {{basic-switch-option check=user.infos.private onCheck=(action "updatePrivateSetting")}}
     </div>
@@ -163,6 +173,12 @@
     {{else}}
       <div class="statistic">
         <p class="statistic__message">
+          Listes personnalisées :
+          <span class="message__value">{{user.lists.length}}</span>
+        </p>
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
           Nombre total de films :
           <span class="message__value">{{totalMovies.total}}</span>
         </p>
@@ -226,9 +242,6 @@
             <span class="message__value">{{if (not-eq null totalVotes.average) totalVotes.average 'Non disponible'}} / 10</span>
           </p>
         </div>
-        {{#link-to 'my-profile.votes' class="statistic__button"}}
-          Gérer les votes
-        {{/link-to}}
       </div>
     {{/if}}
   </section>
