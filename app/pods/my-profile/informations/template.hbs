@@ -29,11 +29,7 @@
     </div>
     <div class="setting">
       <p class="setting__message">Couleur</p>
-      {{#if (not media.isMobile)}}
-        {{basic-color-selector value=user.infos.color onChange=(perform updateColorSetting)}}
-      {{else}}
-        Modif. uniquement sur PC
-      {{/if}}
+      {{basic-color-selector value=user.infos.color onChange=(perform updateColorSetting)}}
     </div>
     <div class="setting little-device">
       <p class="setting__message">Image de profil</p>
