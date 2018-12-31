@@ -2,14 +2,12 @@
   display: flex;
   flex-direction: column;
 
-  margin: 5px;
+  margin: 10px auto;
   padding: 15px;
 
   border-radius: 5px;
 
   background: $grey;
-
-  margin: auto;
 
   .edit__title {
     margin: 10px 0 0 20px;
