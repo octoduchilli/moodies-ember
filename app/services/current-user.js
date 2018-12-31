@@ -30,7 +30,7 @@ export default Service.extend({
 
   addActivity (obj) {
     if (this.activities.length > 0) {
-      if (JSON.stringify(this.activities.firstObject) !== JSON.stringify(obj)) {
+      if (['icon', 'id', 'name', 'type'].every(i => String(this.activities.firstObject[i]) === String(obj[i])) === false) {
         this.activities.unshiftObject(obj)
       }
     } else {
