@@ -148,8 +148,10 @@
 
         flex-direction: column;
 
+        padding: 10px;
+
         .setting__message {
-          margin: 20px 0;
+          margin: 15px 0;
         }
 
         .setting__user-profile-img-container, .setting__user-cover-img-container {
@@ -157,12 +159,29 @@
         }
 
         .setting__button-user-img {
-          margin: 20px 15px;
+          margin: 15px;
         }
       }
 
       .setting__message {
         margin: 0 20px;
+      }
+
+      .setting__button {
+        background: $black;
+        color: $white;
+
+        text-decoration: underline;
+
+        border-radius: 5px;
+
+        padding: 10px 15px;
+
+        margin: 10px auto 10px auto;
+
+        font-size: 1em;
+
+        cursor: pointer;
       }
 
       .setting__user-img {
@@ -263,21 +282,6 @@
 
           margin-left: 15px;
         }
-      }
-
-      .statistic__button {
-        color: $white;
-        background: $black;
-
-        border-radius: 5px;
-
-        padding: 10px 15px;
-
-        margin: 15px auto 0 auto;
-
-        font-size: 0.85em;
-
-        cursor: pointer;
       }
 
       .statistic__little-statistic {
