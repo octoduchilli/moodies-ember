@@ -68,6 +68,8 @@
 
     overflow-y: scroll;
 
+    -webkit-overflow-scrolling: touch;
+
     background: rgba(0, 0, 0, .9);
 
     &.not--visible {
@@ -89,7 +91,7 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 767px) {
   & {
     padding: 2px;
   }
