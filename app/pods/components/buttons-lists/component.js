@@ -53,7 +53,8 @@ export default Component.extend({
         id: list.id,
         name: list.name,
         label: list.label,
-        color: list.color
+        color: list.color,
+        position: list.position
       }
     })
 

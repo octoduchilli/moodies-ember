@@ -18,6 +18,10 @@ Router.map(function() {
     this.route('my-lists');
     this.route('informations');
     this.route('votes');
+    this.route('lists-pannel', function() {
+      this.route('new');
+      this.route('edit', { path: '/:id'});
+    });
   });
 
   this.route('community');

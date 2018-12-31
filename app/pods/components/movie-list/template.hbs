@@ -27,15 +27,17 @@
           <img class="link__poster" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
         {{/link-to}}
         <div class="div-buttons-lists">
-          {{#if session.isAuthenticated}}
-            {{#if (not user.fetch.isRunning)}}
-              {{#if (eq item.id hover)}}
-                {{buttons-lists movie=item class="col"}}
+          {{#if (not media.isMobile)}}
+            {{#if session.isAuthenticated}}
+              {{#if (not user.fetch.isRunning)}}
+                {{#if (eq item.id hover)}}
+                  {{buttons-lists movie=item class="col"}}
+                {{/if}}
               {{/if}}
-            {{/if}}
-          {{else}}
-            {{#if (eq item.id hover)}}
-              {{buttons-lists-fake movie=item class="col" click=(action "notifyNotConnected")}}
+            {{else}}
+              {{#if (eq item.id hover)}}
+                {{buttons-lists-fake movie=item class="col" click=(action "notifyNotConnected")}}
+              {{/if}}
             {{/if}}
           {{/if}}
         </div>

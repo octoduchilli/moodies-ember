@@ -67,7 +67,7 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 767px) {
   & {
     left: 0;
 
@@ -75,6 +75,8 @@
 
     .container {
       overflow: hidden;
+
+      padding-bottom: 30px;
 
       section {
         flex-direction: column;

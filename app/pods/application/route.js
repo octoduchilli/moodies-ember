@@ -20,7 +20,7 @@ export default Route.extend(RouteHistoryMixin, {
 
   redirect(model, transition) {
     if (transition.targetName === 'index'){
-      return this.transitionTo('home')
+      return this.transitionTo('discover')
     }
   }
 });

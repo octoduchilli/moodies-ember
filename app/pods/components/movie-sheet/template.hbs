@@ -79,7 +79,7 @@
       {{#if session.isAuthenticated}}
         {{basic-vote average=voteAverage onChange=(action "saveVote") class="actions-container__vote-action"}}
       {{else}}
-        {{basic-vote-skeleton class="actions-container__vote-action"}}
+        {{basic-vote-skeleton click=(action "notifyNotConnected") class="actions-container__vote-action grey-bg"}}
       {{/if}}
       {{#if (and session.isAuthenticated (not-eq voteAverage null))}}
         <p class="actions-container__delete-vote" {{action "deleteVote" on="click"}}>Supprimer le vote</p>
@@ -153,23 +153,6 @@
                 </div>
               </div>
             </li>
-            {{#if (gt slicedCast.length 5)}}
-                <li class="person-list__person" {{action "resetPerson" "sliceCast" "person-part__cast-section" on="click"}}>
-                  <div class="person__poster">
-                    <div class="poster__show-button">
-                      tout cacher
-                    </div>
-                  </div>
-                </li>
-            {{/if}}
-          {{else if (gt movie.credits.cast.length 5)}}
-            <li class="person-list__person" {{action "resetPerson" "sliceCast" "person-part__cast-section" on="click"}}>
-              <div class="person__poster">
-                <div class="poster__show-button">
-                  tout cacher
-                </div>
-              </div>
-            </li>
           {{/if}}
         {{else}}
           <li class="person-list__person">
@@ -227,23 +210,6 @@
               <div class="person__poster">
                 <div class="poster__show-button">
                   tout voir - {{movie.credits.crew.length}}
-                </div>
-              </div>
-            </li>
-            {{#if (gt slicedCrew.length 5)}}
-                <li class="person-list__person" {{action "resetPerson" "sliceCrew" "person-part__crew-section" on="click"}}>
-                  <div class="person__poster">
-                    <div class="poster__show-button">
-                      tout cacher
-                    </div>
-                  </div>
-                </li>
-            {{/if}}
-          {{else if (gt movie.credits.crew.length 5)}}
-            <li class="person-list__person" {{action "resetPerson" "sliceCrew" "person-part__crew-section" on="click"}}>
-              <div class="person__poster">
-                <div class="poster__show-button">
-                  tout cacher
                 </div>
               </div>
             </li>

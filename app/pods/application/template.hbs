@@ -5,6 +5,9 @@
 <div class="div-scroll-top-icon" {{action "scrollTop" on="click"}}>
   {{fa-icon "arrow-up" color="white"}}
 </div>
+{{#if media.isMobile}}
+  <div class="close-side-bar {{if sideBar.isOpen 'side--bar-is-open'}}" {{action "closeSideBar" on="click"}}></div>
+{{/if}}
 <div id="app">
   {{outlet}}
 </div>

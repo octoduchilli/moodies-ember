@@ -116,16 +116,6 @@ export default Component.extend(preloadImg, lerpColor, {
     },
     showAllPerson (array, sliceKey) {
       set(this, sliceKey, array.length)
-    },
-    resetPerson (sliceKey, className) {
-      set(this, sliceKey, 5)
-
-      setTimeout(() => {
-        window.scroll({
-          top: document.getElementsByClassName(className)[0].offsetTop - 100,
-          behavior: 'smooth'
-        })
-      })
     }
   },
 
