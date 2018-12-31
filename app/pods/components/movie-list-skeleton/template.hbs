@@ -5,7 +5,7 @@
         <div class="link__poster"></div>
       </div>
       <div class="div-buttons-lists">
-      {{#if (or media.isMobile (eq view.userButton "visible"))}}
+      {{#if (eq view.userButton "visible")}}
         {{buttons-lists-skeleton class="col"}}
       {{/if}}
       </div>

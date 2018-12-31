@@ -5,9 +5,7 @@
       {{filters.dropdown label="Type de recherche" smallLabel="Type" items=typeItems value=type onSelect=(action "typeUpdate")}}
     {{/topbar.filters}}
     {{#topbar.options as |options|}}
-      {{#if (not media.isMobile)}}
-        {{options.option onChange=(action "warnViewUserButton") selected=view.userButton options=view.userButtonOptions}}
-      {{/if}}
+      {{options.option onChange=(action "warnViewUserButton") selected=view.userButton options=view.userButtonOptions}}
       {{options.option onChange=(perform __fetchData) selected=view.list options=view.listOptions}}
     {{/topbar.options}}
   {{/filters-top-bar}}
