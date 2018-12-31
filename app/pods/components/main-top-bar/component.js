@@ -40,6 +40,12 @@ export default Component.extend({
       return 'Vidéos'
     } else if (name === 'person') {
       return 'Personnalité'
+    } else if (name.indexOf('lists-pannel') !== -1) {
+      if (name.indexOf('new') !== -1) {
+        return 'Nouvelle liste'
+      }
+
+      return 'Édition de liste'
     }
 
     return ''
