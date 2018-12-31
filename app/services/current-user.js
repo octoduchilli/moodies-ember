@@ -142,6 +142,8 @@ export default Service.extend({
       this.fetchMovies.perform(),
       this.fetchVotes.perform()
     ])
+
+    this.__updateUserInfosData()
   }),
 
   fetchVotes: task(function* () {
@@ -168,7 +170,7 @@ export default Service.extend({
   }),
 
   fetchInfos: task(function* () {
-    yield this.store.find('fb-user-infos', `${get(this.session, 'uid')}/infos`).then(infos => {
+    yield this.store.find('fb-user-infos', get(this.session, 'uid')).then(infos => {
       set(this, 'infos', infos)
     })
   }),
@@ -220,5 +222,38 @@ export default Service.extend({
 
       return await Promise.all(promises).then(moviesData => set(this, 'moviesData', moviesData.concat(this.moviesData)))
     }
+  },
+
+  __updateUserInfosData () {
+    this.__updateUserInfosLastConnection()
+    this.__updateUserInfosMovies()
+
+    this.__updateCommunityUser()
+  },
+
+  __updateUserInfosLastConnection () {
+    set(this.infos, 'lastConnection', new Date().getTime())
+    set(this.infos, 'lastConnectionInverse', 9999999999999 - Number(new Date().getTime()))
+
+    this.infos.save()
+  },
+
+  __updateUserInfosMovies () {
+    set(this.infos, 'totalMovies', this.movies ? this.movies.length : 0)
+    set(this.infos, 'totalMoviesInverse', this.movies ? 9999999999999 - this.movies.length : 9999999999999 - 0)
+
+    this.infos.save()
+  },
+
+  __updateCommunityUser () {
+    let payload = {}
+
+    const index = ['createdAt', 'modifiedAt', 'color', 'firstname', 'lastname', 'pseudo', 'pseudoLower', 'pseudoLowerInverse', 'private', 'profileImg', 'coverImg', 'lastConnection', 'lastConnectionInverse', 'totalMovies', 'totalMoviesInverse']
+
+    index.forEach(i => {
+      set(payload, i, this.infos[i])
+    })
+
+    firebase.database().ref(`community/users/${get(this.session, 'uid')}`).update(payload)
   }
 })

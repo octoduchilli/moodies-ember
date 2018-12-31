@@ -2,6 +2,10 @@ import FirebaseAdapter from 'emberfire/adapters/firebase'
 import { set } from '@ember/object'
 
 export default FirebaseAdapter.extend({
+  pathForType() {
+    return 'community/users'
+  },
+
   async findRecord (store, typeClass, id) {
     let payload
 
@@ -10,17 +14,5 @@ export default FirebaseAdapter.extend({
     set(payload, 'id', id)
 
     return payload
-  },
-
-  _getCollectionRef (typeClass, id) {
-    var ref = this._ref
-
-    if (id) {
-      ref = ref.child(`users/${id}/infos`)
-    } else {
-      ref = ref.child('users')
-    }
-
-    return ref
   }
 })

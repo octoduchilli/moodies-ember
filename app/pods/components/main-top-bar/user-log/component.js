@@ -141,7 +141,7 @@ export default Component.extend({
           lastname: this.lastnameSignUp,
           pseudo: this.pseudoSignUp,
           pseudoLower: this.pseudoSignUp.toLowerCase(),
-          pseudoInverseLower: this.__inverseCharCode(this.pseudoSignUp.toLowerCase()),
+          pseudoLowerInverse: this.__inverseCharCode(this.pseudoSignUp.toLowerCase()),
           createdAt: new Date().toString(),
           modifiedAt: new Date().toString()
         })
