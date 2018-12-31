@@ -1,0 +1,141 @@
+.lists-pannel__edit {
+  display: flex;
+  flex-direction: column;
+
+  margin: 5px;
+  padding: 15px;
+
+  border-radius: 5px;
+
+  background: $grey;
+
+  margin: auto;
+
+  .edit__title {
+    margin: 10px 0 0 20px;
+
+    font-size: 1.35em;
+  }
+
+  .edit__form {
+    margin: 0;
+  }
+
+  .edit__section {
+    min-height: 40px;
+
+    background: $lightgrey;
+
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 10px 15px;
+    margin: 10px 0;
+
+    .section__title {
+      margin-right: auto;
+    }
+  }
+
+  .edit__link {
+    padding: 15px 20px;
+
+    border-radius: 5px;
+
+    border: 2px solid $black;
+    background: $lightgrey;
+
+    text-decoration: underline;
+
+    margin: 20px;
+
+    cursor: pointer;
+  }
+
+  .edit__button {
+    margin: 0;
+  }
+
+  .edit__input-number {
+    padding: 10px 5px;
+
+    font-size: 18px;
+
+    box-sizing: border-box;
+
+    border: 2px solid $darkblue;
+    border-radius: 3px;
+
+    color: $black;
+    background: $lightgrey;
+
+    min-width: 60px;
+
+    transition: 500ms ease;
+  }
+
+  .edit__save-button {
+    margin: 15px 0 15px auto;
+
+    opacity: .5;
+
+    transition: 300ms ease;
+
+    cursor: auto;
+
+    &.is--clickable {
+      opacity: 1;
+
+      cursor: pointer;
+    }
+  }
+
+  .edit__delete-buttons-container {
+    display: flex;
+    align-items: center;
+
+    margin: 15px 0 15px auto;
+
+    .edit__button.left--margin {
+      margin-left: 20px;
+    }
+
+    .delete-buttons-container__message {
+      margin-right: 15px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .lists-pannel__edit {
+
+    .edit__input-text {
+
+      input {
+        min-width: 250px;
+      }
+    }
+
+    .edit__delete-buttons-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      margin: 15px 0 15px auto;
+
+      .edit__button.left--margin {
+        margin-left: 0;
+      }
+
+      .edit__button {
+        margin: 10px 0;
+      }
+
+      .delete-buttons-container__message {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}

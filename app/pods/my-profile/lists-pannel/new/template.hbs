@@ -1,0 +1,19 @@
+<div class="lists-pannel__edit">
+  {{#if created}}
+    <h1 class="edit__title">Bravo !</h1>
+    <div class="edit__link" {{action (mut created) false on="click"}}>
+      Créer une nouvelle liste
+    </div>
+  {{else}}
+    <h1 class="edit__title">Créez une liste</h1>
+    {{#basic-form class="edit__form" onSubmit=(perform save) as |form|}}
+      {{form.input label="Label" placeholder="LOL" value=label error=errorLabel maxlength=3 class="edit__input-text"}}
+      {{form.input label="Titre" placeholder="Un jolie titre pour ma liste" value=name error=errorName maxlength=50 class="edit__input-text"}}
+    {{/basic-form}}
+    <div class="edit__section">
+      <h1 class="section__title">Couleur</h1>
+      {{basic-color-selector value=color}}
+    </div>
+    {{basic-button icon="check" label="Créer" pending=save.isRunning click=(perform save) class=(concat (if (and label name) "is--clickable ") "edit__save-button edit__button")}}
+  {{/if}}
+</div>

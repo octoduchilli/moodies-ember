@@ -1,0 +1,18 @@
+<div class="my-profile__lists-pannel work">
+  <ul class="lists-pannel__user-list-list">
+    {{#link-to 'my-profile.lists-pannel.new' tagName="li" class="user-list-list__user-list"}}
+      <p class="user-list__name">Créer{{if (not media.isMobile) " une liste"}}</p>
+    {{/link-to}}
+    {{#each (sort-by "position" user.lists) as |list|}}
+      {{#link-to 'my-profile.lists-pannel.edit' list.id tagName="li" class="user-list-list__user-list"}}
+        <div class="user-list__label" style="{{compute (action "style") list.color "border-color"}}">{{list.label}}</div>
+        {{#if (not media.isMobile)}}
+          <p class="user-list__name">{{list.name}}</p>
+        {{/if}}
+      {{/link-to}}
+    {{/each}}
+    <li class="user-list-list__fake-li-margin"></li>
+  </ul>
+
+  {{outlet}}
+</div>
