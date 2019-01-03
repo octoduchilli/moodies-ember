@@ -31,7 +31,7 @@ export default Controller.extend(preloadImg, {
   movies: null,
   moviesContentSliced: null,
 
-  listsItems: computed('user.lists', function () {
+  listsItems: computed('user.lists', 'user.lists.length', function () {
     if (this.user.lists) {
       let items = [
         {
@@ -62,7 +62,7 @@ export default Controller.extend(preloadImg, {
     }
   }),
 
-  refineItems: computed('user.lists', function () {
+  refineItems: computed('user.lists', 'user.lists.length', function () {
     if (this.user.lists) {
       let items = [
         {
