@@ -1,15 +1,35 @@
-.my-profile__my-lists {
-  padding-top: 140px;
-
+.users__votes {
   display: flex;
   flex-direction: column;
 
-  .total-results {
+  z-index: 3;
+
+  min-height: 80vh;
+  min-width: 100%;
+
+  background: linear-gradient(to right, rgba(black, 0), rgba($black2, .8) 20%);
+
+  .votes__filters-top-bar {
+    left: auto;
+    top: auto;
+
+    width: auto;
+
+    position: static;
+
+    background: linear-gradient(to right, rgba(black, 0), rgba($darkblue2, .8) 20%);
+
+    .div-lock-icon {
+      display: none;
+    }
+  }
+
+  .votes__total-results {
     margin-bottom: 10px;
 
     min-height: 70px;
 
-    background: $darkblue4;
+    background: linear-gradient(to right, rgba(black, 0), rgba($darkblue4, .8) 20%);
 
     padding-left: 10px;
 
@@ -31,27 +51,12 @@
       }
     }
   }
-
-  .no-movies {
-    padding: 15px 25px;
-
-    border-radius: 10px;
-
-    background: $white;
-
-    color: $black;
-
-    text-align: center;
-
-    margin: auto;
-    margin-top: 20px;
-  }
 }
 
 @media (max-width: 767px) {
-  .my-profile__my-lists {
+  .users__votes {
 
-    .total-results {
+    .votes__total-results {
       padding: 0;
 
       .total {
