@@ -1,6 +1,6 @@
 import FirebaseAdapter from 'emberfire/adapters/firebase'
 import { inject as service } from '@ember/service'
-import { get, set } from '@ember/object'
+import { get } from '@ember/object'
 
 export default FirebaseAdapter.extend({
   session: service(),
@@ -14,28 +14,25 @@ export default FirebaseAdapter.extend({
   },
 
   async findRecord (store, typeClass, id) {
-    var _this = this
-
     var ref = this._getCollectionRef(typeClass, id);
 
     var log = 'DS: FirebaseAdapter#findRecord ' + typeClass.modelName + ' to ' + ref.toString()
 
-    let payload = await this._fetch(ref, log).then(function (snapshot) {
-      var payload = _this._assignIdToPayload(snapshot)
+    return await this._fetch(ref, log).then(function (snapshot) {
+      let votes = []
 
-      _this._updateRecordCacheForType(typeClass, payload, store)
+      snapshot.forEach(_ => {
+        const vote = _.val()
 
-      return payload
-    })
+        vote.id = _.key
 
-    if (payload) {
-      set(payload, 'id', id)
-    } else {
-      payload = {
-        id: id
+        votes.push(vote)
+      })
+
+      return {
+        id: id,
+        votes: votes
       }
-    }
-
-    return payload
+    })
   }
 })

@@ -337,7 +337,7 @@ export default Controller.extend(preloadImg, {
 
     set(this, 'page', 1)
 
-    let movies = copy(this.user.movies)
+    let movies = copy(this.user.movies) || []
 
     const moviesData = this.user.moviesData
 

@@ -1,33 +1,32 @@
 import FirebaseAdapter from 'emberfire/adapters/firebase'
-import { set } from '@ember/object'
 
 export default FirebaseAdapter.extend({
   async findRecord (store, typeClass, id) {
-    let payload = {
-      id: null,
-      movies: []
-    }
+    var ref = this._getCollectionRef(typeClass, id);
 
-    await this._super(...arguments).then(res => {
-      for (const i in res) {
-        if (i !== 'id') {
-          let lists = []
+    var log = 'DS: FirebaseAdapter#findRecord ' + typeClass.modelName + ' to ' + ref.toString()
 
-          for (const j in res[i]) {
-            lists.push(j)
-          }
+    return await this._fetch(ref, log).then(function (snapshot) {
+      let movies = []
 
-          payload.movies.push({
-            id: i,
-            lists: lists
-          })
+      snapshot.forEach(_ => {
+        let lists = []
+
+        for (const i in _.val()) {
+          lists.push(i)
         }
+
+        movies.push({
+          id: _.key,
+          lists: lists
+        })
+      })
+
+      return {
+        id: id,
+        movies: movies
       }
     })
-
-    set(payload, 'id', id)
-
-    return payload
   },
 
   _getCollectionRef (typeClass, id) {
