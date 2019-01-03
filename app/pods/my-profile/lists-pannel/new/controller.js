@@ -47,6 +47,10 @@ export default Controller.extend({
       position: this.user.lists ? this.user.lists.length + 1 : 1
     }
 
-    await this.store.createRecord('fb-user-lists', payload).save()
+    const list = await this.store.createRecord('fb-user-lists', payload)
+
+    await list.save()
+
+    this.user.addNewList(list)
   }
 })

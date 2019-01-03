@@ -38,6 +38,18 @@ export default Service.extend({
     }
   },
 
+  addNewList (list) {
+    if (!this.lists) {
+      set(this, 'lists', [list])
+    } else {
+      this.lists.pushObject(list)
+    }
+  },
+
+  removeList (list) {
+    this.lists.removeObject(list)
+  },
+
   resetUser() {
     this.store.unloadAll('fb-user-lists')
 
@@ -177,7 +189,11 @@ export default Service.extend({
 
   fetchLists: task(function* () {
     yield this.store.findAll('fb-user-lists').then(lists => {
-      set(this, 'lists', lists)
+      set(this, 'lists', [])
+
+      lists.forEach(list => {
+        this.lists.pushObject(list)
+      })
     })
   }),
 

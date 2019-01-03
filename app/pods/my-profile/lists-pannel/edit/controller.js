@@ -79,6 +79,8 @@ export default Controller.extend({
       this.__delete()
     ])
 
+    this.user.removeList(this.list)
+
     set(this, 'deleted', true)
     set(this, 'willDeleteList', false)
 
