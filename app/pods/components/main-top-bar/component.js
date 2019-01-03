@@ -46,6 +46,16 @@ export default Component.extend({
       }
 
       return 'Édition de liste'
+    } else if (name.indexOf('users') !== -1) {
+      if (name.indexOf('statistics') !== -1) {
+        return `Statistiques d'Utilis.`
+      } else if (name.indexOf('lists') !== -1) {
+        return `Listes d'Utilisateur`
+      } else if (name.indexOf('votes') !== -1) {
+        return `Votes d'Utilisateur`
+      }
+
+      return 'Utilisateur'
     }
 
     return ''
