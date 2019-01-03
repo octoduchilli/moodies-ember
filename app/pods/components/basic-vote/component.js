@@ -13,6 +13,8 @@ export default Component.extend(lerpColor, {
   average: null,
   newAverage: null,
 
+  userPseudo: null,
+
   onChance () {},
 
   actions: {

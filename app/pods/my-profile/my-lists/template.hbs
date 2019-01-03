@@ -15,17 +15,9 @@
 
   <div class="total-results">
     {{#if (or __updateMovies.isRunning (not __updateMovies.performCount))}}
-      <p class="total">Temps accumulés : <span class="higher">...</span></p>
+      <p class="total">{{if media.isMobile '' 'Temps accumulés : '}}<span class="higher">...</span></p>
     {{else}}
-      <p class="total">Temps accumulés : <span class="higher">{{compute (action "minToMDHM") (or movies.totalRuntime 0)}} - {{movies.total}} titres</span></p>
-    {{/if}}
-  </div>
-
-  <div class="little-total-results">
-    {{#if (or __updateMovies.isRunning (not __updateMovies.performCount))}}
-      <p class="total"><span class="higher">...</span></p>
-    {{else}}
-      <p class="total"><span class="higher">{{compute (action "minToMDHM") (or movies.totalRuntime 0)}} - {{movies.total}}</span> titres</p>
+      <p class="total">{{if media.isMobile '' 'Temps accumulés : '}}<span class="higher">{{compute (action "minToMDHM") (or movies.totalRuntime 0)}} - {{movies.total}}{{if media.isMobile '' ' titres'}}</span>{{if media.isMobile ' titres'}}</p>
     {{/if}}
   </div>
 

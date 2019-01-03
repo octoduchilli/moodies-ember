@@ -95,7 +95,7 @@ export default Service.extend({
       payload.modifiedAt = new Date().toString()
     }
 
-    await firebase.database().ref(`users/${get(this.session, 'uid')}/vote/${id}`).update(payload)
+    await firebase.database().ref(`users/${get(this.session, 'uid')}/votes/${id}`).update(payload)
 
     this.addActivity({
       id: id,
@@ -126,7 +126,7 @@ export default Service.extend({
   },
 
   async deleteVote (id) {
-    await firebase.database().ref(`users/${get(this.session, 'uid')}/vote/${id}`).set(null)
+    await firebase.database().ref(`users/${get(this.session, 'uid')}/votes/${id}`).set(null)
 
     const vote = this.votes.findBy('id', id)
 
@@ -142,6 +142,8 @@ export default Service.extend({
       this.fetchMovies.perform(),
       this.fetchVotes.perform()
     ])
+
+    this.__updateUserInfosData()
   }),
 
   fetchVotes: task(function* () {
@@ -149,7 +151,7 @@ export default Service.extend({
       yield timeout(200)
     }
 
-    yield firebase.database().ref(`users/${get(this.session, 'uid')}/vote`).once('value', snap => {
+    yield firebase.database().ref(`users/${get(this.session, 'uid')}/votes`).once('value', snap => {
       let votes = []
 
       snap.forEach(vote => {
@@ -168,7 +170,7 @@ export default Service.extend({
   }),
 
   fetchInfos: task(function* () {
-    yield this.store.find('fb-user-infos', `${get(this.session, 'uid')}/infos`).then(infos => {
+    yield this.store.find('fb-user-infos', get(this.session, 'uid')).then(infos => {
       set(this, 'infos', infos)
     })
   }),
@@ -180,24 +182,7 @@ export default Service.extend({
   }),
 
   fetchMovies: task(function* () {
-    yield firebase.database().ref(`users/${get(this.session, 'uid')}/films`).once('value', snap => {
-      let movies = []
-
-      snap.forEach(movie => {
-        let lists = []
-
-        movie.forEach(list => {
-          lists.push(list.key)
-        })
-
-        movies.push({
-          id: movie.key,
-          lists: lists
-        })
-      })
-
-      set(this, 'movies', movies)
-    })
+    yield this.store.find('fb-user-movies', get(this.session, 'uid')).then(({ movies }) => set(this, 'movies', movies))
 
     yield this.fetchMoviesData(this.movies)
   }),
@@ -220,5 +205,38 @@ export default Service.extend({
 
       return await Promise.all(promises).then(moviesData => set(this, 'moviesData', moviesData.concat(this.moviesData)))
     }
+  },
+
+  __updateUserInfosData () {
+    this.__updateUserInfosLastConnection()
+    this.__updateUserInfosMovies()
+
+    this.__updateCommunityUser()
+  },
+
+  __updateUserInfosLastConnection () {
+    set(this.infos, 'lastConnection', new Date().getTime())
+    set(this.infos, 'lastConnectionInverse', 9999999999999 - Number(new Date().getTime()))
+
+    this.infos.save()
+  },
+
+  __updateUserInfosMovies () {
+    set(this.infos, 'totalMovies', this.movies ? this.movies.length : 0)
+    set(this.infos, 'totalMoviesInverse', this.movies ? 9999999999999 - this.movies.length : 9999999999999 - 0)
+
+    this.infos.save()
+  },
+
+  __updateCommunityUser () {
+    let payload = {}
+
+    const index = ['createdAt', 'modifiedAt', 'color', 'firstname', 'lastname', 'pseudo', 'pseudoLower', 'pseudoLowerInverse', 'private', 'profileImg', 'coverImg', 'lastConnection', 'lastConnectionInverse', 'totalMovies', 'totalMoviesInverse']
+
+    index.forEach(i => {
+      set(payload, i, this.infos[i])
+    })
+
+    firebase.database().ref(`community/users/${get(this.session, 'uid')}`).update(payload)
   }
 })

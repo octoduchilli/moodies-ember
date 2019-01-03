@@ -29,6 +29,11 @@ Router.map(function() {
   this.route('search');
   this.route('images', { path: 'images/:id' });
   this.route('videos', { path: 'videos/:id' });
+  this.route('users', { path: 'users/:id'}, function() {
+    this.route('statistics');
+    this.route('lists');
+    this.route('votes');
+  });
 });
 
 export default Router;

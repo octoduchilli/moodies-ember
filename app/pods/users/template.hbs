@@ -1,0 +1,49 @@
+{{#if fetch.isRunning}}
+  <div class="users-skeleton work">
+    <div class="users-skeleton__veil"></div>
+    <div class="users-skeleton__banner">
+      <div class="banner__profile-img">
+        <div class="profile-img__poster"></div>
+      </div>
+      <h1 class="banner__pseudo"></h1>
+      <p class="banner__info">Inscrit le <span class="value">...</span></p>
+      <p class="banner__info last-child">Dernière apparition le <span class="value">...</span></p>
+      {{#link-to 'users.statistics' class="banner__link"}}
+      Voir les statistiques
+      {{/link-to}}
+      {{#link-to 'users.lists' class="banner__link"}}
+      Voir les listes
+      {{/link-to}}
+      {{#link-to 'users.votes' class="banner__link"}}
+      Voir les votes
+      {{/link-to}}
+    </div>
+  </div>
+{{else}}
+  <div class="users work {{if bannerIsVisible 'banner--is-visible'}}">
+    <img class="users__cover-img" src="https://image.tmdb.org/t/p/original{{infos.coverImg.path}}" alt="" style="{{compute (action "styleCoverImg") infos.coverImg.posX infos.coverImg.posY infos.coverImg.scale}}">
+    <div class="users__veil"></div>
+    <div class="users__show-banner" {{action (toggle "bannerIsVisible" this) on="click"}}>
+      {{fa-icon "arrow-right" class="show-banner__icon" rotate=(if bannerIsVisible 180 0) size=2 color="white"}}
+    </div>
+    <div class="users__banner">
+      <div class="banner__profile-img">
+        <img class="profile-img__poster" src="https://image.tmdb.org/t/p/original{{infos.profileImg.path}}" alt="" style="{{compute (action "styleProfileImg") infos.profileImg.posX infos.profileImg.posY infos.profileImg.scale}}">
+        <div class="profile-img__color"></div>
+      </div>
+      <h1 class="banner__pseudo">{{infos.pseudo}}</h1>
+      <p class="banner__info">Inscrit le <span class="value">{{moment-format infos.createdAt "Do MMMM YYYY"}}</span></p>
+      <p class="banner__info last-child">Dernière apparition le <span class="value">{{moment-format infos.lastConnection "Do MMMM YYYY"}}</span></p>
+      {{#link-to 'users.statistics' class="banner__link"}}
+      Voir les statistiques
+      {{/link-to}}
+      {{#link-to 'users.lists' class="banner__link"}}
+      Voir les listes
+      {{/link-to}}
+      {{#link-to 'users.votes' class="banner__link"}}
+      Voir les votes
+      {{/link-to}}
+    </div>
+    {{outlet}}
+  </div>
+{{/if}}

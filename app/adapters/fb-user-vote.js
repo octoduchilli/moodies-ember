@@ -8,7 +8,7 @@ export default FirebaseAdapter.extend({
   _getCollectionRef (typeClass, id) {
     var ref = this._ref
 
-    ref = ref.child(`users/${get(this.session, 'uid')}/vote/${id}`)
+    ref = ref.child(`users/${get(this.session, 'uid')}/votes/${id}`)
 
     return ref
   },

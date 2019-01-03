@@ -36,8 +36,10 @@ export default Controller.extend({
   },
 
   actions: {
-    updatePrivateSetting (check) {
-      this.user.updateInfos({ private: check })
+    async updatePrivateSetting (check) {
+      await this.user.updateInfos({ private: check })
+
+      this.user.__updateCommunityUser()
     },
     minToMDHM (min) {
       let M = Math.floor(min / (24 * 30 * 60)) % 12
@@ -202,7 +204,7 @@ export default Controller.extend({
 
     set(this, 'totalVotes', {
       total: total,
-      average: Number(average.toFixed(1))
+      average: average ? Number(average.toFixed(1)) : null
     })
   },
 
