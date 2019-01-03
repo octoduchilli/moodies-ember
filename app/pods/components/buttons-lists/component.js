@@ -70,9 +70,13 @@ export default Component.extend({
           } else if (listId === 'heart') {
             this.basicLists[1].isSelected = true
           } else {
-            this.otherLists.find(list => list.id === listId).isSelected = true
+            const otherList = this.otherLists.find(list => list.id === listId)
 
-            this.basicLists[2].isSelected = true
+            if (otherList) {
+              otherList.isSelected = true
+
+              this.basicLists[2].isSelected = true
+            }
           }
         })
       }
