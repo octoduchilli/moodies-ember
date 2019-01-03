@@ -204,7 +204,7 @@ export default Controller.extend({
 
     set(this, 'totalVotes', {
       total: total,
-      average: Number(average.toFixed(1))
+      average: average ? Number(average.toFixed(1)) : null
     })
   },
 

@@ -35,6 +35,8 @@
 
         &::after {
           z-index: 1;
+
+          color: $white;
         }
       }
 
@@ -61,7 +63,7 @@
 
         background: rgba(black, .75);
 
-        color: white;
+        color: transparent;
       }
 
       .link__poster {
