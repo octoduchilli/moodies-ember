@@ -116,93 +116,57 @@
   <section class="informations__section informations__statistic">
     <h1 class="section__title">Statistiques</h1>
     {{#if initStatistics.isRunning}}
-      <div class="statistic">
-        <p class="statistic__message">
-          Actualisation des statistiques
-        </p>
-        <div class="statistic__little-statistic">
-          <p class="little-statistic__message">
-            Un instant...
+      {{#each (repeat 6) as |nb index|}}
+        <div class="statistic">
+          <p class="statistic__message">
+            Actualisation des statistiques
           </p>
+          {{#if (not-eq index 0)}}
+            <div class="statistic__little-statistic">
+              <p class="little-statistic__message">
+                Un instant...
+              </p>
+            </div>
+          {{/if}}
         </div>
-      </div>
-      <div class="statistic">
-        <p class="statistic__message">
-          Actualisation des statistiques
-        </p>
-        <div class="statistic__little-statistic">
-          <p class="little-statistic__message">
-            Un instant...
-          </p>
-        </div>
-      </div>
-      <div class="statistic">
-        <p class="statistic__message">
-          Actualisation des statistiques
-        </p>
-        <div class="statistic__little-statistic">
-          <p class="little-statistic__message">
-            Un instant...
-          </p>
-        </div>
-      </div>
-      <div class="statistic">
-        <p class="statistic__message">
-          Actualisation des statistiques
-        </p>
-        <div class="statistic__little-statistic">
-          <p class="little-statistic__message">
-            Un instant...
-          </p>
-        </div>
-      </div>
-      <div class="statistic">
-        <p class="statistic__message">
-          Actualisation des statistiques
-        </p>
-        <div class="statistic__little-statistic">
-          <p class="little-statistic__message">
-            Un instant...
-          </p>
-        </div>
-      </div>
+      {{/each}}
     {{else}}
       <div class="statistic">
         <p class="statistic__message">
           Listes personnalisées :
-          <span class="message__value">{{user.lists.length}}</span>
+          <span class="message__value">{{or user.lists.length 0}}</span>
         </p>
       </div>
       <div class="statistic">
         <p class="statistic__message">
           Nombre total de films :
-          <span class="message__value">{{totalMovies.total}}</span>
+          <span class="message__value">{{or totalMovies.total 0}}</span>
         </p>
         <div class="statistic__little-statistic">
           <p class="little-statistic__message">
-            {{compute (action "minToMDHM") totalMovies.totalRuntime}}
+            {{compute (action "minToMDHM") (or totalMovies.totalRuntime 0)}}
           </p>
         </div>
       </div>
       <div class="statistic">
         <p class="statistic__message">
           Nombre total de films visionnés :
-          <span class="message__value">{{totalViewedMovies.total}}</span>
+          <span class="message__value">{{or totalViewedMovies.total 0}}</span>
         </p>
         <div class="statistic__little-statistic">
           <p class="little-statistic__message">
-            {{compute (action "minToMDHM") totalViewedMovies.totalRuntime}}
+            {{compute (action "minToMDHM") (or totalViewedMovies.totalRuntime 0)}}
           </p>
         </div>
       </div>
       <div class="statistic">
         <p class="statistic__message">
           Nombre total de films favoris :
-          <span class="message__value">{{totalFavoriteMovies.total}}</span>
+          <span class="message__value">{{or totalFavoriteMovies.total 0}}</span>
         </p>
         <div class="statistic__little-statistic">
           <p class="little-statistic__message">
-            {{compute (action "minToMDHM") totalFavoriteMovies.totalRuntime}}
+            {{compute (action "minToMDHM") (or totalFavoriteMovies.totalRuntime 0)}}
           </p>
         </div>
       </div>
@@ -230,12 +194,12 @@
       <div class="statistic">
         <p class="statistic__message">
           Nombre total de votes :
-          <span class="message__value">{{totalVotes.total}}</span>
+          <span class="message__value">{{or totalVotes.total 0}}</span>
         </p>
         <div class="statistic__little-statistic">
           <p class="little-statistic__message">
             moyenne des votes :
-            <span class="message__value">{{if (not-eq null totalVotes.average) totalVotes.average '-'}} / 10</span>
+            <span class="message__value">{{totalVotes.average}} / 10</span>
           </p>
         </div>
       </div>

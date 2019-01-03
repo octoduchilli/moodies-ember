@@ -61,7 +61,7 @@ export default Service.extend({
   async updateInfos (payload) {
     await firebase.database().ref(`users/${get(this.session, 'uid')}/infos`).update(payload)
 
-    return this.fetchInfos.perform()
+    return this.fetch.perform()
   },
 
   async updateMovieData (id) {

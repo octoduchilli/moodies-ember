@@ -183,72 +183,72 @@ export default Controller.extend(preloadImg, {
   },
 
   __checkFiltersValue () {
-    // Called by the route with refresh queryParams
-    // needed settimeout or this.xxx will be undefined
-    setTimeout(() => {
-      if (this.primary_release_date_gte) {
-        const release = moment(this.primary_release_date_gte).format('x')
+    if (this.primary_release_date_gte) {
+      const release = moment(this.primary_release_date_gte).format('x')
 
-        if (Number(this.releaseGte) !== Number(release)) {
-          set(this, 'releaseGte', release)
-        }
-      } else {
-        set(this, 'releaseGte', null)
+      if (Number(this.releaseGte) !== Number(release)) {
+        set(this, 'releaseGte', release)
       }
+    } else {
+      set(this, 'releaseGte', null)
+    }
 
-      if (this.primary_release_date_lte) {
-        const release = moment(this.primary_release_date_lte).format('x')
+    if (this.primary_release_date_lte) {
+      const release = moment(this.primary_release_date_lte).format('x')
 
-        if (Number(this.releaseLte) !== Number(release)) {
-          set(this, 'releaseLte', release)
-        }
-      } else {
-        set(this, 'releaseLte', null)
+      if (Number(this.releaseLte) !== Number(release)) {
+        set(this, 'releaseLte', release)
       }
+    } else {
+      set(this, 'releaseLte', null)
+    }
 
-      if (this.with_genres) {
-        const genresValue = this.with_genres.split(',')
-        const genresItems = genresValue.map(value => this.genresItems.findBy('value', Number(value)))
+    if (this.with_genres) {
+      const genresValue = this.with_genres.split(',')
+      const genresItems = genresValue.map(value => this.genresItems.findBy('value', Number(value))).filter(value => value)
 
-        set(this, 'genres', genresItems)
-      } else {
-        set(this, 'genres', null)
-      }
+      set(this, 'genres', genresItems)
+    } else {
+      set(this, 'genres', null)
+    }
 
-      if (this.sort_by) {
-        const sortItem = this.sortItems.findBy('value', this.sort_by)
+    if (this.sort_by) {
+      const sortItem = this.sortItems.findBy('value', this.sort_by)
 
-        //call didUpdateAttrs in filters-top-bar/filters-section/dropdown-button component
-        set(this, 'sort', null)
+      //call didUpdateAttrs in filters-top-bar/filters-section/dropdown-button component
+      set(this, 'sort', null)
 
+      if (sortItem) {
         set(this, 'sort', sortItem)
-      } else {
-        set(this, 'sort', null)
       }
+    } else {
+      set(this, 'sort', null)
+    }
 
-      if (this.vote_count_gte) {
-        const voteItem = this.voteItems.findBy('value', Number(this.vote_count_gte))
+    if (this.vote_count_gte) {
+      const voteItem = this.voteItems.findBy('value', Number(this.vote_count_gte))
 
-        //call didUpdateAttrs in filters-top-bar/filters-section/dropdown-button component
-        set(this, 'vote', null)
+      //call didUpdateAttrs in filters-top-bar/filters-section/dropdown-button component
+      set(this, 'vote', null)
 
+      if (voteItem) {
         set(this, 'vote', voteItem)
-      } else {
-        set(this, 'vote', null)
       }
+    } else {
+      set(this, 'vote', null)
+    }
 
-      if (this.user.reset === 'discover') {
-        set(this.user, 'reset', null)
+    if (this.user.reset === 'discover') {
+      set(this.user, 'reset', null)
 
-        set(this, 'isLeaving', false)
-      }
+      set(this, 'isLeaving', false)
+    }
 
-      if (!this.isLeaving) {
-        this.__checkQueryFilters()
-      } else {
-        set(this, 'isLeaving', false)
-      }
-    })
+    if (!this.isLeaving) {
+      this.__checkQueryFilters()
+    } else {
+      set(this, 'isLeaving', false)
+    }
   },
 
   __fetchData: task(function* () {

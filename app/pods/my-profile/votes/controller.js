@@ -118,7 +118,9 @@ export default Controller.extend({
       //call didUpdateAttrs in filters-top-bar/filters-section/dropdown-button component
       set(this, 'sort', null)
 
-      set(this, 'sort', sortItem)
+      if (sortItem) {
+        set(this, 'sort', sortItem)
+      }
     } else {
       set(this, 'sort', null)
     }

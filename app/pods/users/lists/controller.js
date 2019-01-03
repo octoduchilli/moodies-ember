@@ -248,7 +248,7 @@ export default Controller.extend({
     // Called by the route with refresh queryParams
     if (this.with_genres) {
       const genresValue = this.with_genres.split(',')
-      const genresItems = genresValue.map(value => this.genresItems.findBy('value', Number(value)))
+      const genresItems = genresValue.map(value => this.genresItems.findBy('value', Number(value))).filter(value => value)
 
       set(this, 'genres', genresItems)
     } else {
@@ -261,14 +261,16 @@ export default Controller.extend({
       //call didUpdateAttrs in filters-top-bar/filters-section/dropdown-button component
       set(this, 'sort', null)
 
-      set(this, 'sort', sortItem)
+      if (sortItem) {
+        set(this, 'sort', sortItem)
+      }
     } else {
       set(this, 'sort', null)
     }
 
     if (this.show_lists) {
       const listsValue = this.show_lists.split(',')
-      const listsItems = listsValue.map(value => this.listsItems.findBy('value', value))
+      const listsItems = listsValue.map(value => this.listsItems.findBy('value', value)).filter(value => value)
 
       set(this, 'lists', listsItems)
     } else {
@@ -281,7 +283,9 @@ export default Controller.extend({
       //call didUpdateAttrs in filters-top-bar/filters-section/dropdown-button component
       set(this, 'refine', null)
 
-      set(this, 'refine', refineItem)
+      if (refineItem) {
+        set(this, 'refine', refineItem)
+      }
     } else {
       set(this, 'refine', null)
     }

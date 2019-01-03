@@ -9,7 +9,9 @@
     {{user.infos.pseudo}}
   {{/link-to}}
   {{#link-to "my-profile.informations" class=(concat styleNamespace "__little-profile-link")}}
-    {{slice 0 1 user.infos.pseudo}}
+    {{#if user.infos.pseudo}}
+      {{slice 0 1 user.infos.pseudo}}
+    {{/if}}
   {{/link-to}}
 {{else}}
   <div class="{{styleNamespace}}__sign-up" {{action (mut isShowingSignUpPopup) true on="click"}}>

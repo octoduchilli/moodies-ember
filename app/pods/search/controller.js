@@ -138,7 +138,9 @@ export default Controller.extend(preloadImg, {
 
       set(this, 'type', null)
 
-      set(this, 'type', typeItem)
+      if (typeItem) {
+        set(this, 'type', typeItem)
+      }
     } else {
       set(this, 'type', this.typeItems.firstObject)
     }

@@ -48,15 +48,19 @@ export default Component.extend({
       }
     ]
 
-    this.otherLists = this.user.lists.map(list => {
-      return {
-        id: list.id,
-        name: list.name,
-        label: list.label,
-        color: list.color,
-        position: list.position
-      }
-    })
+    if (this.user.lists) {
+      this.otherLists = this.user.lists.map(list => {
+        return {
+          id: list.id,
+          name: list.name,
+          label: list.label,
+          color: list.color,
+          position: list.position
+        }
+      })
+    } else {
+      this.otherLists = []
+    }
 
     if (this.user.movies) {
       const movie = this.user.movies.findBy('id', String(this.movie.id))
@@ -130,48 +134,50 @@ export default Component.extend({
   },
 
   async __updateUserMoviesAndUserMoviesData (list, value) {
-    if (this.user.movies) {
-      const movie = this.user.movies.find(movie => String(movie.id) === String(this.movie.id))
+    if (!this.user.movies) {
+      set(this.user, 'movies', [])
+    }
 
-      if (movie) {
-        if (value) {
-          movie.lists.push(list.id)
-        } else {
-          movie.lists.splice(movie.lists.indexOf(list.id), 1)
-        }
+    const movie = this.user.movies.find(movie => String(movie.id) === String(this.movie.id))
 
-        if (movie.lists.length === 0) {
-          this.user.movies.removeObject(movie)
-
-          this.user.addActivity({
-            id: this.movie.id,
-            name: this.movie.title,
-            icon: 'trash',
-            type: 'movie'
-          })
-        } else {
-          this.user.addActivity({
-            id: this.movie.id,
-            name: this.movie.title,
-            icon: 'pencil',
-            type: 'movie'
-          })
-        }
+    if (movie) {
+      if (value) {
+        movie.lists.push(list.id)
       } else {
-        await this.user.updateMovieData(this.movie.id)
+        movie.lists.splice(movie.lists.indexOf(list.id), 1)
+      }
 
-        this.user.movies.pushObject({
-          id: String(this.movie.id),
-          lists: [list.id]
-        })
+      if (movie.lists.length === 0) {
+        this.user.movies.removeObject(movie)
 
         this.user.addActivity({
           id: this.movie.id,
           name: this.movie.title,
-          icon: 'plus-circle',
+          icon: 'trash',
+          type: 'movie'
+        })
+      } else {
+        this.user.addActivity({
+          id: this.movie.id,
+          name: this.movie.title,
+          icon: 'pencil',
           type: 'movie'
         })
       }
+    } else {
+      await this.user.updateMovieData(this.movie.id)
+
+      this.user.movies.pushObject({
+        id: String(this.movie.id),
+        lists: [list.id]
+      })
+
+      this.user.addActivity({
+        id: this.movie.id,
+        name: this.movie.title,
+        icon: 'plus-circle',
+        type: 'movie'
+      })
     }
   },
 

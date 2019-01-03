@@ -30,11 +30,17 @@ export default Component.extend(lerpColor, {
 
     window.addEventListener('scroll', this.__scroll, false)
 
-    setTimeout(() => {
+    if (this.media.isMobile) {
+      setTimeout(() => {
+        window.scroll({
+          top: this.scrollY
+        })
+      })
+    } else {
       window.scroll({
         top: this.scrollY
       })
-    })
+    }
 
     this.updatedItems(this.items)
   },

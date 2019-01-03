@@ -122,7 +122,7 @@ export default Component.extend({
           }
 
           if (error.code === 'auth/email-already-in-use') {
-            set(this, 'errorPasswordSignUp', 'Cet email à déjà été utilisé')
+            set(this, 'errorEmailSignUp', 'Cet email à déjà été utilisé')
           }
 
           return false

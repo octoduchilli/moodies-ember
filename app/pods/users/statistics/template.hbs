@@ -1,56 +1,20 @@
 <div class="users__statistics">
   <h1 class="statistics__title">Statistiques</h1>
   {{#if fetch.isRunning}}
-    <div class="statistic">
-      <p class="statistic__message">
-        Récupération des statistiques
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          Un instant...
+    {{#each (repeat 6) as |nb index|}}
+      <div class="statistic">
+        <p class="statistic__message">
+          Récupération  des statistiques
         </p>
+        {{#if (not-eq index 0)}}
+          <div class="statistic__little-statistic">
+            <p class="little-statistic__message">
+              Un instant...
+            </p>
+          </div>
+        {{/if}}
       </div>
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Récupération des statistiques
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          Un instant...
-        </p>
-      </div>
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Récupération des statistiques
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          Un instant...
-        </p>
-      </div>
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Récupération des statistiques
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          Un instant...
-        </p>
-      </div>
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Récupération des statistiques
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          Un instant...
-        </p>
-      </div>
-    </div>
+    {{/each}}
   {{else}}
     <div class="statistic">
       <p class="statistic__message">
