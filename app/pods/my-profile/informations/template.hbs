@@ -132,10 +132,10 @@
       {{/each}}
     {{else}}
       <div class="statistic">
-        <p class="statistic__message">
+        {{#link-to 'my-profile.lists-pannel.new' tagName="p" class="statistic__message pointer"}}
           Listes personnalisées :
           <span class="message__value">{{or user.lists.length 0}}</span>
-        </p>
+        {{/link-to}}
       </div>
       <div class="statistic">
         <p class="statistic__message">
