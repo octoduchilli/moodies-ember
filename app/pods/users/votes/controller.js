@@ -2,7 +2,7 @@ import Controller from '@ember/controller'
 import filtersHelper from 'moodies-ember/mixins/filters-helper'
 import { task, timeout, all } from 'ember-concurrency'
 import { inject as service } from '@ember/service'
-import { set, get } from '@ember/object'
+import { set } from '@ember/object'
 
 export default Controller.extend(filtersHelper, {
   queryFilters: service(),
