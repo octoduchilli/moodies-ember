@@ -165,19 +165,12 @@ export default Service.extend({
       yield timeout(200)
     }
 
-    yield firebase.database().ref(`users/${get(this.session, 'uid')}/votes`).once('value', snap => {
-      let votes = []
+    yield this.store.findAll('fb-user-vote').then(votes => {
+      set(this, 'votes', [])
 
-      snap.forEach(vote => {
-        votes.push({
-          id: vote.key,
-          average: vote.val().average,
-          createdAt: vote.val().createdAt,
-          modifiedAt: vote.val().modifiedAt
-        })
+      votes.forEach(vote => {
+        this.votes.pushObject(vote)
       })
-
-      set(this, 'votes', votes)
     })
 
     yield this.fetchMoviesData(this.votes)
