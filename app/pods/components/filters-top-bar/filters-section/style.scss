@@ -22,3 +22,20 @@
     color: $lightgrey;
   }
 }
+
+@media (max-width: 767px) {
+  & {
+
+    .reset-filters, .actualise-filters {
+      display: flex;
+      align-items: center;
+
+      .fa {
+        height: 15px;
+        width: 15px;
+
+        font-size: 1.2em;
+      }
+    }
+  }
+}
