@@ -2,10 +2,10 @@
   {{#if (not fetch.isRunning)}}
     {{#filters-top-bar class="lists__filters-top-bar" as |topbar|}}
       {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
-        {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sortItems value=sort onSelect=(action "sortUpdate")}}
-        {{filters.dropdown label="Avec les genres" smallLabel="Genres" items=genresItems multipleSelect=true value=genres onSelect=(action "genresUpdate")}}
-        {{filters.dropdown label="Afficher les listes" smallLabel="Afficher" items=listsItems multipleSelect=true value=lists onSelect=(action "listsUpdate")}}
-        {{filters.dropdown label="Affiner le résultat" smallLabel="Affiner" items=refineItems value=refine onSelect=(action "refineUpdate")}}
+        {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sort.items value=sort.selected onSelect=(action "sortUpdate")}}
+        {{filters.dropdown label="Avec les genres" smallLabel="Genres" items=genres.items multipleSelect=true value=genres.selected onSelect=(action "genresUpdate")}}
+        {{filters.dropdown label="Afficher les listes" smallLabel="Afficher" items=listsItems multipleSelect=true value=lists.selected onSelect=(action "listsUpdate")}}
+        {{filters.dropdown label="Affiner le résultat" smallLabel="Affiner" items=refineItems value=refine.selected onSelect=(action "refineUpdate")}}
         {{filters.input placeholder="Titre" type="text" value=title onInput=(action "titleUpdate")}}
       {{/topbar.filters}}
       {{#topbar.options as |options|}}
@@ -15,14 +15,14 @@
     {{/filters-top-bar}}
 
     <div class="total-results">
-      {{#if (or __updateMovies.isRunning (not __updateMovies.performCount))}}
+      {{#if (or __fetchData.isRunning (not __fetchData.performCount))}}
         <p class="total">{{if media.isMobile '' 'Temps accumulés : '}}<span class="higher">...</span></p>
       {{else}}
         <p class="total">{{if media.isMobile '' 'Temps accumulés : '}}<span class="higher">{{compute (action "minToMDHM") (or movies.totalRuntime 0)}} - {{movies.total}}{{if media.isMobile '' ' titres'}}</span>{{if media.isMobile ' titres'}}</p>
       {{/if}}
     </div>
 
-    {{#if __updateMovies.isRunning}}
+    {{#if __fetchData.isRunning}}
       {{movie-list-skeleton}}
     {{else}}
       {{movie-list class="movie-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=moviesContentSliced}}

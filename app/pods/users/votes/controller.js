@@ -1,9 +1,10 @@
 import Controller from '@ember/controller'
+import filtersHelper from 'moodies-ember/mixins/filters-helper'
 import { task, timeout, all } from 'ember-concurrency'
 import { inject as service } from '@ember/service'
 import { set, get } from '@ember/object'
 
-export default Controller.extend({
+export default Controller.extend(filtersHelper, {
   queryFilters: service(),
   progress: service('page-progress'),
   session: service(),
@@ -19,7 +20,6 @@ export default Controller.extend({
   votesSliced: null,
 
   sort: null,
-  sortItems: null,
 
   userInfos: null,
   userVotes: null,
@@ -32,38 +32,42 @@ export default Controller.extend({
     this.votesSliced = []
     this.moviesData = []
 
-    this.sortItems = [
-      {
-        id: 0,
-        name: 'Par défaut (date de vote ↗)',
-        value: 'vote_date.desc'
-      },
-      {
-        id: 1,
-        name: 'Date de vote ↘',
-        value: 'vote_date.asc'
-      },
-      {
-        id: 2,
-        name: 'Date de modification ↗',
-        value: 'modification_date.desc'
-      },
-      {
-        id: 3,
-        name: 'Date de modification ↘',
-        value: 'modification_date.asc'
-      },
-      {
-        id: 4,
-        name: 'Titre de A à Z',
-        value: 'title.desc'
-      },
-      {
-        id: 5,
-        name: 'Titre de Z à A',
-        value: 'title.asc'
-      }
-    ]
+    this.sort = {
+      selected: null,
+      key: 'sort_by',
+      items: [
+        {
+          id: 0,
+          name: 'Par défaut (date de vote ↗)',
+          value: 'vote_date.desc'
+        },
+        {
+          id: 1,
+          name: 'Date de vote ↘',
+          value: 'vote_date.asc'
+        },
+        {
+          id: 2,
+          name: 'Date de modification ↗',
+          value: 'modification_date.desc'
+        },
+        {
+          id: 3,
+          name: 'Date de modification ↘',
+          value: 'modification_date.asc'
+        },
+        {
+          id: 4,
+          name: 'Titre de A à Z',
+          value: 'title.desc'
+        },
+        {
+          id: 5,
+          name: 'Titre de Z à A',
+          value: 'title.asc'
+        }
+      ]
+    }
 
     this.queryKeys = ['sort_by']
 
@@ -73,16 +77,16 @@ export default Controller.extend({
   actions: {
     sortUpdate (sort) {
       if (sort.length === 0) {
-        this.__update('sort_by', null)
+        this.queryFilters.updateFilter('sort_by', null, true)
       } else {
-        this.__update('sort_by', sort.firstObject.value)
+        this.queryFilters.updateFilter('sort_by', sort.firstObject.value, true)
       }
     },
     resetFilters () {
       this.queryFilters.resetQuery()
     },
     actualiseFilters () {
-      this.initVotes.perform()
+      this.__fetchData.perform()
     },
     setScroll (scrollY) {
       set(this, 'scrollY', scrollY)
@@ -99,50 +103,13 @@ export default Controller.extend({
     }
   },
 
-  __update (key, value) {
-    this.queryFilters.updateKeys(key, value)
-
-    this.queryFilters.transition()
-  },
-
-  __checkFiltersValue: task(function* () {
+  __waitFetch: task(function* () {
     while (this.fetch.isRunning) {
       yield timeout(300)
     }
 
-    if (this.sort_by) {
-      const sortItem = this.sortItems.findBy('value', this.sort_by)
-
-      //call didUpdateAttrs in filters-top-bar/filters-section/dropdown-button component
-      set(this, 'sort', null)
-
-      if (sortItem) {
-        set(this, 'sort', sortItem)
-      }
-    } else {
-      set(this, 'sort', null)
-    }
-
-    if (!this.isLeaving) {
-      this.__checkQueryFilters()
-    } else {
-      set(this, 'isLeaving', false)
-    }
+    this.__checkFiltersValue([this.sort])
   }),
-
-  __checkQueryFilters () {
-    this.queryKeys.forEach(key => {
-      const value = get(this, key)
-
-      if (value) {
-        this.queryFilters.updateKeys(key, value)
-      } else {
-        this.queryFilters.updateKeys(key, null)
-      }
-    })
-
-    this.initVotes.perform()
-  },
 
   __nextPage () {
     if (!this.isFetchingNextPage && this.votes) {
@@ -171,7 +138,7 @@ export default Controller.extend({
     })
   },
 
-  initVotes: task(function*() {
+  __fetchData: task(function*() {
     window.scroll({
       top: 0
     })
@@ -195,34 +162,34 @@ export default Controller.extend({
         }
       })
 
-      if (this.sort) {
-        if (this.sort.value === 'vote_date.desc') {
+      if (this.sort.selected) {
+        if (this.sort.selected.value === 'vote_date.desc') {
           votes.sort((a, b) => {
             if (a.createdAt && b.createdAt) {
               return new Date(b.createdAt) - new Date(a.createdAt)
             }
           })
-        } else if (this.sort.value === 'vote_date.asc') {
+        } else if (this.sort.selected.value === 'vote_date.asc') {
           votes.sort((b, a) => {
             if (a.createdAt && b.createdAt) {
               return new Date(b.createdAt) - new Date(a.createdAt)
             }
           })
-        } else if (this.sort.value === 'modification_date.desc') {
+        } else if (this.sort.selected.value === 'modification_date.desc') {
           votes.sort((a, b) => {
             if (a.modifiedAt && b.modifiedAt) {
               return new Date(b.modifiedAt) - new Date(a.modifiedAt)
             }
           })
-        } else if (this.sort.value === 'modification_date.asc') {
+        } else if (this.sort.selected.value === 'modification_date.asc') {
           votes.sort((b, a) => {
             if (a.modifiedAt && b.modifiedAt) {
               return new Date(b.modifiedAt) - new Date(a.modifiedAt)
             }
           })
-        } else if (this.sort.value === 'title.desc') {
+        } else if (this.sort.selected.value === 'title.desc') {
           votes.sort((b, a) => ('' + b.title).localeCompare(a.title))
-        } else if (this.sort.value === 'title.asc') {
+        } else if (this.sort.selected.value === 'title.asc') {
           votes.sort((a, b) => ('' + b.title).localeCompare(a.title))
         }
       } else {

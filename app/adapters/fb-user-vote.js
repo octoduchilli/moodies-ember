@@ -34,5 +34,27 @@ export default FirebaseAdapter.extend({
         votes: votes
       }
     })
-  }
+  },
+
+  findAll(store, typeClass) {
+    var ref = this._ref
+
+    ref = ref.child(`users/${get(this.session, 'uid')}/votes`)
+
+    var log = `DS: FirebaseAdapter#findAll ${typeClass.modelName} to ${ref.toString()}`;
+
+    return this._fetch(ref, log).then((snapshot) => {
+      if (!this._findAllHasEventsForType(typeClass)) {
+        this._findAllAddEventListeners(store, typeClass, ref);
+      }
+      var results = [];
+      snapshot.forEach((childSnapshot) => {
+        var payload = this._assignIdToPayload(childSnapshot);
+        this._updateRecordCacheForType(typeClass, payload, store);
+        results.push(payload);
+      });
+
+      return results;
+    });
+  },
 })
