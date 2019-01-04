@@ -21,12 +21,12 @@ export default Service.extend({
     })
   },
 
-  updateKeys (key, value) {
+  updateFilter (key, value, transition) {
     set(this, `filters.${key}`, value)
-  },
 
-  transition () {
-    this.__queryTransition()
+    if (transition) {
+      this.__queryTransition()
+    }
   },
 
   resetQuery() {
