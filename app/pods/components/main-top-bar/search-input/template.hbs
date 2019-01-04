@@ -1,6 +1,6 @@
 <div class="logo flex jus-center ali-center">
   {{#if (not-eq totalResults undefined)}}
-    {{#link-to 'search' (query-params query=text type=searchType) class="total-results"}}
+    {{#link-to 'search' (query-params query=text type=searchType) class="total-results" click=(pipe-action (action (mut text) null) (action onChange) (action (mut user.reset) "search"))}}
       {{if (gte totalResults 20) '20+' totalResults}}
     {{/link-to}}
   {{else}}
