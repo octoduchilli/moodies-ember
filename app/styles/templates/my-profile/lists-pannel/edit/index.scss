@@ -42,14 +42,21 @@
 
     border-radius: 5px;
 
-    border: 2px solid $black;
-    background: $lightgrey;
+    border: 2px solid $white;
+    background: $black;
+    color: $white;
 
     text-decoration: underline;
 
     margin: 20px;
 
     cursor: pointer;
+  }
+
+  .edit__little-link {
+    text-decoration: underline;
+
+    margin: 10px auto;
   }
 
   .edit__button {

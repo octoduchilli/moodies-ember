@@ -1,6 +1,6 @@
 import Controller from '@ember/controller'
 import { inject as service } from '@ember/service'
-import { task, timeout, all } from 'ember-concurrency'
+import { task, timeout } from 'ember-concurrency'
 import { set, computed } from '@ember/object'
 import { copy } from '@ember/object/internals'
 
@@ -40,56 +40,46 @@ export default Controller.extend({
         set(this.props, 'position', this.user.lists.length)
       }
 
-      yield all([
-        timeout(750),
-        this.__save()
-      ])
+      yield timeout(500)
+
+      const payload = Object.assign({}, this.props, {
+        modifiedAt: new Date().toString()
+      })
+
+      set(payload, 'position', Number(payload.position))
+
+      if (Number(payload.position) !== Number(this.propsToCheck)) {
+        const list = this.user.lists.findBy('position', Number(payload.position))
+
+        set(list, 'position', Number(this.propsToCheck.position))
+
+        yield list.save()
+      }
+
+      for (const i in payload) {
+        set(this.list, i, payload[i])
+      }
+
+      yield this.list.save()
+
+      set(this, 'propsToCheck', copy(this.props))
 
       this.notify.success('Les modifications ont bien été sauvegardées')
     }
   }),
 
-  async __save () {
-    const payload = Object.assign({}, this.props, {
-      modifiedAt: new Date().toString()
-    })
-
-    set(payload, 'position', Number(payload.position))
-
-    if (Number(payload.position) !== Number(this.propsToCheck)) {
-      const list = this.user.lists.findBy('position', Number(payload.position))
-
-      set(list, 'position', Number(this.propsToCheck.position))
-
-      await list.save()
-    }
-
-    for (const i in payload) {
-      set(this.list, i, payload[i])
-    }
-
-    await this.list.save()
-
-    set(this, 'propsToCheck', copy(this.props))
-  },
-
   delete: task(function*() {
-    yield all([
-      timeout(750),
-      this.__delete()
-    ])
+    yield timeout(500)
+
+    this.user.removeList(this.list)
+
+    yield this.list.destroyRecord()
 
     set(this, 'deleted', true)
     set(this, 'willDeleteList', false)
 
     this.notify.success('Votre liste a bien été supprimé')
   }),
-
-  async __delete () {
-    this.user.removeList(this.list)
-
-    await this.list.destroyRecord()
-  },
 
   fetchList: task(function*(id) {
     while (this.user.fetch.isRunning) {

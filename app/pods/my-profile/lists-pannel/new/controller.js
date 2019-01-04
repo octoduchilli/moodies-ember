@@ -1,6 +1,6 @@
 import Controller from '@ember/controller'
 import { inject as service } from '@ember/service'
-import { task, timeout, all } from 'ember-concurrency'
+import { task, timeout } from 'ember-concurrency'
 import { set } from '@ember/object'
 
 export default Controller.extend({
@@ -24,21 +24,8 @@ export default Controller.extend({
       return set(this, 'errorName', 'Ne peut pas être vite')
     }
 
-    yield all([
-      timeout(750),
-      this.__save()
-    ])
+    yield timeout(500)
 
-    set(this, 'created', true)
-
-    set(this, 'label', null)
-    set(this, 'name', null)
-    set(this, 'color', '#551A8B')
-
-    this.notify.success('Votre nouvelle liste a été créé avec succès')
-  }),
-
-  async __save () {
     const payload = {
       color: this.color,
       createdAt: new Date().toString(),
@@ -47,10 +34,18 @@ export default Controller.extend({
       position: this.user.lists ? this.user.lists.length + 1 : 1
     }
 
-    const list = await this.store.createRecord('fb-user-lists', payload)
+    const list = yield this.store.createRecord('fb-user-lists', payload)
 
-    await list.save()
+    yield list.save()
 
     this.user.addNewList(list)
-  }
+
+    set(this, 'created', true)
+
+    set(this, 'label', null)
+    set(this, 'name', null)
+    set(this, 'color', '#551A8B')
+
+    this.notify.success('Votre nouvelle liste a été créé avec succès')
+  }).restartable(),
 })

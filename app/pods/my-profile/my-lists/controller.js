@@ -189,6 +189,8 @@ export default Controller.extend(preloadImg, {
 
       this.queryFilters.resetQuery()
 
+      this.queryFilters.transition()
+
       this.__updateMovies.perform()
 
       this.__updateMoviesContentSliced(this.page)
@@ -282,6 +284,12 @@ export default Controller.extend(preloadImg, {
       }
     } else {
       set(this, 'refine', null)
+    }
+
+    if (this.user.reset === 'my-lists') {
+      set(this.user, 'reset', null)
+
+      set(this, 'isLeaving', false)
     }
 
     if (!this.isLeaving) {
