@@ -38,7 +38,7 @@ export default Controller.extend(preloadImg, {
     this.typeItems = [
       {
         id: 0,
-        name: 'Films',
+        name: 'Films (par défaut)',
         value: 'movie'
       },
       {
