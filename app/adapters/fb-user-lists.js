@@ -5,10 +5,10 @@ import { get } from '@ember/object'
 export default FirebaseAdapter.extend({
   session: service(),
 
-  _getCollectionRef () {
+  _getCollectionRef (typeClass, id) {
     var ref = this._ref
 
-    ref = ref.child(`users/${get(this.session, 'uid')}/filters`)
+    ref = ref.child(`users/${get(this.session, 'uid')}/filters${id ? '/' + id : ''}`)
 
     return ref
   }

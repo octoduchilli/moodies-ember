@@ -1,0 +1,19 @@
+<div class="users__votes work">
+  {{#if (not fetch.isRunning)}}
+    {{#filters-top-bar class="votes__filters-top-bar" as |topbar|}}
+      {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
+        {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sort.items value=sort.selected onSelect=(action "sortUpdate")}}
+      {{/topbar.filters}}
+    {{/filters-top-bar}}
+
+    <div class="votes__total-results">
+      <p class="total">Total des votes : <span class="higher">{{if (or (not __fetchData.performCount) __fetchData.isRunning) '...' (if votes.length votes.length 'Aucun')}}</span></p>
+    </div>
+
+    {{#if __fetchData.isRunning}}
+      {{vote-list-skeleton}}
+    {{else}}
+      {{vote-list class="vote-list" userPseudo=userInfos.pseudo scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") deleteItem=(action "removeVote") items=votesSliced}}
+    {{/if}}
+  {{/if}}
+</div>

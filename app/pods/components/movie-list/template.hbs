@@ -8,11 +8,13 @@
         <div class="div-buttons-lists">
           {{#if session.isAuthenticated}}
             {{#if (not user.fetch.isRunning)}}
-              {{#if (eq item.id hover)}}
+              {{#if (or media.isMobile (eq item.id hover))}}
                 {{buttons-lists movie=item class="col"}}
               {{else}}
                 {{buttons-lists-fake movie=item class="col"}}
               {{/if}}
+            {{else}}
+              {{buttons-lists-skeleton class="col"}}
             {{/if}}
           {{else}}
             {{buttons-lists-fake movie=item class="col" click=(action "notifyNotConnected")}}
@@ -25,22 +27,24 @@
           <img class="link__poster" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
         {{/link-to}}
         <div class="div-buttons-lists">
-          {{#if session.isAuthenticated}}
-            {{#if (not user.fetch.isRunning)}}
-              {{#if (eq item.id hover)}}
-                {{buttons-lists movie=item class="col"}}
+          {{#if (not media.isMobile)}}
+            {{#if session.isAuthenticated}}
+              {{#if (not user.fetch.isRunning)}}
+                {{#if (eq item.id hover)}}
+                  {{buttons-lists movie=item class="col"}}
+                {{/if}}
               {{/if}}
-            {{/if}}
-          {{else}}
-            {{#if (eq item.id hover)}}
-              {{buttons-lists-fake movie=item class="col" click=(action "notifyNotConnected")}}
+            {{else}}
+              {{#if (eq item.id hover)}}
+                {{buttons-lists-fake movie=item class="col" click=(action "notifyNotConnected")}}
+              {{/if}}
             {{/if}}
           {{/if}}
         </div>
       </li>
     {{/if}}
   {{else if (eq view.list "details")}}
-    <li class="{{styleNamespace}}__item mouse--is-over" {{action (mut hover) null on="mouseLeave"}} {{action (mut hover) item.id on="mouseEnter"}}>
+    <li class="{{styleNamespace}}__item is--detailed mouse--is-over" {{action (mut hover) null on="mouseLeave"}} {{action (mut hover) item.id on="mouseEnter"}}>
       {{#link-to 'movie' item.id class="item__link" data-name=item.title}}
         <img class="link__poster bigger" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
       {{/link-to}}
@@ -70,7 +74,7 @@
           {{#if session.isAuthenticated}}
             {{#if (not user.fetch.isRunning)}}
               {{#if (eq view.userButton "visible")}}
-                {{#if (eq item.id hover)}}
+                {{#if (or media.isMobile (eq item.id hover))}}
                   {{buttons-lists movie=item}}
                 {{else}}
                   {{buttons-lists-fake movie=item}}
@@ -82,7 +86,7 @@
               {{/if}}
             {{/if}}
           {{else}}
-            {{#if (or (eq item.id hover) (eq view.userButton "visible"))}}
+            {{#if (or (or media.isMobile (eq item.id hover)) (eq view.userButton "visible"))}}
               {{buttons-lists-fake movie=item click=(action "notifyNotConnected")}}
             {{/if}}
           {{/if}}

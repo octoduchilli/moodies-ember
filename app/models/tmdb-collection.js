@@ -4,5 +4,6 @@ const { attr } = DS;
 
 export default DS.Model.extend({
   name: attr('string'),
+  overview: attr('string'),
   parts: attr('')
 });

@@ -1,8 +1,8 @@
 <div class="search">
-  {{#filters-top-bar lock=filtersBarLock onResize=(action "setTopbarHeight") as |topbar|}}
-    {{#topbar.filters resetFilters=(action "resetFilters") as |filters|}}
-      {{filters.input placeholder="Recherche" type="text" value=text onInput=(perform textUpdate)}}
-      {{filters.dropdown label="Type de recherche" smallLabel="Type" items=typeItems value=type onSelect=(action "typeUpdate")}}
+  {{#filters-top-bar onResize=(action "setTopbarHeight") as |topbar|}}
+    {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
+      {{filters.input placeholder="Recherche" type="text" value=text.selected onInput=(perform textUpdate)}}
+      {{filters.dropdown label="Type de recherche" smallLabel="Type" items=type.items value=type.selected onSelect=(action "typeUpdate")}}
     {{/topbar.filters}}
     {{#topbar.options as |options|}}
       {{options.option onChange=(action "warnViewUserButton") selected=view.userButton options=view.userButtonOptions}}
@@ -14,7 +14,11 @@
     <p class="total">Nombres de titres correspondants à votre recherche : <span class="higher">{{if __fetchData.isRunning "..." totalResults}}</span></p>
   </div>
 
-  {{#if (eq type.value 'movie')}}
+  <div class="little-total-results">
+    <p class="total">Nombres de titres : <span class="higher">{{if __fetchData.isRunning "..." totalResults}}</span></p>
+  </div>
+
+  {{#if (eq type.selected.value 'movie')}}
     {{#if __fetchData.isRunning}}
       {{movie-list-skeleton}}
     {{else}}

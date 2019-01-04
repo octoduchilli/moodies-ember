@@ -47,3 +47,27 @@
     margin-top: 20px;
   }
 }
+
+@media (max-width: 767px) {
+  .my-profile__my-lists {
+
+    .total-results {
+      padding: 0;
+
+      .total {
+        font-size: 0.9em;
+
+        text-align: center;
+
+        margin: auto;
+
+        .higher {
+          font-size: 0.9em;
+          line-height: 1.3em;
+
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+}

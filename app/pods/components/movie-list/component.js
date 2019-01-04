@@ -5,9 +5,9 @@ import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
 
 export default Component.extend(lerpColor, {
-  progress: service('page-progress'),
   session: service(),
   notify: service('notification-messages'),
+  media: service(),
   user: service('current-user'),
   view: service(),
 
@@ -30,9 +30,17 @@ export default Component.extend(lerpColor, {
 
     window.addEventListener('scroll', this.__scroll, false)
 
-    window.scroll({
-      top: this.scrollY
-    })
+    if (this.media.isMobile) {
+      setTimeout(() => {
+        window.scroll({
+          top: this.scrollY
+        })
+      })
+    } else {
+      window.scroll({
+        top: this.scrollY
+      })
+    }
 
     this.updatedItems(this.items)
   },

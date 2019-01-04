@@ -62,6 +62,10 @@
   display: none;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .unselectable {
   -moz-user-select: -moz-none;
   -khtml-user-select: none;

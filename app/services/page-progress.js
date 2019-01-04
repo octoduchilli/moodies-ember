@@ -2,13 +2,15 @@ import Service from '@ember/service'
 
 export default Service.extend({
   reset () {
-    const el = document.getElementById('main-progress-bar')
+    setTimeout(() => {
+      const el = document.getElementById('main-progress-bar')
 
-    el.style.transition = 'none'
+      el.style.transition = 'none'
 
-    el.style.width = '0vw'
+      el.style.width = '0vw'
 
-    el.style.transition = '500ms ease'
+      el.style.transition = '500ms ease'
+    })
   },
 
   update (percent) {

@@ -1,9 +1,22 @@
 <span class="section__title">Filtres</span>
 <div class="flex wrap">
   {{yield (hash
-    date=(component "date-picker" label=label class="filter" min=min max=max value=value)
+    date=(component "date-picker" label=label class="filter" min=min max=max value=value onClick=(action "overflowFTPforMobile"))
     input=(component "filters-top-bar/filters-section/input-text")
     dropdown=(component "filters-top-bar/filters-section/dropdown-button" onResize=onResize)
   )}}
-  <button class="reset-filters" {{action resetFilters}}>Tout effacer</button>
+  <button class="reset-filters" {{action resetFilters}}>
+    {{#if media.isMobile}}
+      {{fa-icon "times" color="white"}}
+    {{else}}
+      Tout effacer
+    {{/if}}
+  </button>
+  <button class="actualise-filters" {{action actualiseFilters}}>
+    {{#if media.isMobile}}
+      {{fa-icon "undo" color="white"}}
+    {{else}}
+      Actualiser
+    {{/if}}
+  </button>
 </div>

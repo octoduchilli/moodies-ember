@@ -1,6 +1,6 @@
 {{#each (repeat 30) as |nb|}}
   {{#if (eq view.list "basic")}}
-    <li class="{{styleNamespace}}__item {{if (eq view.userButton "visible") "mouse--is-over"}}">
+    <li class="{{styleNamespace}}__item {{if (or media.isMobile (eq view.userButton "visible")) "mouse--is-over"}}">
       <div class="item__link">
         <div class="link__poster"></div>
       </div>
@@ -11,7 +11,7 @@
       </div>
     </li>
   {{else if (eq view.list "details")}}
-    <li class="{{styleNamespace}}__item mouse--is-over">
+    <li class="{{styleNamespace}}__item is--detailed mouse--is-over">
       <div class="item__link">
         <div class="link__poster bigger"></div>
       </div>
@@ -28,7 +28,7 @@
         </div>
         <p class="details__overview"></p>
         <div class="div-buttons-lists margin-auto">
-          {{#if (eq view.userButton "visible")}}
+          {{#if (or media.isMobile (eq view.userButton "visible"))}}
             {{buttons-lists-skeleton}}
           {{/if}}
         </div>

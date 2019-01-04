@@ -13,7 +13,9 @@ export default Route.extend(RouteHistoryMixin, {
 
   model () {
     setTimeout(() => {
-      this.controllerFor('search').__checkFiltersValue()
+      const c = this.controllerFor('search')
+
+      c.__checkFiltersValue([c.text, c.type])
     })
   },
 

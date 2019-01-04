@@ -1,0 +1,35 @@
+<div class="lists-pannel__edit">
+  {{#if deleted}}
+    <h1 class="edit__title">Liste supprimée</h1>
+    {{#link-to 'my-profile.lists-pannel.new' class="edit__link"}}
+      Créer une nouvelle liste
+    {{/link-to}}
+  {{else}}
+    <h1 class="edit__title">Modifiez votre liste</h1>
+    {{#basic-form class="edit__form" onSubmit=(perform save) as |form|}}
+      {{form.input label="Label" placeholder="LOL" value=props.label error=errorLabel maxlength=3 class="edit__input-text"}}
+      {{form.input label="Titre" placeholder="Un jolie titre pour ma liste" value=props.name error=errorName maxlength=50 class="edit__input-text"}}
+    {{/basic-form}}
+    <div class="edit__section">
+      <h1 class="section__title">Couleur</h1>
+      {{basic-color-selector value=props.color}}
+    </div>
+    <div class="edit__section">
+      <h1 class="section__title">Position</h1>
+      {{input type="number" min=1 max=user.lists.length value=props.position class="edit__input-number"}}
+    </div>
+    {{#link-to 'my-profile.my-lists' (query-params show_lists=list.id) click=(action (mut user.reset) "my-lists") class="edit__little-link"}}
+      voir dans MES LISTES
+    {{/link-to}}
+    {{basic-button icon="check" label="Sauvegarder" pending=save.isRunning click=(perform save) class=(concat (if haveChanges "is--clickable ") "edit__save-button edit__button")}}
+    <div class="edit__delete-buttons-container">
+      {{#if willDeleteList}}
+        <p class="delete-buttons-container__message">Supprimer ?</p>
+        {{basic-button icon="check" label="Oui" pending=delete.isRunning click=(perform delete) class="edit__button"}}
+        {{basic-button icon="times" label="Non" pending=delete.isRunning click=(action (mut willDeleteList) false) class="edit__button left--margin"}}
+      {{else}}
+        {{basic-button icon="trash" label="Supprimer" click=(action (mut willDeleteList) true) class="edit__button"}}
+      {{/if}}
+    </div>
+  {{/if}}
+</div>

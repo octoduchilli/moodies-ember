@@ -20,7 +20,9 @@ export default Route.extend(RouteHistoryMixin, {
 
   model () {
     setTimeout(() => {
-      this.controllerFor('my-profile.my-lists').__checkFiltersValue.perform()
+      const c = this.controllerFor('my-profile.my-lists')
+
+      c.__waitUserFetch.perform()
     })
   },
 

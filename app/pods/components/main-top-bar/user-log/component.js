@@ -41,6 +41,10 @@ export default Component.extend({
       this.user.resetUser()
     },
     styleUserColor (color, attr) {
+      if (!color) {
+        color = '#fbfcff'
+      }
+
       let c = color.substring(1)
       let rgb = parseInt(c, 16)
       let r = (rgb >> 16) & 0xff
@@ -118,7 +122,7 @@ export default Component.extend({
           }
 
           if (error.code === 'auth/email-already-in-use') {
-            set(this, 'errorPasswordSignUp', 'Cet email à déjà été utilisé')
+            set(this, 'errorEmailSignUp', 'Cet email à déjà été utilisé')
           }
 
           return false
@@ -137,7 +141,7 @@ export default Component.extend({
           lastname: this.lastnameSignUp,
           pseudo: this.pseudoSignUp,
           pseudoLower: this.pseudoSignUp.toLowerCase(),
-          pseudoInverseLower: this.__inverseCharCode(this.pseudoSignUp.toLowerCase()),
+          pseudoLowerInverse: this.__inverseCharCode(this.pseudoSignUp.toLowerCase()),
           createdAt: new Date().toString(),
           modifiedAt: new Date().toString()
         })

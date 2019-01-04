@@ -1,13 +1,13 @@
 <div class="discover">
-  {{#filters-top-bar lock=filtersBarLock onResize=(action "setTopbarHeight") as |topbar|}}
-    {{#topbar.filters resetFilters=(action "resetFilters") as |filters|}}
-      {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sortItems value=sort onSelect=(action "sortUpdate")}}
-      {{#if (eq sort.value "vote_average.desc")}}
-        {{filters.dropdown label="Avec un minimum de" smallLabel="Minimum" items=voteItems value=vote onSelect=(action "voteUpdate")}}
+  {{#filters-top-bar onResize=(action "setTopbarHeight") as |topbar|}}
+    {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
+      {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sort.items value=sort.selected onSelect=(action "sortUpdate")}}
+      {{#if (eq sort.selected.value "vote_average.desc")}}
+        {{filters.dropdown label="Avec un minimum de" smallLabel="Minimum" items=vote.items value=vote.selected onSelect=(action "voteUpdate")}}
       {{/if}}
-      {{filters.dropdown label="Avec les genres" smallLabel="Genres" items=genresItems multipleSelect=true value=genres onSelect=(action "genresUpdate")}}
-      {{filters.date label="Depuis le ..." value=releaseGte max=releaseLte dateUpdate=(action "dateUpdate" "Gte")}}
-      {{filters.date label="Jusqu'au ..." value=releaseLte min=releaseGte dateUpdate=(action "dateUpdate" "Lte")}}
+      {{filters.dropdown label="Avec les genres" smallLabel="Genres" items=genres.items multipleSelect=true value=genres.selected onSelect=(action "genresUpdate")}}
+      {{filters.date label="Depuis le ..." value=releaseGte.selected max=releaseLte.selected  dateUpdate=(action "dateUpdate" "Gte")}}
+      {{filters.date label="Jusqu'au ..." value=releaseLte.selected  min=releaseGte.selected dateUpdate=(action "dateUpdate" "Lte")}}
     {{/topbar.filters}}
     {{#topbar.options as |options|}}
       {{options.option onChange=(action "warnViewUserButton") selected=view.userButton options=view.userButtonOptions}}
@@ -17,6 +17,10 @@
 
   <div class="total-results">
     <p class="total">Nombres de titres correspondants à votre recherche : <span class="higher">{{if __fetchData.isRunning "..." totalResults}}</span></p>
+  </div>
+
+  <div class="little-total-results">
+    <p class="total">Nombres de titres : <span class="higher">{{if __fetchData.isRunning "..." totalResults}}</span></p>
   </div>
 
   {{#if __fetchData.isRunning}}

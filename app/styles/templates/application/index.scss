@@ -1,11 +1,13 @@
 #app {
   padding: 70px 0 0 200px;
+
+  overflow-x: hidden;
 }
 
 #main-progress-bar {
   position: fixed;
 
-  z-index: 20000;
+  z-index: 999;
 
   top: 0;
   left: 0;
@@ -45,4 +47,38 @@
   opacity: .8;
 
   z-index: 20;
+}
+
+.close-side-bar {
+  position: fixed;
+
+  top: 70px;
+  left: 0;
+
+  height: calc(100vh - 70px);
+  width: 100vw;
+
+  transition: 500ms ease;
+
+  z-index: -1;
+
+  &.side--bar-is-open {
+    z-index: 1005;
+
+    transform: translateX(200px)
+  }
+}
+
+@media (max-width: 767px) {
+  #app {
+    padding: 70px 0 0 0;
+
+    transition: 500ms ease;
+
+    &.side--bar-is-open {
+      transform: translateX(200px);
+
+      opacity: .3;
+    }
+  }
 }

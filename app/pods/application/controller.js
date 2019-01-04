@@ -2,7 +2,9 @@ import Controller from '@ember/controller'
 import { inject as service } from '@ember/service'
 
 export default Controller.extend({
+  sideBar: service(),
   notify: service('notification-messages'),
+  media: service(),
   view: service(),
 
   init () {
@@ -35,6 +37,11 @@ export default Controller.extend({
       window.scroll({
         top: 0
       })
+    },
+    closeSideBar () {
+      if (this.sideBar.isOpen) {
+        this.sideBar.toggle()
+      }
     }
   }
 })

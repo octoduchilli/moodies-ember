@@ -6,9 +6,9 @@
 <ul class="other-lists {{movie.id}}__other-lists {{if otherListsOpen "is--visible" "not--visible"}}" {{action (mut otherListsOpen) false on="mouseLeave"}}>
   {{#if otherListsOpen}}
     {{#if (eq otherLists.length 0)}}
-      <div class="other-lists__no-lists">
+      {{#link-to 'my-profile.lists-pannel.new' class="other-lists__no-lists"}}
         Créer votre première liste personnalisée !
-      </div>
+      {{/link-to}}
     {{else}}
       {{#each (sort-by "position" otherLists) as |list|}}
         <li class="div-button-list" {{action "selectOrDeselect" list}}>

@@ -1,7 +1,7 @@
 & {
   position: relative;
 
-  margin: 5px;
+  padding: 10px;
 
   color: $white;
 
@@ -46,5 +46,11 @@
     .icon {
       opacity: .15;
     }
+  }
+}
+
+@media (max-width: 767px) {
+  & {
+    padding: 2px;
   }
 }

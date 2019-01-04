@@ -1,8 +1,8 @@
 import Controller from '@ember/controller'
 import genres from 'moodies-ember/data/genres'
-import { inject as service } from '@ember/service'
-import { task, timeout } from 'ember-concurrency'
+import { task, timeout, all } from 'ember-concurrency'
 import { get, set, computed } from '@ember/object'
+import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
 
 export default Controller.extend({
@@ -23,96 +23,11 @@ export default Controller.extend({
     return null
   }),
 
-  //TODO computed user.movies.@each not actualised in deep when movie.lists is updated
-
-  totalMovies: computed('user.movies.@each', function () {
-    let totalRuntime = 0
-
-    if (this.user.movies) {
-      this.user.movies.forEach(movie => {
-        const { runtime } = this.user.moviesData.findBy('id', movie.id)
-
-        totalRuntime += runtime || 0
-      })
-    }
-
-    return {
-      total: this.user.movies ? this.user.movies.length : 0,
-      totalRuntime: totalRuntime,
-    }
-  }),
-
-  totalViewedMovies: computed('user.movies.@each', function () {
-    let total = 0
-    let totalRuntime = 0
-
-    if (this.user.movies) {
-      this.user.movies.forEach(movie => {
-        if (movie.lists.find(list => list === 'eye')) {
-          const { runtime } = this.user.moviesData.findBy('id', movie.id)
-
-          totalRuntime += runtime || 0
-          total++
-        }
-      })
-    }
-
-    return {
-      total: total,
-      totalRuntime: totalRuntime,
-    }
-  }),
-
-  totalFavoriteMovies: computed('user.movies.@each', function () {
-    let total = 0
-    let totalRuntime = 0
-
-    if (this.user.movies) {
-      this.user.movies.forEach(movie => {
-        if (movie.lists.find(list => list === 'heart')) {
-          const { runtime } = this.user.moviesData.findBy('id', movie.id)
-
-          totalRuntime += runtime || 0
-          total++
-        }
-      })
-    }
-
-    return {
-      total: total,
-      totalRuntime: totalRuntime,
-    }
-  }),
-
-  likedGenres: computed('user.movies.@each', function () {
-    let genresCounter = {}
-
-    if (this.user.movies) {
-      this.user.movies.forEach(movie => {
-        const { genres } = this.user.moviesData.findBy('id', movie.id)
-
-        if (genres) {
-          genres.forEach(genre => {
-            if (genresCounter[genre.id]) {
-              genresCounter[genre.id] += 1
-            } else {
-              genresCounter[genre.id] = 1
-            }
-          })
-        }
-      })
-    }
-
-    return Object.entries(genresCounter).sort((a, b) => b[1] - a[1]).slice(0, 3).map(genre => {
-      const g = this.genresItems.find(_ => Number(_.value) === Number(genre[0]))
-
-      return {
-        id: g.value,
-        name: g.name,
-        total: genre[1]
-      }
-    })
-  }),
+  totalMovies: null,
+  totalViewedMovies: null,
+  totalFavoriteMovies: null,
+  likedGenres: null,
+  totalVotes: null,
 
   init () {
     this._super(...arguments)
@@ -121,8 +36,10 @@ export default Controller.extend({
   },
 
   actions: {
-    updatePrivateSetting (check) {
-      this.user.updateInfos({ private: check })
+    async updatePrivateSetting (check) {
+      await this.user.updateInfos({ private: check })
+
+      this.user.__updateCommunityUser()
     },
     minToMDHM (min) {
       let M = Math.floor(min / (24 * 30 * 60)) % 12
@@ -141,6 +58,17 @@ export default Controller.extend({
     },
     updateUserProfileImgPos (x, y, scale) {
       return htmlSafe(`transform: translate(calc(-50% + ${x * (50 / 150)}px), calc(-50% + ${y * (50 / 150)}px)) scale(${scale})`)
+    },
+    async signOut () {
+      await this.session.close()
+
+      this.user.resetUser()
+    },
+    openCenterImg (path) {
+      set(this, 'imgDataPathToCenter', path)
+    },
+    closeCenterImg () {
+      set(this, 'imgDataPathToCenter', null)
     }
   },
 
@@ -155,6 +83,130 @@ export default Controller.extend({
 
     yield this.user.updateInfos({ color: color })
   }).restartable(),
+
+  initStatistics: task(function*() {
+    while (this.user.fetch.isRunning) {
+      yield timeout(300)
+    }
+
+    yield all([
+      timeout(1000),
+      this.__initTotalMovies(),
+      this.__initTotalViewedMovies(),
+      this.__initTotalFavoriteMovies(),
+      this.__initLikedGenres(),
+      this.__initTotalVotes()
+    ])
+  }),
+
+  __initTotalMovies () {
+    let totalRuntime = 0
+
+    if (this.user.movies) {
+      this.user.movies.forEach(movie => {
+        const { runtime } = this.user.moviesData.findBy('id', movie.id)
+
+        totalRuntime += runtime || 0
+      })
+    }
+
+    set(this, 'totalMovies', {
+      total: this.user.movies ? this.user.movies.length : 0,
+      totalRuntime: totalRuntime,
+    })
+  },
+
+  __initTotalViewedMovies () {
+    let total = 0
+    let totalRuntime = 0
+
+    if (this.user.movies) {
+      this.user.movies.forEach(movie => {
+        if (movie.lists.find(list => list === 'eye')) {
+          const { runtime } = this.user.moviesData.findBy('id', movie.id)
+
+          totalRuntime += runtime || 0
+          total++
+        }
+      })
+    }
+
+    set(this, 'totalViewedMovies', {
+      total: total,
+      totalRuntime: totalRuntime,
+    })
+  },
+
+  __initTotalFavoriteMovies () {
+    let total = 0
+    let totalRuntime = 0
+
+    if (this.user.movies) {
+      this.user.movies.forEach(movie => {
+        if (movie.lists.find(list => list === 'heart')) {
+          const { runtime } = this.user.moviesData.findBy('id', movie.id)
+
+          totalRuntime += runtime || 0
+          total++
+        }
+      })
+    }
+
+    set(this, 'totalFavoriteMovies', {
+      total: total,
+      totalRuntime: totalRuntime,
+    })
+  },
+
+  __initLikedGenres () {
+    let genresCounter = {}
+
+    if (this.user.movies) {
+      this.user.movies.forEach(movie => {
+        const { genres } = this.user.moviesData.findBy('id', movie.id)
+
+        if (genres) {
+          genres.forEach(genre => {
+            if (genresCounter[genre.id]) {
+              genresCounter[genre.id] += 1
+            } else {
+              genresCounter[genre.id] = 1
+            }
+          })
+        }
+      })
+    }
+
+    const likedGenres = Object.entries(genresCounter).sort((a, b) => b[1] - a[1]).slice(0, 3).map(genre => {
+      const g = this.genresItems.find(_ => Number(_.value) === Number(genre[0]))
+
+      return {
+        id: g.value,
+        name: g.name,
+        total: genre[1]
+      }
+    })
+
+    set(this, 'likedGenres', likedGenres)
+  },
+
+  __initTotalVotes () {
+    let total = 0
+    let average = null
+
+    if (this.user.votes) {
+      total = this.user.votes.length
+
+      if (total) {
+        average = this.user.votes.map(vote => vote.average).reduce((a, b) => a + b) / total
+      }
+    }
+
+    set(this, 'totalVotes', {
+      total: total,
+      average: average ? Number(average.toFixed(1)) : null
+    })
+  },
 
   savePseudo: task(function*() {
     const pseudoErrors = yield this.__validPseudo(this.pseudo)

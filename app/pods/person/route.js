@@ -5,6 +5,10 @@ export default Route.extend(RouteHistoryMixin, {
   setupController (controller, model) {
     this._super(controller, model)
 
-    controller.set('personId', this.currentModel.id)
+    controller.set('id', this.currentModel.id)
+
+    window.scroll({
+      top: 0
+    })
   }
 });

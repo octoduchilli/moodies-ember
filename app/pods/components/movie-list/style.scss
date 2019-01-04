@@ -1,5 +1,5 @@
 & {
-  padding-bottom: 100px;
+  padding-bottom: 120px;
 
   &__item {
     display: flex;
@@ -35,6 +35,8 @@
 
         &::after {
           z-index: 1;
+
+          color: $white;
         }
       }
 
@@ -61,7 +63,7 @@
 
         background: rgba(black, .75);
 
-        color: white;
+        color: transparent;
       }
 
       .link__poster {
@@ -158,13 +160,52 @@
     .div-buttons-lists {
       position: relative;
 
-      min-width: 56px;
-      min-height: 56px;
+      min-width: 76px;
+      min-height: 76px;
 
       &.margin-auto {
         margin: auto;
         margin-bottom: 10px;
       }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  & {
+
+    &__item {
+      margin: 2px;
+
+      .item__link {
+
+        .link__poster {
+          height: 150px;
+          width: 100px;
+          min-height: 150px;
+          min-width: 100px;
+
+          &.bigger {
+            height: 220px;
+            width: 140px;
+            min-height: 220px;
+            min-width: 140px;
+          }
+        }
+      }
+
+      &.is--detailed {
+        flex-direction: column;
+      }
+
+      .item__details {
+        min-width: 300px;
+        max-width: 300px;
+      }
+    }
+
+    .div-buttons-lists {
+      min-width: 0;
     }
   }
 }

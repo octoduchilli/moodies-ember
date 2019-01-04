@@ -82,6 +82,8 @@
     overflow-x: hidden;
     overflow-y: scroll;
 
+    -webkit-overflow-scrolling: touch;
+
     .item {
       white-space: nowrap;
 

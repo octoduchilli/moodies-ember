@@ -2,11 +2,20 @@
   <img class="{{styleNamespace}}__bg-img" src="https://image.tmdb.org/t/p/w500{{imgPath}}" alt=" ">
   <div class="{{styleNamespace}}__img-container">
     <img class="img-container__img" src="https://image.tmdb.org/t/p/w500{{imgPath}}" alt=" ">
-    <div class="img-container__mouse-tracker" {{action (mut mouseIsDown) false on="mouseUp"}} {{action (mut mouseIsDown) true on="mouseDown"}} {{action "changeImgPos" event on="mouseMove"}}></div>
+    <div class="img-container__mouse-tracker" {{action (pipe-action (action "changeImgPos" event) (action (mut mouseIsDown) false)) on="mouseUp"}} {{action (mut mouseIsDown) true on="mouseDown"}} {{action "changeImgPos" event on="mouseMove"}}></div>
   </div>
 </div>
 <div class="{{styleNamespace}}__pannel">
-  Zoom
-  <button class="pannel__button pannel__zoom-less" {{action "updateImgLarger" "less" on="click"}}>-</button>
-  <button class="pannel__button pannel__zoom-more" {{action "updateImgLarger" "more" on="click"}}>+</button>
+  {{#if (not media.isMobile)}}
+    Zoom
+    <button class="pannel__button pannel__zoom-less" {{action "updateImgLarger" "less" on="click"}}>-</button>
+    <button class="pannel__button pannel__zoom-more" {{action "updateImgLarger" "more" on="click"}}>+</button>
+  {{else}}
+    <button class="pannel__button pannel__zoom-less" {{action "updateImgLarger" "less" on="click"}}>-</button>
+    <button class="pannel__button pannel__zoom-more" {{action "updateImgLarger" "more" on="click"}}>+</button>
+    <button class="pannel__button pannel__zoom-less" {{action "updateImgLarger" "up" on="click"}}>↑</button>
+    <button class="pannel__button pannel__zoom-more" {{action "updateImgLarger" "down" on="click"}}>↓</button>
+    <button class="pannel__button pannel__zoom-less" {{action "updateImgLarger" "left" on="click"}}>←</button>
+    <button class="pannel__button pannel__zoom-more" {{action "updateImgLarger" "right" on="click"}}>→</button>
+  {{/if}}
 </div>

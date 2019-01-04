@@ -1,5 +1,5 @@
 {{#if user.fetchInfos.isRunning}}
-  connexion...
+  <p class="{{styleNamespace}}__connect">connexion...</p>
 {{else if session.isAuthenticated}}
   {{#link-to "home" class=(concat styleNamespace "__sign-out") click=(action "signOut")}}
     Se déconnecter
@@ -8,12 +8,20 @@
     <div class="profile-link__message" style="{{compute (action "styleUserColor") user.infos.color "background"}}">Mon profil</div>
     {{user.infos.pseudo}}
   {{/link-to}}
+  {{#link-to "my-profile.informations" class=(concat styleNamespace "__little-profile-link")}}
+    {{#if user.infos.pseudo}}
+      {{slice 0 1 user.infos.pseudo}}
+    {{/if}}
+  {{/link-to}}
 {{else}}
   <div class="{{styleNamespace}}__sign-up" {{action (mut isShowingSignUpPopup) true on="click"}}>
     S'inscrire
   </div>
-  <div class="{{styleNamespace}}__sign-in" {{action (mut isShowingSignInPopup) true on="click"}}>
+  <div class="{{styleNamespace}}__sign-in large-device" {{action (mut isShowingSignInPopup) true on="click"}}>
     Se connecter
+  </div>
+  <div class="{{styleNamespace}}__sign-in little-device" {{action (mut isShowingSignInPopup) true on="click"}}>
+    {{fa-icon "user" color="#274556" class="sign-in__icon"}}
   </div>
 {{/if}}
 
@@ -22,6 +30,7 @@
     {{#basic-form onSubmit=(perform signIn) as |form|}}
       {{form.input label="Email" placeholder="example@mail.com" value=emailSignIn error=errorEmailSignIn maxlength=100}}
       {{form.input label="Mot de passe" type="password" placeholder="motdepasse" value=passwordSignIn error=errorPasswordSignIn maxlength=30}}
+      <p class="sign-in-popup__sign-up" {{action (pipe-action (action (mut isShowingSignInPopup) false) (action (mut isShowingSignUpPopup) true)) on="click"}}>S'inscrire</p>
     {{/basic-form}}
   {{/basic-popup}}
 {{/if}}

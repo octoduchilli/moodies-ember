@@ -1,11 +1,11 @@
 & {
 
-  .reset-filters {
+  .reset-filters, .actualise-filters {
     cursor: pointer;
 
     height: 36px;
 
-    margin: 17px 5px;
+    margin: 10px 5px;
 
     border-radius: 5px;
 
@@ -20,5 +20,22 @@
     background: $black;
 
     color: $lightgrey;
+  }
+}
+
+@media (max-width: 767px) {
+  & {
+
+    .reset-filters, .actualise-filters {
+      display: flex;
+      align-items: center;
+
+      .fa {
+        height: 15px;
+        width: 15px;
+
+        font-size: 1.2em;
+      }
+    }
   }
 }

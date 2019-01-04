@@ -14,6 +14,16 @@
   <section class="informations__section informations__settings">
     <h1 class="section__title">Paramètres</h1>
     <div class="setting">
+      {{#link-to 'my-profile.lists-pannel.new' class="setting__button"}}
+        Créer / Gérer les listes
+      {{/link-to}}
+    </div>
+    <div class="setting">
+      {{#link-to 'my-profile.votes' class="setting__button"}}
+        Gérer les votes
+      {{/link-to}}
+    </div>
+    <div class="setting">
       <p class="setting__message">Profil privé</p>
       {{basic-switch-option check=user.infos.private onCheck=(action "updatePrivateSetting")}}
     </div>
@@ -21,13 +31,36 @@
       <p class="setting__message">Couleur</p>
       {{basic-color-selector value=user.infos.color onChange=(perform updateColorSetting)}}
     </div>
-    <div class="setting">
+    <div class="setting little-device">
       <p class="setting__message">Image de profil</p>
       {{#if user.infos.profileImg}}
-        <div class="setting__user-profile-img-container">
-          <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.profileImg.posX user.infos.profileImg.posY user.infos.profileImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.profileImg.path}}" alt=" " {{action (mut imgDataPathToCenter) "profileImg" on="click"}}>
+        <div class="setting__user-profile-img-container" {{action "openCenterImg" "profileImg" on="click"}}>
+          <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.profileImg.posX user.infos.profileImg.posY user.infos.profileImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.profileImg.path}}" alt=" ">
         </div>
-        <div class="setting__delete-user-img" {{action "removeUserImg" "profileImg" on="click"}}>
+        <div class="flex">
+          <div class="setting__button-user-img" {{action "openCenterImg" "profileImg" on="click"}}>
+            Recadrer
+          </div>
+          <div class="setting__button-user-img" {{action "removeUserImg" "profileImg" on="click"}}>
+            Supprimer
+          </div>
+        </div>
+      {{else}}
+        <div class="setting__no-user-img circle">
+          Aucune
+        </div>
+      {{/if}}
+    </div>
+    <div class="setting large-device">
+      <p class="setting__message">Image de profil</p>
+      {{#if user.infos.profileImg}}
+        <div class="setting__user-profile-img-container" {{action "openCenterImg" "profileImg" on="click"}}>
+          <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.profileImg.posX user.infos.profileImg.posY user.infos.profileImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.profileImg.path}}" alt=" ">
+        </div>
+        <div class="setting__button-user-img" {{action "openCenterImg" "profileImg" on="click"}}>
+          Recadrer
+        </div>
+        <div class="setting__button-user-img" {{action "removeUserImg" "profileImg" on="click"}}>
           Supprimer
         </div>
       {{else}}
@@ -36,13 +69,36 @@
         </div>
       {{/if}}
     </div>
-    <div class="setting">
+    <div class="setting little-device">
       <p class="setting__message">Image de couverture</p>
       {{#if user.infos.coverImg}}
         <div class="setting__user-cover-img-container">
-          <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.coverImg.posX user.infos.coverImg.posY user.infos.coverImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.coverImg.path}}" alt=" " {{action (mut imgDataPathToCenter) "coverImg" on="click"}}>
+          <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.coverImg.posX user.infos.coverImg.posY user.infos.coverImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.coverImg.path}}" alt=" " {{action "openCenterImg" "coverImg" on="click"}}>
         </div>
-        <div class="setting__delete-user-img" {{action "removeUserImg" "coverImg" on="click"}}>
+        <div class="flex">
+          <div class="setting__button-user-img" {{action "openCenterImg" "coverImg" on="click"}}>
+            Recadrer
+          </div>
+          <div class="setting__button-user-img" {{action "removeUserImg" "coverImg" on="click"}}>
+            Supprimer
+          </div>
+        </div>
+      {{else}}
+        <div class="setting__no-user-img">
+          Aucune
+        </div>
+      {{/if}}
+    </div>
+    <div class="setting large-device">
+      <p class="setting__message">Image de couverture</p>
+      {{#if user.infos.coverImg}}
+        <div class="setting__user-cover-img-container">
+          <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.coverImg.posX user.infos.coverImg.posY user.infos.coverImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.coverImg.path}}" alt=" " {{action "openCenterImg" "coverImg" on="click"}}>
+        </div>
+        <div class="setting__button-user-img" {{action "openCenterImg" "profileImg" on="click"}}>
+          Recadrer
+        </div>
+        <div class="setting__button-user-img" {{action "removeUserImg" "coverImg" on="click"}}>
           Supprimer
         </div>
       {{else}}
@@ -51,68 +107,108 @@
         </div>
       {{/if}}
     </div>
+    <div class="setting disconnect">
+      {{#link-to "home" class="setting__message" click=(action "signOut")}}
+        Se déconnecter
+      {{/link-to}}
+    </div>
   </section>
   <section class="informations__section informations__statistic">
     <h1 class="section__title">Statistiques</h1>
-    <div class="statistic">
-      <p class="statistic__message">
-        Nombre total de films :
-        <span class="message__value">{{totalMovies.total}}</span>
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          {{compute (action "minToMDHM") totalMovies.totalRuntime}}
-        </p>
-      </div>
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Nombre total de films visionnés :
-        <span class="message__value">{{totalViewedMovies.total}}</span>
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          {{compute (action "minToMDHM") totalViewedMovies.totalRuntime}}
-        </p>
-      </div>
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Nombre total de films favoris :
-        <span class="message__value">{{totalFavoriteMovies.total}}</span>
-      </p>
-      <div class="statistic__little-statistic">
-        <p class="little-statistic__message">
-          {{compute (action "minToMDHM") totalFavoriteMovies.totalRuntime}}
-        </p>
-      </div>
-    </div>
-    <div class="statistic">
-      <p class="statistic__message">
-        Genres les plus appréciés :
-      </p>
-      {{#if likedGenres}}
-        {{#each likedGenres as |genre|}}
-        <div class="statistic__little-statistic">
-          <p class="little-statistic__message">
-            {{genre.name}} :
-            <span class="message__value">{{genre.total}}</span>
+    {{#if initStatistics.isRunning}}
+      {{#each (repeat 6) as |nb index|}}
+        <div class="statistic">
+          <p class="statistic__message">
+            Actualisation des statistiques
           </p>
+          {{#if (not-eq index 0)}}
+            <div class="statistic__little-statistic">
+              <p class="little-statistic__message">
+                Un instant...
+              </p>
+            </div>
+          {{/if}}
         </div>
       {{/each}}
-      {{else}}
+    {{else}}
+      <div class="statistic">
+        {{#link-to 'my-profile.lists-pannel.new' tagName="p" class="statistic__message pointer"}}
+          Listes personnalisées :
+          <span class="message__value">{{or user.lists.length 0}}</span>
+        {{/link-to}}
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Nombre total de films :
+          <span class="message__value">{{or totalMovies.total 0}}</span>
+        </p>
         <div class="statistic__little-statistic">
           <p class="little-statistic__message">
-            Commencez à ajouter des films !
+            {{compute (action "minToMDHM") (or totalMovies.totalRuntime 0)}}
           </p>
         </div>
-      {{/if}}
-    </div>
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Nombre total de films visionnés :
+          <span class="message__value">{{or totalViewedMovies.total 0}}</span>
+        </p>
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            {{compute (action "minToMDHM") (or totalViewedMovies.totalRuntime 0)}}
+          </p>
+        </div>
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Nombre total de films favoris :
+          <span class="message__value">{{or totalFavoriteMovies.total 0}}</span>
+        </p>
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            {{compute (action "minToMDHM") (or totalFavoriteMovies.totalRuntime 0)}}
+          </p>
+        </div>
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Genres les plus appréciés :
+        </p>
+        {{#if likedGenres}}
+          {{#each likedGenres as |genre|}}
+          <div class="statistic__little-statistic">
+            <p class="little-statistic__message">
+              {{genre.name}} :
+              <span class="message__value">{{genre.total}}</span>
+            </p>
+          </div>
+        {{/each}}
+        {{else}}
+          <div class="statistic__little-statistic">
+            <p class="little-statistic__message">
+              Commencez à ajouter des films !
+            </p>
+          </div>
+        {{/if}}
+      </div>
+      <div class="statistic">
+        <p class="statistic__message">
+          Nombre total de votes :
+          <span class="message__value">{{or totalVotes.total 0}}</span>
+        </p>
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            moyenne des votes :
+            <span class="message__value">{{totalVotes.average}} / 10</span>
+          </p>
+        </div>
+      </div>
+    {{/if}}
   </section>
 </div>
 
 {{#if imgDataPathToCenter}}
-  {{#basic-popup title="Centrer l'image" confirmLabel="Sauvegarder" confirmIcon="check" pending=saveCenterImg.isRunning close=(action (mut imgDataPathToCenter) null) confirm=(perform saveCenterImg) as |popup|}}
+  {{#basic-popup title="Recadrer l'image" confirmLabel="Sauvegarder" confirmIcon="check" pending=saveCenterImg.isRunning close=(action "closeCenterImg") confirm=(perform saveCenterImg) as |popup|}}
     {{center-img imgDataPath=imgDataPathToCenter save=saveCenterImg.isRunning}}
   {{/basic-popup}}
 {{/if}}

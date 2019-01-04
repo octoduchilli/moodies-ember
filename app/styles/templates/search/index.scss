@@ -1,7 +1,7 @@
 .search {
   padding-top: 140px;
 
-  .total-results {
+  .total-results, .little-total-results {
     margin-bottom: 10px;
 
     height: 70px;
@@ -21,6 +21,23 @@
       font-size: 1.4em;
 
       margin-left: 5px;
+    }
+  }
+
+  .little-total-results {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .search {
+
+    .total-results {
+      display: none;
+    }
+
+    .little-total-results {
+      display: flex;
     }
   }
 }

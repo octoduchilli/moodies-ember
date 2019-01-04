@@ -1,6 +1,8 @@
 & {
   overflow-y: scroll;
 
+  -webkit-overflow-scrolling: touch;
+
   height: 300px;
 
   &__activity-item {
@@ -42,6 +44,14 @@
       white-space: nowrap;
 
       color: $white;
+
+      padding: 3px 0;
     }
+  }
+}
+
+@media (max-width: 800px) {
+  & {
+    height: 200px;
   }
 }

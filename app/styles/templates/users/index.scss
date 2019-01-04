@@ -1,0 +1,267 @@
+.users, .users-skeleton {
+  position: relative;
+
+  display: flex;
+
+  color: $white;
+
+  margin-bottom: 100px;
+
+  .users__cover-img {
+    position: fixed;
+
+    top: calc((100% + 70px) / 2);
+    left: calc((100% + 200px) / 2);
+
+    height: calc(100vh - 70px);
+
+    transform: translate(-50%, -50%);
+
+    z-index: 1;
+  }
+
+  .users__veil, .users-skeleton__veil {
+    position: fixed;
+
+    top: 70px;
+    left: 200px;
+
+    height: calc(100vh - 70px);
+    width: calc(100vw - 200px);
+
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .5), $black2);
+
+    z-index: 2;
+
+    &::before {
+      content: "";
+
+      position: fixed;
+
+      bottom: -500px;
+      left: 0;
+
+      height: 500px;
+      width: 100vw;
+
+      background: $black2;
+
+      z-index: 2;
+    }
+
+    &::after {
+      content: "";
+
+      position: fixed;
+
+      top: -500px;
+      left: 0;
+
+      height: 500px;
+      width: 100vw;
+
+      background: $black2;
+
+      z-index: 2;
+    }
+  }
+
+  .users__banner, .users-skeleton__banner {
+    position: fixed;
+
+    top: 100px;
+    left: 230px;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 3;
+
+    background: rgba(0, 0, 0, .7);
+
+    padding: 15px;
+
+    border-radius: 5px;
+
+    max-width: 300px;
+
+    .banner__profile-img {
+      position: relative;
+
+      height: 200px;
+      width: 200px;
+      min-height: 200px;
+      min-width: 200px;
+
+      overflow: hidden;
+
+      border-radius: 50%;
+
+      background: $black;
+
+      margin: 0 auto;
+
+      .profile-img__poster {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        height: 100%;
+
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .banner__pseudo {
+      font-size: 2em;
+
+      text-align: center;
+
+      margin: 20px 0;
+    }
+
+    .banner__info {
+      color: lightgray;
+
+      font-size: 0.85em;
+
+      margin: 5px 0;
+
+      .value {
+        color: $white;
+
+        font-size: 1.05em;
+      }
+
+      &.last-child {
+        margin-bottom: 20px;
+      }
+    }
+
+    .banner__link {
+      padding: 10px 20px;
+
+      background: white;
+      color: $black;
+
+      border-radius: 5px;
+
+      border: 2px solid transparent;
+
+      margin: 10px 0;
+
+      transition: 300ms ease;
+
+      &.active {
+        border-color: $white;
+
+        color: $white;
+
+        background: transparent;
+      }
+    }
+  }
+
+  .users-skeleton__banner {
+    opacity: .5;
+
+    .banner__profile-img {
+      background: $black;
+    }
+
+    .banner__pseudo {
+      height: 32px;
+      width: 100%;
+
+      background: $black;
+    }
+  }
+}
+
+@media (min-width: 767px) {
+  .users {
+    padding-left: 100px;
+
+    &.banner--is-visible {
+      padding-left: 320px;
+
+      .users__banner {
+        display: flex;
+      }
+    }
+
+    .users__banner {
+      display: none;
+    }
+
+    .users__show-banner {
+      cursor: pointer;
+
+      position: fixed;
+
+      top: 100px;
+      left: 230px;
+
+      width: 45px;
+      height: 45px;
+
+      z-index: 4;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border-radius: 5px;
+      border: 2px solid $white;
+
+      background: rgba(0, 0, 0, .5);
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .users, .users-skeleton {
+    flex-direction: column;
+
+    .users__show-banner {
+      display: none;
+    }
+
+    .users__cover-img {
+      left: calc(100% / 2);
+
+      height: calc(100vw - 70px);
+    }
+
+    .users__veil, .users-skeleton__veil {
+      left: 0;
+
+      width: 100vw;
+
+      background: linear-gradient(to bottom, rgba(0, 0, 0, .5), $black2);
+    }
+
+    .users__banner, .users-skeleton__banner {
+      position: static;
+
+      top: auto;
+      left: auto;
+
+      display: flex;
+      flex-direction: column;
+
+      z-index: 3;
+
+      background: rgba(0, 0, 0, .7);
+
+      padding: 15px;
+
+      border-radius: 5px;
+
+      min-width: 280px;
+
+      margin: 20px auto;
+    }
+  }
+}

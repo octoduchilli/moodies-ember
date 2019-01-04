@@ -71,6 +71,10 @@
 
         opacity: 0;
       }
+
+      .picker__select--month, .picker__select--year {
+        height: 2.5em;
+      }
     }
   }
 
@@ -98,5 +102,24 @@
     font-size: 1em;
 
     font-family: 'Work Sans'
+  }
+}
+
+@media (max-width: 767px) {
+  & {
+
+    .picker {
+
+      .picker__holder {
+        left: 0;
+
+        min-width: 100vw;
+
+        .picker__frame {
+          min-width: 300px;
+          max-width: 300px;
+        }
+      }
+    }
   }
 }

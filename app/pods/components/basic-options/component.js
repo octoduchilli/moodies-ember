@@ -26,11 +26,13 @@ export default Component.extend({
       const isOpen = this.isOpen
 
       if (isOpen) {
-        set(this, 'selected', key)
+        if (key !== this.selected) {
+          set(this, 'selected', key)
 
-        this.onChange(key)
+          this.onChange(key)
 
-        this.__orderOptions(key)
+          this.__orderOptions(key)
+        }
       }
     }
   },

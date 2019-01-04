@@ -1,0 +1,86 @@
+.users__statistics {
+  font-family: 'Work Sans';
+
+  min-width: 300px;
+  min-height: 300px;
+
+  padding: 10px;
+  margin: 20px auto;
+
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 5px;
+
+  background: $grey;
+
+  color: $black;
+
+  z-index: 3;
+
+  .statistics__title {
+    font-size: 1.35em;
+
+    text-align: center;
+
+    margin: 0 auto;
+    padding: 10px 20px;
+
+    border-radius: 5px;
+
+    background: $black2;
+
+    color: $white;
+  }
+
+  .statistic {
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 5px;
+
+    background: $lightgrey;
+
+    padding: 20px 10px;
+
+    margin: 10px 0;
+
+    .statistic__message {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      width: 100%;
+
+      .message__value {
+        font-size: 1.2em;
+
+        margin-left: 15px;
+      }
+    }
+
+    .statistic__little-statistic {
+      display: flex;
+      flex-direction: column;
+
+      margin-top: 15px;
+      margin-left: 30px;
+
+      font-size: 0.85em;
+
+      .little-statistic__message {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        width: 100%;
+
+        .message__value {
+          font-size: .95em;
+
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+}

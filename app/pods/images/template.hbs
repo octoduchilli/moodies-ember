@@ -1,0 +1,52 @@
+<div class="images work">
+  {{#each imageSections as |section|}}
+    <div class="images__section">
+      <h1 class="section__title">{{section.title}} - {{section.images.length}}</h1>
+      <ul class="section__image-list">
+        {{#each section.images as |image|}}
+          <li class="image-list__image">
+            <div class="image__poster" style="{{compute (action "setPosterLarger") image.width image.height}}" {{action (mut showImg) image.file_path on="click"}}>
+              <img class="poster__img" src="https://image.tmdb.org/t/p/w500{{image.file_path}}" alt="">
+            </div>
+            {{#if (eq showImg image.file_path)}}
+              <div class="image__show-poster" {{action (mut showImg) null on="click"}}>
+                <div class="show-poster__container">
+                  <img class="container__img" src="https://image.tmdb.org/t/p/w500{{image.file_path}}" alt="">
+                  <img class="container__img over" src="https://image.tmdb.org/t/p/original{{image.file_path}}" alt="">
+                </div>
+              </div>
+            {{/if}}
+            <p class="image__information">taille : <span class="value">{{image.width}}</span> x <span class="value">{{image.height}}</span></p>
+            {{#if session.isAuthenticated}}
+              {{#if (eq image.file_path user.infos.profileImg.path)}}
+                <button class="image__button is--selected" disabled>
+                  <span class="value">image de profil sélectionnée</span>
+                </button>
+              {{else}}
+                <button class="image__button" {{action "updateUserImg" image.file_path "profileImg" on="click"}}>
+                  Utiliser comme <span class="value">image de profil</span>
+                </button>
+              {{/if}}
+              {{#if (eq image.file_path user.infos.coverImg.path)}}
+                <button class="image__button is--selected" disabled>
+                  <span class="value">image de couverture sélectionnée</span>
+                </button>
+              {{else}}
+                <button class="image__button" {{action "updateUserImg" image.file_path "coverImg" on="click"}}>
+                  Utiliser comme <span class="value">image de couverture</span>
+                </button>
+              {{/if}}
+            {{else}}
+              <button class="image__button not--connected" {{action "notifyNotConnected" on="click"}}>
+                Utiliser comme <span class="value">image de profil</span>
+              </button>
+              <button class="image__button not--connected" {{action "notifyNotConnected" on="click"}}>
+                Utiliser comme <span class="value">image de couverture</span>
+              </button>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/each}}
+</div>

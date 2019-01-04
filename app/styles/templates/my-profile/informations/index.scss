@@ -21,8 +21,6 @@
     display: flex;
     flex-direction: column;
 
-    box-sizing: border-box;
-
     border-radius: 5px;
 
     background: $grey;
@@ -133,8 +131,56 @@
 
       min-height: 60px;
 
+      &.disconnect {
+        display: none;
+
+        .setting__message {
+          cursor: pointer;
+
+          text-decoration: underline;
+        }
+      }
+
+      &.little-device {
+        display: none;
+
+        flex-direction: column;
+
+        padding: 10px;
+
+        .setting__message {
+          margin: 15px 0;
+        }
+
+        .setting__user-profile-img-container, .setting__user-cover-img-container {
+          margin: 0;
+        }
+
+        .setting__button-user-img {
+          margin: 15px;
+        }
+      }
+
       .setting__message {
         margin: 0 20px;
+      }
+
+      .setting__button {
+        border: 2px solid $white;
+        background: $black;
+        color: $white;
+
+        text-decoration: underline;
+
+        border-radius: 5px;
+
+        padding: 10px 15px;
+
+        margin: 10px auto 10px auto;
+
+        font-size: 1em;
+
+        cursor: pointer;
       }
 
       .setting__user-img {
@@ -163,6 +209,8 @@
         margin-left: auto;
 
         background: $black;
+
+        cursor: pointer;
       }
 
       .setting__user-cover-img-container {
@@ -176,6 +224,8 @@
         margin-left: auto;
 
         background: $black;
+
+        cursor: pointer;
       }
 
       .setting__no-user-img {
@@ -195,7 +245,7 @@
         }
       }
 
-      .setting__delete-user-img {
+      .setting__button-user-img {
         cursor: pointer;
 
         text-decoration: underline;
@@ -254,6 +304,25 @@
 
             margin-left: 15px;
           }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .my-profile__informations {
+
+    .informations__settings {
+
+      .setting {
+
+        &.large-device {
+          display: none;
+        }
+
+        &.disconnect, &.little-device {
+          display: flex;
         }
       }
     }

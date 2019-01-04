@@ -1,0 +1,92 @@
+<div class="users__statistics">
+  <h1 class="statistics__title">Statistiques</h1>
+  {{#if fetch.isRunning}}
+    {{#each (repeat 6) as |nb index|}}
+      <div class="statistic">
+        <p class="statistic__message">
+          Récupération  des statistiques
+        </p>
+        {{#if (not-eq index 0)}}
+          <div class="statistic__little-statistic">
+            <p class="little-statistic__message">
+              Un instant...
+            </p>
+          </div>
+        {{/if}}
+      </div>
+    {{/each}}
+  {{else}}
+    <div class="statistic">
+      <p class="statistic__message">
+        Listes personnalisées :
+        <span class="message__value">{{lists.length}}</span>
+      </p>
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Nombre total de films :
+        <span class="message__value">{{totalMovies.total}}</span>
+      </p>
+      <div class="statistic__little-statistic">
+        <p class="little-statistic__message">
+          {{compute (action "minToMDHM") totalMovies.totalRuntime}}
+        </p>
+      </div>
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Nombre total de films visionnés :
+        <span class="message__value">{{totalViewedMovies.total}}</span>
+      </p>
+      <div class="statistic__little-statistic">
+        <p class="little-statistic__message">
+          {{compute (action "minToMDHM") totalViewedMovies.totalRuntime}}
+        </p>
+      </div>
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Nombre total de films favoris :
+        <span class="message__value">{{totalFavoriteMovies.total}}</span>
+      </p>
+      <div class="statistic__little-statistic">
+        <p class="little-statistic__message">
+          {{compute (action "minToMDHM") totalFavoriteMovies.totalRuntime}}
+        </p>
+      </div>
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Genres les plus appréciés :
+      </p>
+      {{#if likedGenres}}
+        {{#each likedGenres as |genre|}}
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            {{genre.name}} :
+            <span class="message__value">{{genre.total}}</span>
+          </p>
+        </div>
+      {{/each}}
+      {{else}}
+        <div class="statistic__little-statistic">
+          <p class="little-statistic__message">
+            Commencez à ajouter des films !
+          </p>
+        </div>
+      {{/if}}
+    </div>
+    <div class="statistic">
+      <p class="statistic__message">
+        Nombre total de votes :
+        <span class="message__value">{{totalVotes.total}}</span>
+      </p>
+      <div class="statistic__little-statistic">
+        <p class="little-statistic__message">
+          moyenne des votes :
+          <span class="message__value">{{if (not-eq null totalVotes.average) totalVotes.average '-'}} / 10</span>
+        </p>
+      </div>
+    </div>
+  {{/if}}
+</div>

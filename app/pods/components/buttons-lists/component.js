@@ -9,6 +9,7 @@ export default Component.extend({
 
   firebaseApp: service(),
   session: service(),
+  media: service(),
   store: service(),
   user: service('current-user'),
 
@@ -18,6 +19,10 @@ export default Component.extend({
   otherListsOpen: true,
 
   movie: null,
+
+  mouseLeave () {
+    set(this, 'otherListsOpen', false)
+  },
 
   init () {
     this._super(...arguments)
@@ -43,31 +48,42 @@ export default Component.extend({
       }
     ]
 
-    this.otherLists = this.user.lists.map(list => {
-      return {
-        id: list.id,
-        name: list.name,
-        label: list.label,
-        color: list.color
-      }
-    })
-
-    const movie = this.user.movies.findBy('id', String(this.movie.id))
-
-    if (movie) {
-      this.movieLists = movie.lists
-
-      this.movieLists.forEach(listId => {
-        if (listId === 'eye') {
-          this.basicLists[0].isSelected = true
-        } else if (listId === 'heart') {
-          this.basicLists[1].isSelected = true
-        } else {
-          this.otherLists.find(list => list.id === listId).isSelected = true
-
-          this.basicLists[2].isSelected = true
+    if (this.user.lists) {
+      this.otherLists = this.user.lists.map(list => {
+        return {
+          id: list.id,
+          name: list.name,
+          label: list.label,
+          color: list.color,
+          position: list.position
         }
       })
+    } else {
+      this.otherLists = []
+    }
+
+    if (this.user.movies) {
+      const movie = this.user.movies.findBy('id', String(this.movie.id))
+
+      if (movie) {
+        this.movieLists = movie.lists
+
+        this.movieLists.forEach(listId => {
+          if (listId === 'eye') {
+            this.basicLists[0].isSelected = true
+          } else if (listId === 'heart') {
+            this.basicLists[1].isSelected = true
+          } else {
+            const otherList = this.otherLists.find(list => list.id === listId)
+
+            if (otherList) {
+              otherList.isSelected = true
+
+              this.basicLists[2].isSelected = true
+            }
+          }
+        })
+      }
     }
   },
 
@@ -99,10 +115,10 @@ export default Component.extend({
       this.toggleProperty('otherListsOpen')
 
       setTimeout(() => {
-        const otherListsEl = document.getElementsByClassName('other-lists')[0]
+        const otherListsEl = document.getElementsByClassName(`${this.movie.id}__other-lists`)[0]
 
-        if (this.element.parentNode.offsetLeft + otherListsEl.offsetWidth / 2 > window.innerWidth) {
-          otherListsEl.style.transform = 'translateX(-100%)'
+        if (this.element.parentNode.offsetLeft + this.element.parentNode.offsetWidth + otherListsEl.offsetWidth / 2 > window.innerWidth) {
+          otherListsEl.style.transform = 'translateX(calc(-100% + 20px))'
         } else {
           otherListsEl.style.transform = 'translateX(-50%)'
         }
@@ -118,6 +134,10 @@ export default Component.extend({
   },
 
   async __updateUserMoviesAndUserMoviesData (list, value) {
+    if (!this.user.movies) {
+      set(this.user, 'movies', [])
+    }
+
     const movie = this.user.movies.find(movie => String(movie.id) === String(this.movie.id))
 
     if (movie) {
@@ -145,35 +165,7 @@ export default Component.extend({
         })
       }
     } else {
-      const movieData = await this.store.find('tmdb-movie', this.movie.id).then(data => data)
-      const frenchRelease = movieData.releases.countries.find(_ => String(_.iso_3166_1) === 'FR')
-
-      let releaseDate
-
-      if (frenchRelease) {
-        releaseDate = frenchRelease.release_date
-      } else {
-        releaseDate = movieData.release_date
-      }
-
-      const obj = {
-        id: movieData.id,
-        title: movieData.title,
-        poster_path: movieData.poster_path,
-        runtime: movieData.runtime,
-        popularity: movieData.popularity,
-        genres: movieData.genres,
-        release_date: releaseDate,
-        overview: movieData.overview,
-        vote_count: movieData.vote_count,
-        vote_average: movieData.vote_average
-      }
-
-      await this.firebaseApp.database().ref(`films/added/${this.movie.id}`).set(obj)
-
-      await this.store.find('fb-movies-data', movieData.id)
-
-      this.user.moviesData.pushObject(obj)
+      await this.user.updateMovieData(this.movie.id)
 
       this.user.movies.pushObject({
         id: String(this.movie.id),

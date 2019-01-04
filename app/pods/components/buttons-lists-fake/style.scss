@@ -1,7 +1,7 @@
 & {
   position: relative;
 
-  margin: 5px;
+  padding: 10px;
 
   color: $white;
 
@@ -68,6 +68,8 @@
 
     overflow-y: scroll;
 
+    -webkit-overflow-scrolling: touch;
+
     background: rgba(0, 0, 0, .9);
 
     &.not--visible {
@@ -86,5 +88,11 @@
         margin-left: 15px;
       }
     }
+  }
+}
+
+@media (max-width: 767px) {
+  & {
+    padding: 2px;
   }
 }
