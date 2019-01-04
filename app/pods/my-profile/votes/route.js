@@ -11,11 +11,11 @@ export default Route.extend({
   },
 
   model () {
-    if (this.user.fetch.isRunning || this.user.fetch.performCount) {
-      setTimeout(() => {
-        this.controllerFor('my-profile.votes').__checkFiltersValue.perform()
-      })
-    }
+    setTimeout(() => {
+      const c = this.controllerFor('my-profile.votes')
+
+      c.__waitUserFetch.perform()
+    })
   },
 
   actions: {

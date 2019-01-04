@@ -1,10 +1,11 @@
 import Controller from '@ember/controller'
 import preloadImg from 'moodies-ember/mixins/preload-tmdb-img'
+import filtersHelper from 'moodies-ember/mixins/filters-helper'
 import { task, timeout, all } from 'ember-concurrency'
 import { inject as service } from '@ember/service'
-import { get, set, computed } from '@ember/object'
+import { set, computed } from '@ember/object'
 
-export default Controller.extend(preloadImg, {
+export default Controller.extend(preloadImg, filtersHelper, {
   queryFilters: service(),
   notify: service('notification-messages'),
   media: service(),
@@ -20,7 +21,6 @@ export default Controller.extend(preloadImg, {
 
   text: '',
   type: null,
-  typeItems: null,
 
   totalResults: computed('items.total_results', function () {
     const items = this.items
@@ -35,20 +35,37 @@ export default Controller.extend(preloadImg, {
   init () {
     this._super(...arguments)
 
-    this.typeItems = [
-      {
+    this.type = {
+      selected: {
         id: 0,
         name: 'Films (par défaut)',
         value: 'movie'
       },
-      {
-        id: 1,
-        name: 'Personnalités',
-        value: 'person'
-      }
-    ]
+      default: {
+        id: 0,
+        name: 'Films (par défaut)',
+        value: 'movie'
+      },
+      key: 'search_type',
+      items: [
+        {
+          id: 0,
+          name: 'Films (par défaut)',
+          value: 'movie'
+        },
+        {
+          id: 1,
+          name: 'Personnalités',
+          value: 'person'
+        }
+      ]
+    }
 
-    this.type = this.typeItems[0]
+    this.text = {
+      selected: null,
+      isString: true,
+      key: 'query'
+    }
 
     this.queryKeys = ['query', 'search_type']
 
@@ -58,9 +75,9 @@ export default Controller.extend(preloadImg, {
   actions: {
     typeUpdate (type) {
       if (type.length === 0) {
-        this.__update('search_type', null)
+        this.queryFilters.updateFilter('search_type', null, true)
       } else {
-        this.__update('search_type', type.firstObject.value)
+        this.queryFilters.updateFilter('search_type', type.firstObject.value, true)
       }
     },
     resetFilters () {
@@ -75,9 +92,7 @@ export default Controller.extend(preloadImg, {
       this.__nextPage()
     },
     setTopbarHeight (height) {
-      set(this, 'topbarHeight', height)
-
-      this.__updatePaddingTop()
+      document.getElementsByClassName('search')[0].style.paddingTop = `${height}px`
     },
     updatedItems () {
       this.__nextPage()
@@ -93,83 +108,24 @@ export default Controller.extend(preloadImg, {
     yield timeout(800)
 
     if (!text) {
-      this.__update('query', null)
+      this.queryFilters.updateFilter('query', null, true)
     } else {
-      this.__update('query', text)
+      this.queryFilters.updateFilter('query', text, true)
     }
   }).restartable(),
-
-  __updatePaddingTop () {
-    document.getElementsByClassName('search')[0].style.paddingTop = `${this.topbarHeight}px`
-  },
-
-  __update (key, value) {
-    this.queryFilters.updateKeys(key, value)
-
-    this.queryFilters.transition()
-  },
-
-  __checkQueryFilters () {
-    this.queryKeys.forEach(key => {
-      const value = get(this, key)
-
-      if (value) {
-        this.queryFilters.updateKeys(key, value)
-      } else {
-        this.queryFilters.updateKeys(key, null)
-      }
-    })
-
-    this.__fetchData.perform()
-  },
-
-  __checkFiltersValue () {
-    // Called by the route with refresh queryParams
-    if (this.query) {
-      set(this, 'text', null)
-
-      set(this, 'text', this.query)
-    } else {
-      set(this, 'text', null)
-    }
-
-    if (this.search_type) {
-      const typeItem = this.typeItems.findBy('value', this.search_type)
-
-      set(this, 'type', null)
-
-      if (typeItem) {
-        set(this, 'type', typeItem)
-      }
-    } else {
-      set(this, 'type', this.typeItems.firstObject)
-    }
-
-    if (this.user.reset === 'search') {
-      set(this.user, 'reset', null)
-
-      set(this, 'isLeaving', false)
-    }
-
-    if (!this.isLeaving) {
-      this.__checkQueryFilters()
-    } else {
-      set(this, 'isLeaving', false)
-    }
-  },
 
   __fetchData: task(function* () {
     window.scroll({
       top: 0
     })
 
-    this.__destroyRecords()
+    this.store.unloadAll('tmdb-search')
 
     set(this, 'scrollY', null)
     set(this, 'items', null)
     set(this, 'page', 1)
 
-    if (!this.text) {
+    if (!this.text.selected) {
       return
     }
 
@@ -242,10 +198,6 @@ export default Controller.extend(preloadImg, {
     })
 
     return set(this, 'isFetchingNextPage', false)
-  },
-
-  __destroyRecords () {
-    this.store.unloadAll('tmdb-search')
   },
 
   __getPaths (items) {

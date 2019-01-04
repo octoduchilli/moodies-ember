@@ -11,7 +11,9 @@ export default Route.extend({
     this.controllerFor('users.votes').fetch.perform(this.modelFor('users').id)
 
     setTimeout(() => {
-      this.controllerFor('users.votes').__checkFiltersValue.perform()
+      const c = this.controllerFor('users.votes')
+
+      c.__waitFetch.perform()
     })
   },
 

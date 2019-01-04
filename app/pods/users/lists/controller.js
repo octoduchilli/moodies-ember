@@ -1,11 +1,12 @@
 import Controller from '@ember/controller'
+import filtersHelper from 'moodies-ember/mixins/filters-helper'
 import genres from 'moodies-ember/data/genres'
 import { inject as service } from '@ember/service'
 import { task, timeout, all } from 'ember-concurrency'
-import { get, set, computed } from '@ember/object'
+import { set, computed } from '@ember/object'
 import { copy } from '@ember/object/internals'
 
-export default Controller.extend({
+export default Controller.extend(filtersHelper, {
   queryFilters: service(),
   progress: service('page-progress'),
   notify: service('notification-messages'),
@@ -21,8 +22,6 @@ export default Controller.extend({
 
   id: null,
 
-  genresItems: null,
-  sortItems: null,
   genres: null,
   refine: null,
   lists: null,
@@ -37,20 +36,20 @@ export default Controller.extend({
   userMovies: null,
 
   listsItems: computed('userLists', function () {
-    if (this.userLists) {
-      let items = [
-        {
-          id: 0,
-          name: 'Visionnés',
-          value: 'eye'
-        },
-        {
-          id: 1,
-          name: 'Coups de coeurs',
-          value: 'heart'
-        }
-      ]
+    let items = [
+      {
+        id: 0,
+        name: 'Visionnés',
+        value: 'eye'
+      },
+      {
+        id: 1,
+        name: 'Coups de coeurs',
+        value: 'heart'
+      }
+    ]
 
+    if (this.userLists) {
       return items.concat(copy(this.userLists.map((list, index) => {
         return {
           id: index + 2,
@@ -60,28 +59,24 @@ export default Controller.extend({
       })))
     }
 
-    return {
-      id: 0,
-      name: 'Aucune list',
-      value: null
-    }
+    return items
   }),
 
   refineItems: computed('userLists', function () {
-    if (this.userLists) {
-      let items = [
-        {
-          id: 0,
-          name: 'Visionnés',
-          value: 'eye'
-        },
-        {
-          id: 1,
-          name: 'Coups de coeurs',
-          value: 'heart'
-        }
-      ]
+    let items = [
+      {
+        id: 0,
+        name: 'Visionnés',
+        value: 'eye'
+      },
+      {
+        id: 1,
+        name: 'Coups de coeurs',
+        value: 'heart'
+      }
+    ]
 
+    if (this.userLists) {
       return items.concat(copy(this.userLists.map((list, index) => {
         return {
           id: index + 2,
@@ -91,11 +86,7 @@ export default Controller.extend({
       })))
     }
 
-    return {
-      id: 0,
-      name: 'Aucune list',
-      value: null
-    }
+    return items
   }),
 
   init () {
@@ -105,50 +96,72 @@ export default Controller.extend({
 
     this.moviesContentSliced = []
 
-    this.genresItems = genres
+    this.genres = {
+      selected: null,
+      multipleSelect: true,
+      key: 'with_genres',
+      items: genres
+    }
 
-    this.sortItems = [
-      {
-        id: 0,
-        name: 'Par défaut (popularité ↗)',
-        value: 'popularity.desc'
-      },
-      {
-        id: 1,
-        name: 'Popularité ↘',
-        value: 'popularity.asc'
-      },
-      {
-        id: 2,
-        name: 'Date de réalisation ↗',
-        value: 'release_date.desc'
-      },
-      {
-        id: 3,
-        name: 'Date de réalisation ↘',
-        value: 'release_date.asc'
-      },
-      {
-        id: 4,
-        name: 'Titre de A à Z',
-        value: 'title.desc'
-      },
-      {
-        id: 5,
-        name: 'Titre de Z à A',
-        value: 'title.asc'
-      },
-      {
-        id: 6,
-        name: 'Durée du film ↗',
-        value: 'runtime.desc'
-      },
-      {
-        id: 7,
-        name: 'Durée du film ↘',
-        value: 'runtime.asc'
-      }
-    ]
+    this.sort = {
+      selected: null,
+      key: 'sort_by',
+      items: [
+        {
+          id: 0,
+          name: 'Par défaut (popularité ↗)',
+          value: 'popularity.desc'
+        },
+        {
+          id: 1,
+          name: 'Popularité ↘',
+          value: 'popularity.asc'
+        },
+        {
+          id: 2,
+          name: 'Date de réalisation ↗',
+          value: 'release_date.desc'
+        },
+        {
+          id: 3,
+          name: 'Date de réalisation ↘',
+          value: 'release_date.asc'
+        },
+        {
+          id: 4,
+          name: 'Titre de A à Z',
+          value: 'title.desc'
+        },
+        {
+          id: 5,
+          name: 'Titre de Z à A',
+          value: 'title.asc'
+        },
+        {
+          id: 6,
+          name: 'Durée du film ↗',
+          value: 'runtime.desc'
+        },
+        {
+          id: 7,
+          name: 'Durée du film ↘',
+          value: 'runtime.asc'
+        }
+      ]
+    }
+
+    this.lists = {
+      selected: null,
+      multipleSelect: true,
+      key: 'show_lists',
+      itemsKey: 'listsItems'
+    }
+
+    this.refine = {
+      selected: null,
+      key: 'refine_by',
+      itemsKey: 'refineItems'
+    }
 
     this.queryKeys = ['with_genres', 'sort_by', 'show_lists', 'refine_by']
     this.queryFilters.setKeys(this, this.queryKeys)
@@ -157,9 +170,9 @@ export default Controller.extend({
   actions: {
     sortUpdate (sort) {
       if (sort.length === 0) {
-        this.__update('sort_by', null)
+        this.queryFilters.updateFilter('sort_by', null, true)
       } else {
-        this.__update('sort_by', sort.firstObject.value)
+        this.queryFilters.updateFilter('sort_by', sort.firstObject.value, true)
       }
     },
     listsUpdate (lists) {
@@ -171,13 +184,13 @@ export default Controller.extend({
 
       str = str.substr(0, str.length - 1)
 
-      this.__update('show_lists', str)
+      this.queryFilters.updateFilter('show_lists', str, true)
     },
     refineUpdate (refine) {
       if (refine.length === 0) {
-        this.__update('refine_by', null)
+        this.queryFilters.updateFilter('refine_by', null, true)
       } else {
-        this.__update('refine_by', refine.firstObject.value)
+        this.queryFilters.updateFilter('refine_by', refine.firstObject.value, true)
       }
     },
     genresUpdate (genres) {
@@ -189,10 +202,10 @@ export default Controller.extend({
 
       str = str.substr(0, str.length - 1)
 
-      this.__update('with_genres', str)
+      this.queryFilters.updateFilter('with_genres', str, true)
     },
     titleUpdate () {
-      this.__updateMovies.perform()
+      this.__fetchData.perform()
     },
     resetFilters () {
       window.scroll({
@@ -204,12 +217,12 @@ export default Controller.extend({
 
       this.queryFilters.resetQuery()
 
-      this.__updateMovies.perform()
+      this.__fetchData.perform()
 
       this.__updateMoviesContentSliced(this.page)
     },
     actualiseFilters () {
-      this.__updateMovies.perform()
+      this.__fetchData.perform()
     },
     setScroll (scrollY) {
       set(this, 'scrollY', scrollY)
@@ -235,81 +248,13 @@ export default Controller.extend({
     }
   },
 
-  __update (key, value) {
-    this.queryFilters.updateKeys(key, value)
-
-    this.queryFilters.transition()
-  },
-
-  __checkFiltersValue: task(function* () {
+  __waitFetch: task(function* () {
     while (this.fetch.isRunning) {
-      yield timeout(300)
-    }
-    // Called by the route with refresh queryParams
-    if (this.with_genres) {
-      const genresValue = this.with_genres.split(',')
-      const genresItems = genresValue.map(value => this.genresItems.findBy('value', Number(value))).filter(value => value)
-
-      set(this, 'genres', genresItems)
-    } else {
-      set(this, 'genres', null)
+      yield timeout(500)
     }
 
-    if (this.sort_by) {
-      const sortItem = this.sortItems.findBy('value', this.sort_by)
-
-      //call didUpdateAttrs in filters-top-bar/filters-section/dropdown-button component
-      set(this, 'sort', null)
-
-      if (sortItem) {
-        set(this, 'sort', sortItem)
-      }
-    } else {
-      set(this, 'sort', null)
-    }
-
-    if (this.show_lists) {
-      const listsValue = this.show_lists.split(',')
-      const listsItems = listsValue.map(value => this.listsItems.findBy('value', value)).filter(value => value)
-
-      set(this, 'lists', listsItems)
-    } else {
-      set(this, 'lists', null)
-    }
-
-    if (this.refine_by) {
-      const refineItem = this.refineItems.findBy('value', this.refine_by)
-
-      //call didUpdateAttrs in filters-top-bar/filters-section/dropdown-button component
-      set(this, 'refine', null)
-
-      if (refineItem) {
-        set(this, 'refine', refineItem)
-      }
-    } else {
-      set(this, 'refine', null)
-    }
-
-    if (!this.isLeaving) {
-      this.__checkQueryFilters()
-    } else {
-      set(this, 'isLeaving', false)
-    }
+    this.__checkFiltersValue([this.sort, this.genres, this.lists, this.refine])
   }),
-
-  __checkQueryFilters () {
-    this.queryKeys.forEach(key => {
-      const value = get(this, key)
-
-      if (value) {
-        this.queryFilters.updateKeys(key, value)
-      } else {
-        this.queryFilters.updateKeys(key, null)
-      }
-    })
-
-    this.__updateMovies.perform()
-  },
 
   __nextPage () {
     if (!this.isFetchingNextPage && this.movies) {
@@ -330,7 +275,7 @@ export default Controller.extend({
     }
   },
 
-  __updateMovies: task(function* () {
+  __fetchData: task(function* () {
     yield timeout(750)
 
     window.scroll({
@@ -343,52 +288,52 @@ export default Controller.extend({
 
     const moviesData = this.moviesData
 
-    if (this.lists) {
+    if (this.lists.selected) {
       movies = movies.filter(movie => {
-        return movie.lists.every(movieListId => this.lists.findBy('value', movieListId) === undefined) === false
+        return movie.lists.every(movieListId => this.lists.selected.findBy('value', movieListId) === undefined) === false
       })
     }
 
-    if (this.refine) {
+    if (this.refine.selected) {
       movies = movies.filter(movie => {
-        return movie.lists.every(movieListId => this.refine.value !== movieListId) === false
+        return movie.lists.every(movieListId => this.refine.selected.value !== movieListId) === false
       })
     }
 
     movies = movies.map(movie => moviesData.findBy('id', String(movie.id)))
 
-    if (this.genres) {
+    if (this.genres.selected) {
       movies = movies.filter(movie => {
         if (movie.genres) {
-          return this.genres.every(genre => movie.genres.findBy('id', genre.value) !== undefined) === true
+          return this.genres.selected.every(genre => movie.genres.findBy('id', genre.value) !== undefined) === true
         }
       })
     }
 
-    if (this.sort) {
-      if (this.sort.value === 'popularity.desc') {
+    if (this.sort.selected) {
+      if (this.sort.selected.value === 'popularity.desc') {
         movies.sort((b, a) => a.popularity - b.popularity)
-      } else if (this.sort.value === 'popularity.asc') {
+      } else if (this.sort.selected.value === 'popularity.asc') {
         movies.sort((a, b) => a.popularity - b.popularity)
-      } else if (this.sort.value === 'release_date.desc') {
+      } else if (this.sort.selected.value === 'release_date.desc') {
         movies.sort((a, b) => {
           if (a.release_date && b.release_date) {
             return ('' + b.release_date).localeCompare(a.release_date)
           }
         })
-      } else if (this.sort.value === 'release_date.asc') {
+      } else if (this.sort.selected.value === 'release_date.asc') {
         movies.sort((b, a) => {
           if (a.release_date && b.release_date) {
             return ('' + b.release_date).localeCompare(a.release_date)
           }
         })
-      } else if (this.sort.value === 'title.desc') {
+      } else if (this.sort.selected.value === 'title.desc') {
         movies.sort((b, a) => ('' + b.title).localeCompare(a.title))
-      } else if (this.sort.value === 'title.asc') {
+      } else if (this.sort.selected.value === 'title.asc') {
         movies.sort((a, b) => ('' + b.title).localeCompare(a.title))
-      } else if (this.sort.value === 'runtime.desc') {
+      } else if (this.sort.selected.value === 'runtime.desc') {
         movies.sort((b, a) => a.runtime - b.runtime)
-      } else if (this.sort.value === 'runtime.asc') {
+      } else if (this.sort.selected.value === 'runtime.asc') {
         movies.sort((a, b) => a.runtime - b.runtime)
       }
     } else {

@@ -20,7 +20,9 @@ export default Route.extend({
     this.controllerFor('users.lists').fetch.perform(this.modelFor('users').id)
 
     setTimeout(() => {
-      this.controllerFor('users.lists').__checkFiltersValue.perform()
+      const c = this.controllerFor('users.lists')
+
+      c.__waitFetch.perform()
     })
   },
 
