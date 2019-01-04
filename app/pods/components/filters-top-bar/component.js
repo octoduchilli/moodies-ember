@@ -5,7 +5,7 @@ export default Component.extend({
   user: service('current-user'),
 
   tagName: 'div',
-  classNames: 'flex wrap work',
+  classNames: 'flex wrap work filters-top-bar',
   classNameBindings: ['user.lockFiltersTopBar:is--locked'],
 
   lock: null,

@@ -1,7 +1,7 @@
 <span class="section__title">Filtres</span>
 <div class="flex wrap">
   {{yield (hash
-    date=(component "date-picker" label=label class="filter" min=min max=max value=value)
+    date=(component "date-picker" label=label class="filter" min=min max=max value=value onClick=(action "overflowFTPforMobile"))
     input=(component "filters-top-bar/filters-section/input-text")
     dropdown=(component "filters-top-bar/filters-section/dropdown-button" onResize=onResize)
   )}}

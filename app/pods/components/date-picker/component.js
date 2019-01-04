@@ -20,6 +20,8 @@ export default Component.extend({
 
   dateUpdate: () => {},
 
+  onClick () {},
+
   click () {
     set(this, 'isOpen', true)
   },
@@ -45,6 +47,12 @@ export default Component.extend({
         if (select && select !== Number(this.value)) {
           this.dateUpdate(select)
         }
+      },
+      onOpen: () => {
+        this.onClick(true)
+      },
+      onClose: () => {
+        this.onClick(false)
       }
     })
 
