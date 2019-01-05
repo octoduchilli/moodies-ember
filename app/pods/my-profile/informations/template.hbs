@@ -95,7 +95,7 @@
         <div class="setting__user-cover-img-container">
           <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.coverImg.posX user.infos.coverImg.posY user.infos.coverImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.coverImg.path}}" alt=" " {{action "openCenterImg" "coverImg" on="click"}}>
         </div>
-        <div class="setting__button-user-img" {{action "openCenterImg" "profileImg" on="click"}}>
+        <div class="setting__button-user-img" {{action "openCenterImg" "coverImg" on="click"}}>
           Recadrer
         </div>
         <div class="setting__button-user-img" {{action "removeUserImg" "coverImg" on="click"}}>
