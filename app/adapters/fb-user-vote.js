@@ -19,20 +19,7 @@ export default FirebaseAdapter.extend({
     var log = 'DS: FirebaseAdapter#findRecord ' + typeClass.modelName + ' to ' + ref.toString()
 
     return await this._fetch(ref, log).then(function (snapshot) {
-      let votes = []
-
-      snapshot.forEach(_ => {
-        const vote = _.val()
-
-        vote.id = _.key
-
-        votes.push(vote)
-      })
-
-      return {
-        id: id,
-        votes: votes
-      }
+      return Object.assign({}, { id: id }, snapshot.val())
     })
   },
 
@@ -47,6 +34,7 @@ export default FirebaseAdapter.extend({
       if (!this._findAllHasEventsForType(typeClass)) {
         this._findAllAddEventListeners(store, typeClass, ref);
       }
+
       var results = [];
       snapshot.forEach((childSnapshot) => {
         var payload = this._assignIdToPayload(childSnapshot);
@@ -56,5 +44,5 @@ export default FirebaseAdapter.extend({
 
       return results;
     });
-  },
+  }
 })
