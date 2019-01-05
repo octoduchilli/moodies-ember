@@ -221,7 +221,13 @@ export default Controller.extend(filtersHelper, {
 
       this.__updateMoviesContentSliced(this.page)
     },
-    actualiseFilters () {
+    async actualiseFilters () {
+      this.store.unloadRecord(await this.store.find('fb-community-user-lists', this.id).then(_ => _))
+      this.store.unloadRecord(await this.store.find('fb-community-user-movies', this.id).then(_ => _))
+
+      await this.fetchLists.perform(this.id)
+      await this.fetchMovies.perform(this.id)
+
       this.__fetchData.perform()
     },
     setScroll (scrollY) {
@@ -277,10 +283,6 @@ export default Controller.extend(filtersHelper, {
 
   __fetchData: task(function* () {
     yield timeout(750)
-
-    window.scroll({
-      top: 0
-    })
 
     set(this, 'page', 1)
 

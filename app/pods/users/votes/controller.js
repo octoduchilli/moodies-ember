@@ -85,7 +85,11 @@ export default Controller.extend(filtersHelper, {
     resetFilters () {
       this.queryFilters.resetQuery()
     },
-    actualiseFilters () {
+    async actualiseFilters () {
+      this.store.unloadRecord(await this.store.find('fb-community-user-votes', this.id).then(_ => _))
+
+      await this.fetchVotes.perform(this.id)
+
       this.__fetchData.perform()
     },
     setScroll (scrollY) {
@@ -139,11 +143,6 @@ export default Controller.extend(filtersHelper, {
   },
 
   __fetchData: task(function*() {
-    window.scroll({
-      top: 0
-    })
-
-    set(this, 'scrollY', 0)
     set(this, 'page', 1)
 
     yield timeout(750)
