@@ -6,16 +6,19 @@ import { set } from '@ember/object'
 
 export default Component.extend(lerpColor, {
   media: service(),
+  user: service('current-user'),
 
   tagName: 'div',
   classNames: 'work',
+
+  movieId: null,
 
   average: null,
   newAverage: null,
 
   userPseudo: null,
 
-  onChance () {},
+  onChange () {},
 
   actions: {
     voteAverageBorderColorStyle (average) {
@@ -32,6 +35,11 @@ export default Component.extend(lerpColor, {
     },
     updateVoteAverage () {
       set(this, 'newAverage', Math.round((event.offsetX / event.target.offsetWidth) * 10))
+    },
+    onChange (average) {
+      this.user.updateLastActivityCommunity('vote', this.movieId, average)
+
+      this.onChange(average)
     }
   }
 });
