@@ -1,0 +1,10 @@
+{{#each (repeat 20) as |user|}}
+  <li class="{{styleNamespace}}__item-skeleton">
+    <div class="item-skeleton__user-profile-img"></div>
+    <div class="item-skeleton__user-infos">
+      <h1 class="user-infos__pseudo"></h1>
+      <p class="user-infos__info">Dernière apparition <span class="value">...</span></p>
+      <p class="user-infos__info">Nombre de films <span class="value">...</span></p>
+    </div>
+  </li>
+{{/each}}
