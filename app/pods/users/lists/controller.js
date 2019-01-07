@@ -256,7 +256,7 @@ export default Controller.extend(filtersHelper, {
 
   __waitFetch: task(function* () {
     while (this.fetch.isRunning) {
-      yield timeout(500)
+      yield timeout(200)
     }
 
     this.__checkFiltersValue([this.sort, this.genres, this.lists, this.refine])
@@ -282,7 +282,7 @@ export default Controller.extend(filtersHelper, {
   },
 
   __fetchData: task(function* () {
-    yield timeout(750)
+    yield timeout(300)
 
     set(this, 'page', 1)
 
@@ -372,6 +372,8 @@ export default Controller.extend(filtersHelper, {
       return
     }
 
+    set(this, 'isLeaving', false)
+    set(this, 'scrollY', null)
     set(this, 'id', id)
 
     this.progress.reset()
