@@ -1,25 +1,18 @@
 <div class="community work">
   <div class="community__last-activities">
     <h1 class="last-activities__title">Les dernières activitées</h1>
-    <ul class="last-activities__list">
-      {{#each activityList as |activity|}}
-        <li class="list__item">
-          <h1 class="item__title">{{activity.title}}</h1>
-          {{#link-to 'movie' activity.movie.id class="item__movie-img"}}
-            <img class="img" src="https://image.tmdb.org/t/p/w500{{activity.movie.path}}" alt="">
-          {{/link-to}}
-          {{#link-to 'users' activity.user.id class="item__user"}}
-            <div class="user__img">
-              <img class="img" style="{{compute (action "updateUserProfileImgPos") activity.user.posX activity.user.posY activity.user.scale}}" src="https://image.tmdb.org/t/p/w500{{activity.user.path}}" alt="">
-            </div>
-            <h1 class="user__pseudo">{{activity.user.pseudo}}</h1>
-          {{/link-to}}
-          <p class="item__info">Le <span class="value">{{moment-format activity.createdAt "Do MMMM YYYY à HH:mm"}}</span></p>
-          {{#each activity.infos as |info|}}
-            <p class="item__info">{{info.message}} <span class="value">{{info.value}}</span></p>
-          {{/each}}
-        </li>
-      {{/each}}
-    </ul>
+    {{last-activities}}
   </div>
+  {{#filters-top-bar class="community__filters-top-bar" as |topbar|}}
+    <p class="filters-top-bar__title">Recherche d'utilisateur</p>
+    {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
+      {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sort.items value=sort.selected onSelect=(action "sortUpdate")}}
+      {{filters.input placeholder="Pseudo" type="text" value=pseudo.selected onInput=(perform pseudoUpdate)}}
+    {{/topbar.filters}}
+  {{/filters-top-bar}}
+  {{#if __fetchData.isRunning}}
+    {{user-list-skeleton class="user-list"}}
+  {{else}}
+    {{user-list class="user-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=users}}
+  {{/if}}
 </div>

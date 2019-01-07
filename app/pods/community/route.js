@@ -1,61 +1,32 @@
 import Route from '@ember/routing/route'
 import RouteHistoryMixin from 'ember-route-history/mixins/routes/route-history'
-import { set } from '@ember/object'
+import { inject as service } from '@ember/service'
 
 export default Route.extend(RouteHistoryMixin, {
+  user: service('current-user'),
+
+  queryParams: {
+    'search_pseudo': {
+      refreshModel: true
+    },
+    'sort_by': {
+      refreshModel: true
+    }
+  },
+
   model () {
-    return this.store.findAll('fb-community-last').then(lasts => {
-      let model = {}
+    setTimeout(() => {
+      const c = this.controllerFor('community')
 
-      lasts.forEach(last => set(model, last.id, last))
-
-      return model
+      c.__checkFiltersValue([c.sort, c.pseudo], this.user.reset === 'community')
     })
   },
 
-  setupController (controller, model) {
-    this._super(controller, model)
-
-    controller.set('activityList', [])
-
-    controller.get('activityList').pushObject(Object.assign(
-      {},
-      {
-        title: 'Dernier ajout',
-        infos: [
-          {
-            message: 'Dans sa liste',
-            value: model.add.value
-          }
-        ],
-        createdAt: model.add.createdAt,
-        movie: model.add.movie,
-        user: model.add.user
+  actions: {
+    willTransition ({ targetName }) {
+      if (targetName !== 'community') {
+        this.controller.set('isLeaving', true)
       }
-    ))
-    controller.get('activityList').pushObject(Object.assign(
-      {},
-      {
-        title: 'Dernier favori',
-        createdAt: model.favorite.createdAt,
-        movie: model.favorite.movie,
-        user: model.favorite.user
-      }
-    ))
-    controller.get('activityList').pushObject(Object.assign(
-      {},
-      {
-        title: 'Dernier vote',
-        infos: [
-          {
-            message: 'A noté',
-            value: `${model.vote.value} / 10`
-          }
-        ],
-        createdAt: model.vote.createdAt,
-        movie: model.vote.movie,
-        user: model.vote.user
-      }
-    ))
+    }
   }
 });
