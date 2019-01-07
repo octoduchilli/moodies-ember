@@ -8,11 +8,11 @@ export default Route.extend({
   },
 
   model () {
-    this.controllerFor('users.votes').fetch.perform(this.modelFor('users').id)
+    const c = this.controllerFor('users.votes')
+
+    c.fetch.perform(this.modelFor('users').id)
 
     setTimeout(() => {
-      const c = this.controllerFor('users.votes')
-
       c.__waitFetch.perform()
     })
   },

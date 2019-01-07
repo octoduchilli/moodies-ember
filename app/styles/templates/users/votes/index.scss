@@ -4,7 +4,6 @@
 
   z-index: 3;
 
-  min-height: 80vh;
   min-width: 100%;
 
   background: linear-gradient(to right, rgba(black, 0), rgba($black2, .8) 20%);
@@ -18,6 +17,8 @@
     position: static;
 
     background: linear-gradient(to right, rgba(black, 0), rgba($darkblue2, .8) 20%);
+
+    box-shadow: 6px 3px 9px rgba(0, 0, 0, 0.2);
 
     .div-lock-icon {
       display: none;
@@ -55,6 +56,7 @@
 
 @media (max-width: 767px) {
   .users__votes {
+    min-height: 80vh;
 
     .votes__total-results {
       padding: 0;

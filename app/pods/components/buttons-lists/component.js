@@ -1,4 +1,5 @@
 import Component from '@ember/component'
+import firebase from 'firebase'
 import { inject as service } from '@ember/service'
 import { set, get } from '@ember/object'
 import { htmlSafe } from '@ember/string'
@@ -7,7 +8,6 @@ export default Component.extend({
   tagName: 'ul',
   classNames: 'flex work',
 
-  firebaseApp: service(),
   session: service(),
   media: service(),
   store: service(),
@@ -96,13 +96,13 @@ export default Component.extend({
   actions: {
     async selectOrDeselect (list) {
       if (list.isSelected) {
-        await this.firebaseApp.database().ref(`users/${get(this.session, 'uid')}/films/${this.movie.id}`).update({ [list.id]: null })
+        await firebase.database().ref(`users/${get(this.session, 'uid')}/films/${this.movie.id}`).update({ [list.id]: null })
 
         this.__updateUserMoviesAndUserMoviesData(list, false)
 
         set(list, 'isSelected', false)
       } else {
-        await this.firebaseApp.database().ref(`users/${get(this.session, 'uid')}/films/${this.movie.id}`).update({ [list.id]: true })
+        await firebase.database().ref(`users/${get(this.session, 'uid')}/films/${this.movie.id}`).update({ [list.id]: true })
 
         this.__updateUserMoviesAndUserMoviesData(list, true)
 
@@ -178,7 +178,17 @@ export default Component.extend({
         icon: 'plus-circle',
         type: 'movie'
       })
+
+      if (list.id !== 'heart') {
+        this.user.updateLastActivityCommunity('add', this.movie.id, list.name)
+      }
     }
+
+    if (list.id === 'heart') {
+      this.user.updateLastActivityCommunity('favorite', this.movie.id)
+    }
+
+    this.user.__updateUserInfosData()
   },
 
   __setOtherListsElPosition () {

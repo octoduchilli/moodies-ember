@@ -1,9 +1,9 @@
 <div class="{{styleNamespace}}__container">
   {{#if (not userPseudo)}}
     {{#if media.isMobile}}
-      <div class="{{styleNamespace}}__mouse-tracker" {{action (pipe-action (action "updateVoteAverage") (action onChange newAverage) (action (mut newAverage) null)) onChange newAverage on="click"}}></div>
+      <div class="{{styleNamespace}}__mouse-tracker" {{action (pipe-action (action "updateVoteAverage") (action "onChange" newAverage) (action (mut newAverage) null)) "onChange" newAverage on="click"}}></div>
     {{else}}
-      <div class="{{styleNamespace}}__mouse-tracker" {{action (action "updateVoteAverage") on="mouseMove"}} {{action (mut newAverage) null on="mouseLeave"}} {{action onChange newAverage on="click"}}></div>
+      <div class="{{styleNamespace}}__mouse-tracker" {{action (action "updateVoteAverage") on="mouseMove"}} {{action (mut newAverage) null on="mouseLeave"}} {{action "onChange" newAverage on="click"}}></div>
     {{/if}}
   {{/if}}
   <div class="{{styleNamespace}}__bg" style="{{compute (action "voteAverageBgStyle") (if (not-eq null newAverage) newAverage average)}}"></div>

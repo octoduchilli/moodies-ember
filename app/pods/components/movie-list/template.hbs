@@ -86,7 +86,7 @@
               {{/if}}
             {{/if}}
           {{else}}
-            {{#if (or (or media.isMobile (eq item.id hover)) (eq view.userButton "visible"))}}
+            {{#if (or (eq item.id hover) (eq view.userButton "visible"))}}
               {{buttons-lists-fake movie=item click=(action "notifyNotConnected")}}
             {{/if}}
           {{/if}}

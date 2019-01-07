@@ -24,6 +24,11 @@
       {{/link-to}}
     </div>
     <div class="setting">
+      {{#link-to 'users' session.uid class="setting__button"}}
+        Voir sa fiche utilisateur
+      {{/link-to}}
+    </div>
+    <div class="setting">
       <p class="setting__message">Profil privé</p>
       {{basic-switch-option check=user.infos.private onCheck=(action "updatePrivateSetting")}}
     </div>
@@ -95,7 +100,7 @@
         <div class="setting__user-cover-img-container">
           <img class="setting__user-img" style="{{compute (action "updateUserProfileImgPos") user.infos.coverImg.posX user.infos.coverImg.posY user.infos.coverImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.infos.coverImg.path}}" alt=" " {{action "openCenterImg" "coverImg" on="click"}}>
         </div>
-        <div class="setting__button-user-img" {{action "openCenterImg" "profileImg" on="click"}}>
+        <div class="setting__button-user-img" {{action "openCenterImg" "coverImg" on="click"}}>
           Recadrer
         </div>
         <div class="setting__button-user-img" {{action "removeUserImg" "coverImg" on="click"}}>
@@ -151,22 +156,22 @@
       <div class="statistic">
         <p class="statistic__message">
           Nombre total de films visionnés :
-          <span class="message__value">{{or totalViewedMovies.total 0}}</span>
+          <span class="message__value">{{or totalMoviesViewed.total 0}}</span>
         </p>
         <div class="statistic__little-statistic">
           <p class="little-statistic__message">
-            {{compute (action "minToMDHM") (or totalViewedMovies.totalRuntime 0)}}
+            {{compute (action "minToMDHM") (or totalMoviesViewed.totalRuntime 0)}}
           </p>
         </div>
       </div>
       <div class="statistic">
         <p class="statistic__message">
           Nombre total de films favoris :
-          <span class="message__value">{{or totalFavoriteMovies.total 0}}</span>
+          <span class="message__value">{{or totalMoviesFavorite.total 0}}</span>
         </p>
         <div class="statistic__little-statistic">
           <p class="little-statistic__message">
-            {{compute (action "minToMDHM") (or totalFavoriteMovies.totalRuntime 0)}}
+            {{compute (action "minToMDHM") (or totalMoviesFavorite.totalRuntime 0)}}
           </p>
         </div>
       </div>

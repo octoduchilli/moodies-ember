@@ -21,15 +21,20 @@
   </div>
 {{else}}
   <div class="users work {{if bannerIsVisible 'banner--is-visible'}}">
-    <img class="users__cover-img" src="https://image.tmdb.org/t/p/original{{infos.coverImg.path}}" alt="" style="{{compute (action "styleCoverImg") infos.coverImg.posX infos.coverImg.posY infos.coverImg.scale}}">
+    {{#if infos.coverImg.path}}
+      <img class="users__cover-img" src="https://image.tmdb.org/t/p/original{{infos.coverImg.path}}" alt="" style="{{compute (action "styleCoverImg") infos.coverImg.posX infos.coverImg.posY infos.coverImg.scale}}">
+    {{/if}}
     <div class="users__veil"></div>
     <div class="users__show-banner" {{action (toggle "bannerIsVisible" this) on="click"}}>
       {{fa-icon "arrow-right" class="show-banner__icon" rotate=(if bannerIsVisible 180 0) size=2 color="white"}}
     </div>
     <div class="users__banner">
       <div class="banner__profile-img">
-        <img class="profile-img__poster" src="https://image.tmdb.org/t/p/original{{infos.profileImg.path}}" alt="" style="{{compute (action "styleProfileImg") infos.profileImg.posX infos.profileImg.posY infos.profileImg.scale}}">
-        <div class="profile-img__color"></div>
+        {{#if infos.profileImg.path}}
+          <img class="profile-img__poster" src="https://image.tmdb.org/t/p/original{{infos.profileImg.path}}" alt="" style="{{compute (action "styleProfileImg") infos.profileImg.posX infos.profileImg.posY infos.profileImg.scale}}">
+        {{else}}
+          <h1 class="profile-img__sliced-pseudo">{{compute (action "slicedPseudo") infos.pseudo}}</h1>
+        {{/if}}
       </div>
       <h1 class="banner__pseudo">{{infos.pseudo}}</h1>
       <p class="banner__info">Inscrit le <span class="value">{{moment-format infos.createdAt "Do MMMM YYYY"}}</span></p>

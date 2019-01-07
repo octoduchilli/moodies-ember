@@ -1,25 +1,19 @@
 import Component from '@ember/component'
 import { inject as service } from '@ember/service'
-import { set } from '@ember/object'
+import { htmlSafe } from '@ember/string'
 
 export default Component.extend({
   notify: service('notification-messages'),
   media: service(),
-  user: service('current-user'),
 
   tagName: 'ul',
-  classNames: 'work',
-
-  hover: null,
+  classNames: 'flex wrap jus-center work',
 
   items: null,
 
-  scrollY: null,
-
-  userPseudo: null,
+  scrollY: 0,
 
   scroll () {},
-  deleteItem () {},
 
   didInsertElement () {
     this._super(...arguments)
@@ -54,26 +48,18 @@ export default Component.extend({
   },
 
   actions: {
-    async updateVote ({ id, title }, average) {
-      await this.user.updateVote(id, title, average).then(vote => {
-        const currentVote = this.items.findBy('id', id)
-
-        set(currentVote, 'average', average)
-        set(currentVote, 'modifiedAt', vote.modifiedAt)
-      })
-
-      const vote = this.items.findBy('id', id)
-
-      set(vote, 'average', average)
+    notifyUserPrivate (user) {
+      this.notify.error(`${user.pseudo} a mit son profil en privé. Vous ne pouvez pas y accéder`)
     },
-    async deleteVote (vote) {
-      await this.user.deleteVote(vote.id)
-
-      this.items.removeObject(vote)
-
-      this.notify.success(`Votre vote pour ${vote.title} a bien été supprimé`)
-
-      this.deleteItem(vote)
+    updateUserProfileImgPos (x, y, scale) {
+      return htmlSafe(`transform: translate(calc(-50% + ${x * (120 / 150)}px), calc(-50% + ${y * (120 / 150)}px)) scale(${scale})`)
+    },
+    slicedPseudo (pseudo) {
+      if (pseudo !== 'Aucun pseudo') {
+        return pseudo[0].toUpperCase()
+      } else {
+        return '-'
+      }
     }
   },
 

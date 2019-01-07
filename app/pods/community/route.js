@@ -1,6 +1,32 @@
 import Route from '@ember/routing/route'
 import RouteHistoryMixin from 'ember-route-history/mixins/routes/route-history'
+import { inject as service } from '@ember/service'
 
 export default Route.extend(RouteHistoryMixin, {
+  user: service('current-user'),
 
+  queryParams: {
+    'search_pseudo': {
+      refreshModel: true
+    },
+    'sort_by': {
+      refreshModel: true
+    }
+  },
+
+  model () {
+    setTimeout(() => {
+      const c = this.controllerFor('community')
+
+      c.__checkFiltersValue([c.sort, c.pseudo], this.user.reset === 'community')
+    })
+  },
+
+  actions: {
+    willTransition ({ targetName }) {
+      if (targetName !== 'community') {
+        this.controller.set('isLeaving', true)
+      }
+    }
+  }
 });
