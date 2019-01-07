@@ -1,7 +1,7 @@
 <div class="search">
   {{#filters-top-bar onResize=(action "setTopbarHeight") as |topbar|}}
     {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
-      {{filters.input placeholder="Recherche" type="text" value=text.selected onInput=(perform textUpdate)}}
+      {{filters.input class="search__text-input" placeholder="Recherche" type="text" value=text.selected onInput=(perform textUpdate)}}
       {{filters.dropdown label="Type de recherche" smallLabel="Type" items=type.items value=type.selected onSelect=(action "typeUpdate")}}
     {{/topbar.filters}}
     {{#topbar.options as |options|}}
@@ -17,6 +17,12 @@
   <div class="little-total-results">
     <p class="total">Nombres de titres : <span class="higher">{{if __fetchData.isRunning "..." totalResults}}</span></p>
   </div>
+
+  {{#if (and (not items) (not __fetchData.isRunning))}}
+    <div class="search__no-items" {{action "focus" "search__text-input" on="click"}}>
+      Commencez votre recherche !
+    </div>
+  {{/if}}
 
   {{#if (eq type.selected.value 'movie')}}
     {{#if __fetchData.isRunning}}
