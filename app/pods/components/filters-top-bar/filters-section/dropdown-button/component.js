@@ -36,32 +36,11 @@ export default Component.extend({
   init () {
     this._super(...arguments)
 
-    this.__initIsSelectedAttr()
-  },
-
-  didInsertElement () {
-    this._super(...arguments)
-
-    this.onResize()
+    this.__init()
   },
 
   didUpdateAttrs() {
-    this.__initIsSelectedAttr()
-
-    if (this.value !== null) {
-
-      if (this.multipleSelect) {
-        this.value.forEach(item => {
-          set(item, 'isSelected', true)
-        })
-      } else {
-        set(this, 'value.isSelected', true)
-      }
-    }
-
-    // Resize is called by this component because the dropdown select label could resize the filters topbar height
-    this.onResize()
-    this.__initComputedLabel()
+    this.__init()
   },
 
   actions: {
@@ -100,6 +79,25 @@ export default Component.extend({
       this.__updateMinWidth()
       this.onResize()
     }
+  },
+
+  __init () {
+    this.__initIsSelectedAttr()
+
+    if (this.value !== null) {
+
+      if (this.multipleSelect) {
+        this.value.forEach(item => {
+          set(item, 'isSelected', true)
+        })
+      } else {
+        set(this, 'value.isSelected', true)
+      }
+    }
+
+    // Resize is called by this component because the dropdown select label could resize the filters topbar height
+    this.onResize()
+    this.__initComputedLabel()
   },
 
   __sendOnSelect () {
