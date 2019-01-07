@@ -136,7 +136,7 @@ export default Component.extend({
 
         yield this.session.open('firebase', { provider: 'password', email: this.emailSignUp, password: this.passwordSignUp })
 
-        yield this.user.updateInfos({
+        yield this.user.createInfos({
           firstname: this.firstnameSignUp,
           lastname: this.lastnameSignUp,
           pseudo: this.pseudoSignUp,
