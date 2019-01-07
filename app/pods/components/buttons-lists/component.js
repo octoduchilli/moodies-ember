@@ -187,6 +187,8 @@ export default Component.extend({
     if (list.id === 'heart') {
       this.user.updateLastActivityCommunity('favorite', this.movie.id)
     }
+
+    this.user.__updateUserInfosData()
   },
 
   __setOtherListsElPosition () {
