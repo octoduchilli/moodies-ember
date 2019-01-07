@@ -23,9 +23,11 @@ export default Controller.extend({
     return null
   }),
 
+  moviesDataWithListsAndVotes: null,
+
   totalMovies: null,
-  totalViewedMovies: null,
-  totalFavoriteMovies: null,
+  totalMoviesViewed: null,
+  totalMoviesFavorite: null,
   likedGenres: null,
   totalVotes: null,
 
@@ -89,93 +91,89 @@ export default Controller.extend({
       yield timeout(300)
     }
 
-    yield all([
-      timeout(1000),
-      this.__initTotalMovies(),
-      this.__initTotalViewedMovies(),
-      this.__initTotalFavoriteMovies(),
-      this.__initLikedGenres(),
-      this.__initTotalVotes()
-    ])
+    this.__initMoviesDataWithListsAndVotes()
+
+    this.__initAllStats()
   }),
 
-  __initTotalMovies () {
-    let totalRuntime = 0
+  __initMoviesDataWithListsAndVotes () {
+    let moviesDataWithLists = this.user.movies.map(movie => {
+      const movieData = this.user.moviesData.findBy('id', movie.id)
 
-    if (this.user.movies) {
-      this.user.movies.forEach(movie => {
-        const { runtime } = this.user.moviesData.findBy('id', movie.id)
-
-        totalRuntime += runtime || 0
-      })
-    }
-
-    set(this, 'totalMovies', {
-      total: this.user.movies ? this.user.movies.length : 0,
-      totalRuntime: totalRuntime,
+      return Object.assign(movie, { runtime: movieData.runtime, genres: movieData.genres })
     })
+
+    this.user.votes.forEach(vote => {
+      let movieDataWithLists = moviesDataWithLists.findBy('id', vote.id)
+
+      if (movieDataWithLists) {
+        movieDataWithLists = Object.assign(movieDataWithLists, { vote: vote })
+      } else {
+        moviesDataWithLists.push({ vote: vote })
+      }
+    })
+
+    set(this, 'moviesDataWithListsAndVotes', moviesDataWithLists)
   },
 
-  __initTotalViewedMovies () {
-    let total = 0
-    let totalRuntime = 0
-
-    if (this.user.movies) {
-      this.user.movies.forEach(movie => {
-        if (movie.lists.find(list => list === 'eye')) {
-          const { runtime } = this.user.moviesData.findBy('id', movie.id)
-
-          totalRuntime += runtime || 0
-          total++
-        }
-      })
+  __initAllStats () {
+    let totalMovies = {
+      total: 0,
+      totalRuntime: 0
     }
 
-    set(this, 'totalViewedMovies', {
-      total: total,
-      totalRuntime: totalRuntime,
-    })
-  },
-
-  __initTotalFavoriteMovies () {
-    let total = 0
-    let totalRuntime = 0
-
-    if (this.user.movies) {
-      this.user.movies.forEach(movie => {
-        if (movie.lists.find(list => list === 'heart')) {
-          const { runtime } = this.user.moviesData.findBy('id', movie.id)
-
-          totalRuntime += runtime || 0
-          total++
-        }
-      })
+    let totalMoviesViewed = {
+      total: 0,
+      totalRuntime: 0
     }
 
-    set(this, 'totalFavoriteMovies', {
-      total: total,
-      totalRuntime: totalRuntime,
-    })
-  },
+    let totalMoviesFavorite = {
+      total: 0,
+      totalRuntime: 0
+    }
 
-  __initLikedGenres () {
+    let totalVotes = {
+      total: 0,
+      average: 0
+    }
+
     let genresCounter = {}
 
-    if (this.user.movies) {
-      this.user.movies.forEach(movie => {
-        const { genres } = this.user.moviesData.findBy('id', movie.id)
+    this.moviesDataWithListsAndVotes.forEach(movie => {
+      totalMovies.total++
+      totalMovies.totalRuntime += movie.runtime || 0
 
-        if (genres) {
-          genres.forEach(genre => {
-            if (genresCounter[genre.id]) {
-              genresCounter[genre.id] += 1
-            } else {
-              genresCounter[genre.id] = 1
-            }
-          })
+      if (movie.lists) {
+        if (movie.lists.find(list => list === 'eye')) {
+          totalMoviesViewed.total++
+          totalMoviesViewed.totalRuntime += movie.runtime || 0
         }
-      })
-    }
+
+        if (movie.lists.find(list => list === 'heart')) {
+          totalMoviesFavorite.total++
+          totalMoviesFavorite.totalRuntime += movie.runtime || 0
+        }
+      }
+
+      if (movie.genres) {
+        movie.genres.forEach(genre => {
+          if (genresCounter[genre.id]) {
+            genresCounter[genre.id] += 1
+          } else {
+            genresCounter[genre.id] = 1
+          }
+        })
+      }
+
+      if (movie.vote) {
+        totalVotes.total++
+        totalVotes.average += movie.vote.average
+      }
+    })
+
+    totalVotes.average = totalVotes.average / totalVotes.total
+
+    totalVotes.average = totalVotes.average.toFixed(1)
 
     const likedGenres = Object.entries(genresCounter).sort((a, b) => b[1] - a[1]).slice(0, 3).map(genre => {
       const g = this.genresItems.find(_ => Number(_.value) === Number(genre[0]))
@@ -187,25 +185,11 @@ export default Controller.extend({
       }
     })
 
+    set(this, 'totalMovies', totalMovies)
+    set(this, 'totalMoviesViewed', totalMoviesViewed)
+    set(this, 'totalMoviesFavorite', totalMoviesFavorite)
     set(this, 'likedGenres', likedGenres)
-  },
-
-  __initTotalVotes () {
-    let total = 0
-    let average = null
-
-    if (this.user.votes) {
-      total = this.user.votes.length
-
-      if (total) {
-        average = this.user.votes.map(vote => vote.average).reduce((a, b) => a + b) / total
-      }
-    }
-
-    set(this, 'totalVotes', {
-      total: total,
-      average: average ? Number(average.toFixed(1)) : null
-    })
+    set(this, 'totalVotes', totalVotes)
   },
 
   savePseudo: task(function*() {
