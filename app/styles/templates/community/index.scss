@@ -4,8 +4,6 @@
 
   color: $white;
 
-  padding-bottom: 120px;
-
   .community__last-activities {
     display: flex;
     align-items: center;
@@ -14,12 +12,16 @@
 
     padding: 10px;
 
-    background: $black;
+    background: linear-gradient(to left top, $black, $black2, $black);
 
     .last-activities__title {
       margin: 20px 20px 20px 0;
 
       text-align: center;
+
+      font-size: 1.3em;
+
+      letter-spacing: 1px;
     }
 
     .last-activities__list {
@@ -132,6 +134,48 @@
             font-size: 1.05em;
           }
         }
+      }
+    }
+  }
+
+  .community__filters-top-bar {
+    left: auto;
+    top: auto;
+
+    width: auto;
+
+    position: static;
+
+    background: $darkblue2;
+
+    .filters-top-bar__title {
+      margin-top: 20px;
+      margin-bottom: 10px;
+
+      text-align: center;
+
+      font-size: 1.2em;
+
+      letter-spacing: 1px;
+    }
+
+    .div-lock-icon {
+      display: none;
+    }
+  }
+
+  .user-list {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .community {
+
+    .community__filters-top-bar {
+
+      .container {
+        overflow: visible;
       }
     }
   }
