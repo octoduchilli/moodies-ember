@@ -15,6 +15,14 @@ export default Route.extend(RouteHistoryMixin, {
   },
 
   model () {
+    const c = this.controllerFor('community')
+
+    if (!c.__fetchData.performCount) {
+      window.scroll({
+        top: 0
+      })
+    }
+
     setTimeout(() => {
       const c = this.controllerFor('community')
 
