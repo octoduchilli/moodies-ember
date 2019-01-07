@@ -51,11 +51,21 @@ export default Controller.extend(filtersHelper, {
         },
         {
           id: 4,
+          name: 'Note attribuée ↗',
+          value: 'vote_average.desc'
+        },
+        {
+          id: 5,
+          name: 'Note attribuée ↘',
+          value: 'vote_average.asc'
+        },
+        {
+          id: 6,
           name: 'Titre de A à Z',
           value: 'title.desc'
         },
         {
-          id: 5,
+          id: 7,
           name: 'Titre de Z à A',
           value: 'title.asc'
         }
@@ -139,7 +149,7 @@ export default Controller.extend(filtersHelper, {
       top: 0
     })
 
-    set(this, 'scrollY', 0)
+    set(this, 'scrollY', null)
     set(this, 'page', 1)
 
     yield timeout(750)
@@ -182,6 +192,14 @@ export default Controller.extend(filtersHelper, {
             if (a.modifiedAt && b.modifiedAt) {
               return new Date(b.modifiedAt) - new Date(a.modifiedAt)
             }
+          })
+        } else if (this.sort.selected.value === 'vote_average.desc') {
+          votes.sort((a, b) => {
+            return b.average - a.average
+          })
+        } else if (this.sort.selected.value === 'vote_average.asc') {
+          votes.sort((b, a) => {
+            return b.average - a.average
           })
         } else if (this.sort.selected.value === 'title.desc') {
           votes.sort((b, a) => ('' + b.title).localeCompare(a.title))

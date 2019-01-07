@@ -8,6 +8,7 @@ export default Controller.extend(filtersHelper, {
   queryFilters: service(),
   progress: service('page-progress'),
   session: service(),
+  media: service(),
 
   isFetchingNextPage: false,
   isLeaving: false,
@@ -58,11 +59,21 @@ export default Controller.extend(filtersHelper, {
         },
         {
           id: 4,
+          name: 'Note attribuée ↗',
+          value: 'vote_average.desc'
+        },
+        {
+          id: 5,
+          name: 'Note attribuée ↘',
+          value: 'vote_average.asc'
+        },
+        {
+          id: 6,
           name: 'Titre de A à Z',
           value: 'title.desc'
         },
         {
-          id: 5,
+          id: 7,
           name: 'Titre de Z à A',
           value: 'title.asc'
         }
@@ -109,7 +120,7 @@ export default Controller.extend(filtersHelper, {
 
   __waitFetch: task(function* () {
     while (this.fetch.isRunning) {
-      yield timeout(300)
+      yield timeout(200)
     }
 
     this.__checkFiltersValue([this.sort])
@@ -186,6 +197,14 @@ export default Controller.extend(filtersHelper, {
               return new Date(b.modifiedAt) - new Date(a.modifiedAt)
             }
           })
+        } else if (this.sort.selected.value === 'vote_average.desc') {
+          votes.sort((a, b) => {
+            return b.average - a.average
+          })
+        } else if (this.sort.selected.value === 'vote_average.asc') {
+          votes.sort((b, a) => {
+            return b.average - a.average
+          })
         } else if (this.sort.selected.value === 'title.desc') {
           votes.sort((b, a) => ('' + b.title).localeCompare(a.title))
         } else if (this.sort.selected.value === 'title.asc') {
@@ -210,6 +229,8 @@ export default Controller.extend(filtersHelper, {
       return
     }
 
+    set(this, 'isLeaving', false)
+    set(this, 'scrollY', null)
     set(this, 'id', id)
 
     this.progress.reset()
