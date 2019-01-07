@@ -6,6 +6,7 @@ import { set } from '@ember/object'
 
 export default Controller.extend({
   progress: service('page-progress'),
+  notify: service('notification-messages'),
   router: service(),
   media: service(),
   user: service('current-user'),
@@ -43,6 +44,9 @@ export default Controller.extend({
       style += `transform: translate(calc(-50% + ${x || 0}px), calc(-50% + ${y || 0}px)) scale(${scale || 1})`
 
       return htmlSafe(style)
+    },
+    slicedPseudo (pseudo) {
+      return pseudo[0].toUpperCase()
     }
   },
 
@@ -66,7 +70,7 @@ export default Controller.extend({
       id: id,
       name: this.infos.pseudo,
       icon: 'user',
-      type: 'users'
+      type: 'users.lists'
     })
 
     this.progress.update(100)
@@ -74,49 +78,12 @@ export default Controller.extend({
 
   fetchInfos: task(function* (id) {
     yield this.store.find('fb-community-user-infos', id).then(infos => {
+      if (infos.private) {
+        this.notify.error(`${infos.pseudo} a mit son profil en privé. Vous ne pouvez pas y accéder`)
+
+        this.router.transitionTo('community')
+      }
       set(this, 'infos', infos)
     })
-  }),
-
-  fetchLists: task(function* (id) {
-    yield this.store.find('fb-community-user-lists', id).then(({ lists }) => {
-      set(this, 'lists', lists)
-    })
-  }),
-
-  fetchMovies: task(function*(id) {
-    yield this.store.find('fb-community-user-movies', id).then(({ movies }) => {
-      set(this, 'movies', movies)
-    })
-
-    yield this.fetchMoviesData(this.movies)
-  }),
-
-  fetchVotes: task(function*(id) {
-    yield this.store.find('fb-community-user-votes', id).then(({ votes }) => {
-      set(this, 'votes', votes)
-    })
-
-    yield this.fetchMoviesData(this.votes)
-  }),
-
-  async fetchMoviesData (items) {
-    if (this.moviesData.length === 0) {
-      const promises = await items.map(item => this.store.find('fb-movies-data', item.id).then(_ => _))
-
-      return await Promise.all(promises).then(moviesData => set(this, 'moviesData', moviesData))
-    } else {
-      let promises = await items.map(item => {
-        const movie = this.moviesData.findBy('id', item.id)
-
-        if (!movie) {
-          return this.store.find('fb-movies-data', item.id).then(_ => _)
-        }
-      })
-
-      promises = promises.filter(promise => promise)
-
-      return await Promise.all(promises).then(moviesData => set(this, 'moviesData', moviesData.concat(this.moviesData)))
-    }
-  }
+  })
 });
