@@ -8,15 +8,15 @@
       <h1 class="banner__pseudo"></h1>
       <p class="banner__info">Inscrit le <span class="value">...</span></p>
       <p class="banner__info last-child">Dernière apparition le <span class="value">...</span></p>
-      {{#link-to 'users.statistics' class="banner__link"}}
-      Voir les statistiques
-      {{/link-to}}
-      {{#link-to 'users.lists' class="banner__link"}}
-      Voir les listes
-      {{/link-to}}
-      {{#link-to 'users.votes' class="banner__link"}}
-      Voir les votes
-      {{/link-to}}
+      <div class="banner__link">
+        Voir les statistiques
+      </div>
+      <div class="banner__link">
+        Voir les listes
+      </div>
+      <div class="banner__link">
+        Voir les votes
+      </div>
     </div>
   </div>
 {{else}}
@@ -39,15 +39,33 @@
       <h1 class="banner__pseudo">{{infos.pseudo}}</h1>
       <p class="banner__info">Inscrit le <span class="value">{{moment-format infos.createdAt "Do MMMM YYYY"}}</span></p>
       <p class="banner__info last-child">Dernière apparition le <span class="value">{{moment-format infos.lastConnection "Do MMMM YYYY"}}</span></p>
-      {{#link-to 'users.statistics' class="banner__link"}}
-      Voir les statistiques
-      {{/link-to}}
-      {{#link-to 'users.lists' class="banner__link"}}
-      Voir les listes
-      {{/link-to}}
-      {{#link-to 'users.votes' class="banner__link"}}
-      Voir les votes
-      {{/link-to}}
+      {{#if (eq currentRouteName "users.statistics")}}
+        {{#link-to 'users' class="banner__link"}}
+        Voir les statistiques
+        {{/link-to}}
+      {{else}}
+        {{#link-to 'users.statistics' class="banner__link"}}
+          Voir les statistiques
+        {{/link-to}}
+      {{/if}}
+      {{#if (eq currentRouteName "users.lists")}}
+        {{#link-to 'users' class="banner__link"}}
+          Voir les listes
+        {{/link-to}}
+      {{else}}
+        {{#link-to 'users.lists' class="banner__link"}}
+          Voir les listes
+        {{/link-to}}
+      {{/if}}
+      {{#if (eq currentRouteName "users.votes")}}
+        {{#link-to 'users' class="banner__link"}}
+          Voir les votes
+        {{/link-to}}
+      {{else}}
+        {{#link-to 'users.votes' class="banner__link"}}
+          Voir les votes
+        {{/link-to}}
+      {{/if}}
     </div>
     {{outlet}}
   </div>

@@ -2,7 +2,7 @@ import Controller from '@ember/controller'
 import { inject as service } from '@ember/service'
 import { task, timeout, all } from 'ember-concurrency'
 import { htmlSafe } from '@ember/string'
-import { set } from '@ember/object'
+import { set, computed } from '@ember/object'
 
 export default Controller.extend({
   progress: service('page-progress'),
@@ -19,6 +19,10 @@ export default Controller.extend({
   votes: null,
 
   bannerIsVisible: true,
+
+  currentRouteName: computed('router.currentRouteName', function () {
+    return this.router.currentRouteName
+  }),
 
   actions: {
     styleCoverImg (x, y, scale) {
