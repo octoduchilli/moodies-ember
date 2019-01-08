@@ -14,7 +14,7 @@ export default Route.extend(RouteHistoryMixin, {
     }
   },
 
-  model () {
+  beforeModel () {
     const c = this.controllerFor('community')
 
     if (!c.__fetchData.performCount) {
@@ -22,7 +22,9 @@ export default Route.extend(RouteHistoryMixin, {
         top: 0
       })
     }
+  },
 
+  model () {
     setTimeout(() => {
       const c = this.controllerFor('community')
 
