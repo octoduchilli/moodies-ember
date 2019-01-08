@@ -7,7 +7,7 @@
   {{#if otherListsOpen}}
     {{#if (eq otherLists.length 0)}}
       {{#link-to 'my-profile.lists-pannel.new' class="other-lists__no-lists"}}
-        Créer votre première liste personnalisée !
+        Créer une personnalisée
       {{/link-to}}
     {{else}}
       {{#each (sort-by "position" otherLists) as |list|}}
