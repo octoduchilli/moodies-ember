@@ -92,6 +92,13 @@
         </div>
       {{/if}}
     </div>
+    <div class="setting user-img-info">
+      <p class="setting__message">{{fa-icon "info" size=1 class="fa-icon-info"}} Image de profil et couverture</p>
+      <p class="setting__message message__info">Pour ajouter une image il vous suffit : de vous rendre sur la fiche d'un film ou d'une personnalité, de cliquer sur le boutton dédié aux images (sous le poster principal) puis de séléctionner l'image que vous désirez.</p>
+      <p class="setting__message message__info">Après l'ajout de vos images, revenez ici pour les recadrer !</p>
+      {{#link-to 'images' "244786" (query-params images_type="movie") class="link"}}Images d'un film{{/link-to}}
+      {{#link-to 'images' "18999" (query-params images_type="person") class="link"}}Images d'une personnalité{{/link-to}}
+    </div>
     <div class="setting disconnect">
       {{#link-to "home" class="setting__message" click=(action "signOut")}}
         Se déconnecter
