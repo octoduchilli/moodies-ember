@@ -141,15 +141,15 @@
         }
       }
 
-      &.little-device {
-        display: none;
+      &.user-img-setting {
+        display: flex;
 
         flex-direction: column;
 
         padding: 10px;
 
         .setting__message {
-          margin: 15px 0;
+          margin-right: 15px;
         }
 
         .setting__user-profile-img-container, .setting__user-cover-img-container {
@@ -317,11 +317,7 @@
 
       .setting {
 
-        &.large-device {
-          display: none;
-        }
-
-        &.disconnect, &.little-device {
+        &.disconnect {
           display: flex;
         }
       }
