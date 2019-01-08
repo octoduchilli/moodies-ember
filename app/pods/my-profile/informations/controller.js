@@ -171,9 +171,11 @@ export default Controller.extend({
       }
     })
 
-    totalVotes.average = totalVotes.average / totalVotes.total
+    if (totalVotes.average) {
+      totalVotes.average = totalVotes.average / totalVotes.total
 
-    totalVotes.average = totalVotes.average.toFixed(1)
+      totalVotes.average = totalVotes.average.toFixed(1)
+    }
 
     const likedGenres = Object.entries(genresCounter).sort((a, b) => b[1] - a[1]).slice(0, 3).map(genre => {
       const g = this.genresItems.find(_ => Number(_.value) === Number(genre[0]))
