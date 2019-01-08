@@ -37,6 +37,9 @@
         {{/if}}
       </div>
       <h1 class="banner__pseudo">{{infos.pseudo}}</h1>
+      {{#if infos.private}}
+        <p class="banner__info">Votre profil est <span class="value red">Privé</span></p>
+      {{/if}}
       <p class="banner__info">Inscrit le <span class="value">{{moment-format infos.createdAt "Do MMMM YYYY"}}</span></p>
       <p class="banner__info last-child">Dernière apparition le <span class="value">{{moment-format infos.lastConnection "Do MMMM YYYY"}}</span></p>
       {{#if (eq currentRouteName "users.statistics")}}

@@ -2,10 +2,11 @@ import Controller from '@ember/controller'
 import { inject as service } from '@ember/service'
 import { task, timeout, all } from 'ember-concurrency'
 import { htmlSafe } from '@ember/string'
-import { set, computed } from '@ember/object'
+import { get, set, computed } from '@ember/object'
 
 export default Controller.extend({
   progress: service('page-progress'),
+  session: service(),
   notify: service('notification-messages'),
   router: service(),
   media: service(),
@@ -14,9 +15,6 @@ export default Controller.extend({
   id: null,
 
   infos: null,
-  lists: null,
-  movies: null,
-  votes: null,
 
   bannerIsVisible: true,
 
@@ -82,11 +80,12 @@ export default Controller.extend({
 
   fetchInfos: task(function* (id) {
     yield this.store.find('fb-community-user-infos', id).then(infos => {
-      if (infos.private) {
+      if (infos.private && get(this.session, 'uid') !== id) {
         this.notify.error(`${infos.pseudo} a mit son profil en privé. Vous ne pouvez pas y accéder`)
 
         this.router.transitionTo('community')
       }
+
       set(this, 'infos', infos)
     })
   })

@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
 
 export default Component.extend({
+  session: service(),
   notify: service('notification-messages'),
   media: service(),
 
