@@ -35,7 +35,17 @@ export default Component.extend(preloadImg, {
       this.store.findAll('fb-community-last').then(async lasts => {
         await this.preloadTMDBImg(this.__getPaths(lasts), false)
 
-        lasts.forEach(last => {
+        lasts.forEach(async last => {
+          const user = await this.store.find('fb-community-user', last.user.id).then(user => {
+            return {
+              pseudo: user.pseudo,
+              path: user.profileImg.path,
+              posX: user.profileImg.posX,
+              posY: user.profileImg.posY,
+              scale: user.profileImg.scale
+            }
+          })
+
           if (last.id === 'add') {
             this.activities.pushObject({
               title: 'Dernier ajout',
@@ -47,14 +57,14 @@ export default Component.extend(preloadImg, {
               ],
               createdAt: last.createdAt,
               movie: last.movie,
-              user: last.user
+              user: user || last.user
             })
           } else if (last.id === 'favorite') {
             this.activities.pushObject({
               title: 'Dernier favori',
               createdAt: last.createdAt,
               movie: last.movie,
-              user: last.user
+              user: user || last.user
             })
           } else if (last.id === 'vote') {
             this.activities.pushObject({
@@ -67,7 +77,7 @@ export default Component.extend(preloadImg, {
               ],
               createdAt: last.createdAt,
               movie: last.movie,
-              user: last.user
+              user: user || last.user
             })
           }
         })
