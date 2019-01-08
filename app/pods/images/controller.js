@@ -1,6 +1,6 @@
 import Controller from '@ember/controller'
 import { inject as service } from '@ember/service'
-import { computed, set } from '@ember/object'
+import { computed } from '@ember/object'
 import { htmlSafe } from '@ember/string'
 
 export default Controller.extend({
