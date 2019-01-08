@@ -1,6 +1,6 @@
 {{#each items as |user|}}
   {{#if user.private}}
-    <li class="{{styleNamespace}}__item" {{action "notifyUserPrivate" user on="click"}}>
+    <li class="{{styleNamespace}}__item" style="{{compute (action "style") "border-color" user.color}}" {{action "notifyUserPrivate" user on="click"}}>
       <div class="item__user-profile-img">
         {{#if user.profileImg}}
           <img class="img" style="{{compute (action "updateUserProfileImgPos") user.profileImg.posX user.profileImg.posY user.profileImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.profileImg.path}}" alt=" ">
@@ -14,7 +14,7 @@
       </div>
     </li>
   {{else}}
-    {{#link-to 'users.lists' user.id class=(concat styleNamespace "__item") tagName="li"}}
+    {{#link-to 'users.lists' user.id class=(concat styleNamespace "__item") tagName="li" style=(compute (action "style") "border-color" user.color)}}
       <div class="item__user-profile-img">
         {{#if user.profileImg}}
           <img class="img" style="{{compute (action "updateUserProfileImgPos") user.profileImg.posX user.profileImg.posY user.profileImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.profileImg.path}}" alt=" ">
