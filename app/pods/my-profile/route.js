@@ -13,7 +13,7 @@ export default Route.extend({
       if (!get(this.session, 'isAuthenticated') && !this.user.fetch.isRunning) {
         this.notify.info(`Vous n'êtes pas connecté...`)
 
-        this.transitionTo('index')
+        this.transitionTo('community')
       }
     }
   }

@@ -61,7 +61,7 @@
         <h1 class="information__title">Avec les genres :</h1>
         <ul class="information__genres flex wrap">
           {{#each movie.genres as |genre|}}
-            {{#link-to 'discover' (query-params with_genres=genre.id) class="genre" click=(action (mut user.reset) "discover")}}
+            {{#link-to 'discover' (query-params with_genres=genre.id sort_by=null vote_count_gte=null primary_release_date_gte=null primary_release_date_lte=null) class="genre" click=(action (mut user.reset) "discover")}}
               {{genre.name}}
             {{/link-to}}
           {{/each}}
@@ -77,12 +77,16 @@
     <h1 class="action-part__title">Intéragissez avec le film {{movie.title}}</h1>
     <div class="action-part__actions-container">
       {{#if session.isAuthenticated}}
-        {{basic-vote average=voteAverage onChange=(action "saveVote") class="actions-container__vote-action"}}
+        {{#if (or user.fetch.isRunning fetchVote.isRunning)}}
+          Un instant...
+        {{else}}
+          {{basic-vote movieId=id average=voteAverage onChange=(action "saveVote") class="actions-container__vote-action"}}
+          {{#if (not-eq voteAverage null)}}
+            <p class="actions-container__delete-vote" {{action "deleteVote" on="click"}}>Supprimer le vote</p>
+          {{/if}}
+        {{/if}}
       {{else}}
         {{basic-vote-skeleton click=(action "notifyNotConnected") class="actions-container__vote-action grey-bg"}}
-      {{/if}}
-      {{#if (and session.isAuthenticated (not-eq voteAverage null))}}
-        <p class="actions-container__delete-vote" {{action "deleteVote" on="click"}}>Supprimer le vote</p>
       {{/if}}
       <div class="actions-container__lists-action">
         <p class="lists-action__message">Ajoutez à vos listes</p>

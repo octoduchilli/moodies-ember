@@ -7,10 +7,10 @@
     {{/filters-top-bar}}
 
     <div class="votes__total-results">
-      <p class="total">Total des votes : <span class="higher">{{if (or (not __fetchData.performCount) __fetchData.isRunning) '...' (if votes.length votes.length 'Aucun')}}</span></p>
+      <p class="total">Total des votes : <span class="higher">{{if (or (not __fetchData.performCount) __waitFetch.isRunning __fetchData.isRunning) '...' (if votes.length votes.length 'Aucun')}}</span></p>
     </div>
 
-    {{#if __fetchData.isRunning}}
+    {{#if (or __waitFetch.isRunning __fetchData.isRunning)}}
       {{vote-list-skeleton}}
     {{else}}
       {{vote-list class="vote-list" userPseudo=userInfos.pseudo scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") deleteItem=(action "removeVote") items=votesSliced}}

@@ -161,7 +161,7 @@ export default Component.extend(preloadImg, lerpColor, {
   __fetch: task(function*(id) {
     yield this.fetchMovie.perform(id)
     yield this.fetchImages.perform(id)
-    yield this.fetchVote.perform(id)
+    this.fetchVote.perform(id)
   }),
 
   fetchMovie: task(function*(id) {
@@ -185,10 +185,16 @@ export default Component.extend(preloadImg, lerpColor, {
   }),
 
   fetchVote: task(function*(id) {
-    return yield this.store.find('fb-user-vote', id).then(vote => {
-      this.progress.update(80)
+    while (this.user.fetchVotes.isRunning) {
+      yield timeout(200)
+    }
 
-      set(this, 'voteAverage', vote.average)
+    return yield this.user.findVote(id).then(vote => {
+      if (vote) {
+        set(this, 'voteAverage', vote.average)
+      } else {
+        set(this, 'voteAverage', null)
+      }
     })
   }),
 

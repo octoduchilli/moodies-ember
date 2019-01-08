@@ -4,6 +4,7 @@ import { set } from '@ember/object'
 
 export default Component.extend({
   notify: service('notification-messages'),
+  media: service(),
   user: service('current-user'),
 
   tagName: 'ul',
@@ -27,11 +28,19 @@ export default Component.extend({
 
     window.addEventListener('scroll', this.__scroll, false)
 
-    setTimeout(() => {
-      window.scroll({
-        top: this.scrollY
-      })
-    })
+    if (this.scrollY !== null) {
+      if (this.media.isMobile) {
+        setTimeout(() => {
+          window.scroll({
+            top: this.scrollY
+          })
+        })
+      } else {
+        window.scroll({
+          top: this.scrollY
+        })
+      }
+    }
 
     this.updatedItems(this.items)
   },

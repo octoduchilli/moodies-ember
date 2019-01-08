@@ -1,1 +1,18 @@
-{{outlet}}
+<div class="community work">
+  <div class="community__last-activities">
+    <h1 class="last-activities__title">Les dernières activitées</h1>
+    {{last-activities}}
+  </div>
+  {{#filters-top-bar class="community__filters-top-bar" as |topbar|}}
+    <p class="filters-top-bar__title">Recherche d'utilisateur</p>
+    {{#topbar.filters resetFilters=(action "resetFilters") actualiseFilters=(action "actualiseFilters") as |filters|}}
+      {{filters.dropdown label="Ordre de tri" smallLabel="Ordre" items=sort.items value=sort.selected onSelect=(action "sortUpdate")}}
+      {{filters.input placeholder="Pseudo" type="text" value=pseudo.selected onInput=(perform pseudoUpdate)}}
+    {{/topbar.filters}}
+  {{/filters-top-bar}}
+  {{#if __fetchData.isRunning}}
+    {{user-list-skeleton class="user-list"}}
+  {{else}}
+    {{user-list class="user-list" scrollY=scrollY scroll=(action "setScroll") updatedItems=(action "updatedItems") items=users}}
+  {{/if}}
+</div>

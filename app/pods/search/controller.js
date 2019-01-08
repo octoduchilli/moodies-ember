@@ -101,6 +101,17 @@ export default Controller.extend(preloadImg, filtersHelper, {
       if (key === 'visible') {
         this.notify.warning('Attention ! Cette option peut provoquer quelques latences.', { clearDuration: 7000 })
       }
+    },
+    focus (className) {
+      const el = document.getElementsByClassName(className)[0]
+
+      if (el) {
+        el.focus()
+
+        window.scroll({
+          top: el.offsetTop - 50
+        })
+      }
     }
   },
 

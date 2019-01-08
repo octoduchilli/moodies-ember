@@ -36,22 +36,22 @@
     <div class="statistic">
       <p class="statistic__message">
         Nombre total de films visionnés :
-        <span class="message__value">{{totalViewedMovies.total}}</span>
+        <span class="message__value">{{totalMoviesViewed.total}}</span>
       </p>
       <div class="statistic__little-statistic">
         <p class="little-statistic__message">
-          {{compute (action "minToMDHM") totalViewedMovies.totalRuntime}}
+          {{compute (action "minToMDHM") totalMoviesViewed.totalRuntime}}
         </p>
       </div>
     </div>
     <div class="statistic">
       <p class="statistic__message">
         Nombre total de films favoris :
-        <span class="message__value">{{totalFavoriteMovies.total}}</span>
+        <span class="message__value">{{totalMoviesFavorite.total}}</span>
       </p>
       <div class="statistic__little-statistic">
         <p class="little-statistic__message">
-          {{compute (action "minToMDHM") totalFavoriteMovies.totalRuntime}}
+          {{compute (action "minToMDHM") totalMoviesFavorite.totalRuntime}}
         </p>
       </div>
     </div>

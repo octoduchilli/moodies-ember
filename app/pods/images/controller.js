@@ -1,6 +1,6 @@
 import Controller from '@ember/controller'
 import { inject as service } from '@ember/service'
-import { computed, set } from '@ember/object'
+import { computed } from '@ember/object'
 import { htmlSafe } from '@ember/string'
 
 export default Controller.extend({
@@ -44,12 +44,9 @@ export default Controller.extend({
     updateUserImg (imgPath, dataPath) {
       this.user.updateInfos({
         [dataPath]: {
+          id: this.model.id,
           path: imgPath
         }
-      })
-
-      set(this.user.infos, dataPath, {
-        path: imgPath
       })
 
       this.notify.info(`Recadrez votre image de ${dataPath === 'profileImg' ? 'profil' : 'couverture'} sur votre page de profile`, {

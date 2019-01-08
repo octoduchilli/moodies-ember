@@ -1,0 +1,58 @@
+{{#if fetch.isRunning}}
+  <li class="{{styleNamespace}}__skeleton-item">
+    <h1 class="item__title">Dernier ajout</h1>
+    <div class="item__movie-img"></div>
+    <div class="item__user"></div>
+    <p class="item__info">Le <span class="value">...</span></p>
+    <p class="item__info">Dans sa liste <span class="value">...</span></p>
+  </li>
+  <li class="{{styleNamespace}}__skeleton-item">
+    <h1 class="item__title">Dernier favori</h1>
+    <div class="item__movie-img"></div>
+    <div class="item__user"></div>
+    <p class="item__info">Le <span class="value">...</span></p>
+  </li>
+  <li class="{{styleNamespace}}__skeleton-item">
+    <h1 class="item__title">Dernier vote</h1>
+    <div class="item__movie-img"></div>
+    <div class="item__user"></div>
+    <p class="item__info">Le <span class="value">...</span></p>
+    <p class="item__info">A noté <span class="value">...</span></p>
+  </li>
+{{else}}
+  {{#each activities as |activity|}}
+    <li class="{{styleNamespace}}__item">
+      <h1 class="item__title">{{activity.title}}</h1>
+      {{#link-to 'movie' activity.movie.id class="item__movie-img"}}
+        <img class="img" src="https://image.tmdb.org/t/p/w500{{activity.movie.path}}" alt="">
+      {{/link-to}}
+      {{#if activity.user.private}}
+        <div class="item__user" {{action "notifyUserPrivate" activity.user on="click"}}>
+          <div class="user__img">
+            {{#if activity.user.path}}
+              <img class="img" style="{{compute (action "updateUserProfileImgPos") activity.user.posX activity.user.posY activity.user.scale}}" src="https://image.tmdb.org/t/p/w500{{activity.user.path}}" alt="">
+            {{else}}
+              <h1 class="sliced-pseudo">{{compute (action "slicedPseudo") activity.user.pseudo}}</h1>
+            {{/if}}
+          </div>
+          <h1 class="user__pseudo">{{activity.user.pseudo}}</h1>
+        </div>
+      {{else}}
+        {{#link-to 'users.lists' activity.user.id class="item__user"}}
+          <div class="user__img">
+            {{#if activity.user.path}}
+              <img class="img" style="{{compute (action "updateUserProfileImgPos") activity.user.posX activity.user.posY activity.user.scale}}" src="https://image.tmdb.org/t/p/w500{{activity.user.path}}" alt="">
+            {{else}}
+              <h1 class="sliced-pseudo">{{compute (action "slicedPseudo") activity.user.pseudo}}</h1>
+            {{/if}}
+          </div>
+          <h1 class="user__pseudo">{{activity.user.pseudo}}</h1>
+        {{/link-to}}
+      {{/if}}
+      <p class="item__info">Le <span class="value">{{moment-format activity.createdAt "Do MMMM YYYY à HH:mm"}}</span></p>
+      {{#each activity.infos as |info|}}
+        <p class="item__info">{{info.message}} <span class="value">{{info.value}}</span></p>
+      {{/each}}
+    </li>
+  {{/each}}
+{{/if}}

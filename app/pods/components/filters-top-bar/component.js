@@ -44,7 +44,9 @@ export default Component.extend({
   __onResize () {
     // waiting element height is updated
     setTimeout(() => {
-      this.onResize(this.element.offsetHeight)
+      if (this.element) {
+        this.onResize(this.element.offsetHeight)
+      }
     }, 40)
   }
 });

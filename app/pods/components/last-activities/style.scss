@@ -1,0 +1,152 @@
+& {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  &__skeleton-item {
+    opacity: .5;
+
+    .item__movie-img {
+      background: $black;
+      width: 140px;
+    }
+
+    .item__user {
+      height: 50px;
+
+      pointer-events: none;
+    }
+  }
+
+  &__item, &__skeleton-item {
+    display: flex;
+    flex-direction: column;
+
+    margin: 10px;
+    padding: 10px 20px;
+
+    background: rgba(black, .7);
+
+    border-radius: 5px;
+
+    min-width: 200px;
+    max-width: 200px;
+
+    .item__title {
+      display: flex;
+      align-items: center;
+
+      margin: 5px auto 10px auto;
+
+      font-size: 1.2em;
+    }
+
+    .item__movie-img {
+      margin: 5px auto;
+
+      background: $black;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      min-height: 210px;
+
+      .img {
+        min-height: 190px;
+        width: 140px;
+      }
+    }
+
+    .item__user {
+      display: flex;
+      align-items: center;
+
+      cursor: pointer;
+
+      margin: 5px 0;
+
+      padding: 2.5px;
+
+      border-radius: 5px;
+
+      transition: 300ms ease;
+
+      color: $white;
+
+      background: linear-gradient(to left top, $black, $black2, $black);
+
+      &:hover {
+        background: rgb(226, 220, 220);
+        color: $black;
+      }
+
+      .user__img {
+        position: relative;
+
+        height: 50px;
+        width: 50px;
+        min-height: 50px;
+        min-width: 50px;
+
+        border-radius: 50%;
+
+        background: black;
+
+        cursor: pointer;
+
+        margin-right: 10px;
+
+        overflow: hidden;
+
+        .img {
+          height: 50px;
+
+          position: absolute;
+
+          top: 50%;
+          left: 50%;
+
+          transform: translate(-50%, -50%);
+        }
+
+        .sliced-pseudo {
+          position: absolute;
+
+          top: 50%;
+          left: 50%;
+
+          transform: translate(-50%, -50%);
+
+          color: $white;
+        }
+      }
+
+      .user__pseudo {
+        max-width: 130px;
+
+        overflow: hidden;
+
+        padding: 3px 0;
+
+        text-overflow: ellipsis;
+      }
+    }
+
+    .item__info {
+      color: lightgray;
+
+      font-size: 0.85em;
+      line-height: 1.2em;
+
+      margin: 5px 0 5px 10px;
+
+      .value {
+        color: $white;
+
+        font-size: 1.05em;
+      }
+    }
+  }
+}

@@ -7,9 +7,11 @@ import { task, all, timeout } from 'ember-concurrency'
 export default Service.extend({
   session: service(),
   store: service(),
+  ajax: service(),
 
   reset: null,
 
+  guestSessionId: null,
   infos: null,
   lists: null,
   movies: null,
@@ -26,6 +28,37 @@ export default Service.extend({
     this.activities = []
     this.moviesData = []
     this.votes = []
+  },
+
+  async updateLastActivityCommunity (type, movieId, value) {
+    const movie = await this.store.find('tmdb-movie', movieId).then(movie => movie)
+
+    let payload = {
+      createdAt: new Date().toString(),
+      movie: {
+        id: movie.id,
+        path: movie.poster_path
+      },
+      user: {
+        id: get(this.session, 'uid'),
+        pseudo: this.infos.pseudo,
+      }
+    }
+
+    if (this.infos.profileImg) {
+      payload.user = Object.assign(payload.user, {
+        path: this.infos.profileImg.path,
+        posX: this.infos.profileImg.posX,
+        posY: this.infos.profileImg.posY,
+        scale: this.infos.profileImg.scale
+      })
+    }
+
+    if (value) {
+      payload.value = value
+    }
+
+    firebase.database().ref(`community/last/${type}`).update(payload)
   },
 
   addActivity (obj) {
@@ -58,12 +91,22 @@ export default Service.extend({
     set(this, 'movies', null)
   },
 
+  async createInfos (payload) {
+    await firebase.database().ref(`users/${get(this.session, 'uid')}/infos`).update(payload)
+
+    await this.fetchInfos.perform()
+
+    this.__updateUserInfosData()
+  },
+
   async updateInfos (payload) {
     for (const i in payload) {
       set(this.infos, i, payload[i])
     }
 
     await this.infos.save()
+
+    this.__updateUserInfosData()
   },
 
   async updateMovieData (id) {
@@ -97,7 +140,16 @@ export default Service.extend({
   },
 
   async updateVote (id, title, average) {
-    const vote = this.votes.findBy('id', id)
+    let vote = this.votes.findBy('id', id)
+
+    this.ajax.request(`https://api.themoviedb.org/3/movie/${id}/rating?api_key=3836694fa8a7ae3ea69b5ff360b3be0b&guest_session_id=${this.guestSessionId}`, {
+      method: 'POST',
+      data: {
+        value: average
+      }
+    })
+
+    await this.updateMovieData(id)
 
     let payload = {
       average: average
@@ -109,8 +161,6 @@ export default Service.extend({
       payload.modifiedAt = new Date().toString()
     }
 
-    await firebase.database().ref(`users/${get(this.session, 'uid')}/votes/${id}`).update(payload)
-
     this.addActivity({
       id: id,
       name: title,
@@ -118,34 +168,38 @@ export default Service.extend({
       type: 'movie'
     })
 
-    if (vote) {
-      set(vote, 'average', average)
-      set(vote, 'modifiedAt', payload.modifiedAt)
+    if (!vote) {
+      await firebase.database().ref(`users/${get(this.session, 'uid')}/votes/${id}`).update(payload)
 
-      return vote
+      const vote = await this.store.find('fb-user-vote', id).then(_ => _)
+
+      this.votes.pushObject(vote)
     } else {
-      await this.updateMovieData(id)
-
-      const obj = {
-        id: id,
-        average: payload.average,
-        createdAt: payload.createdAt,
-        modifiedAt: payload.modifiedAt
+      for (let i in payload) {
+        set(vote, i, payload[i])
       }
 
-      this.votes.push(obj)
-
-      return obj
+      await vote.save()
     }
+
+    return vote
   },
 
   async deleteVote (id) {
-    await firebase.database().ref(`users/${get(this.session, 'uid')}/votes/${id}`).set(null)
-
     const vote = this.votes.findBy('id', id)
 
-    if (vote) {
-      this.votes.removeObject(vote)
+    this.votes.removeObject(vote)
+
+    this.store.unloadRecord(vote)
+
+    await firebase.database().ref(`users/${get(this.session, 'uid')}/votes/${id}`).set(null)
+  },
+
+  async findVote (id) {
+    const snap = await firebase.database().ref(`users/${get(this.session, 'uid')}/votes/${id}`).once('value', snap => snap)
+
+    if (snap.val()) {
+      return this.store.find('fb-user-vote', id).then(_ => _)
     }
   },
 
@@ -154,7 +208,8 @@ export default Service.extend({
       this.fetchInfos.perform(),
       this.fetchLists.perform(),
       this.fetchMovies.perform(),
-      this.fetchVotes.perform()
+      this.fetchVotes.perform(),
+      this.ajax.request('https://api.themoviedb.org/3/authentication/guest_session/new?api_key=3836694fa8a7ae3ea69b5ff360b3be0b').then(({ guest_session_id }) => set(this, 'guestSessionId', guest_session_id))
     ])
 
     this.__updateUserInfosData()

@@ -1,7 +1,7 @@
 import LinkComponent from '@ember/routing/link-component'
 
 LinkComponent.reopen({
-  attributeBindings: ['data-line', 'data-name'],
+  attributeBindings: ['data-line', 'data-name', 'style'],
 
   didRender () {
     setTimeout(() => {

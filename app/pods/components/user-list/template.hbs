@@ -1,0 +1,37 @@
+{{#each items as |user|}}
+  {{#if (and (not-eq session.uid user.id) user.private)}}
+    <li class="{{styleNamespace}}__item" style="{{compute (action "style") "border-color" user.color}}" {{action "notifyUserPrivate" user on="click"}}>
+      <div class="item__user-profile-img">
+        {{#if user.profileImg}}
+          <img class="img" style="{{compute (action "updateUserProfileImgPos") user.profileImg.posX user.profileImg.posY user.profileImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.profileImg.path}}" alt=" ">
+        {{else}}
+          <h1 class="sliced-pseudo">{{compute (action "slicedPseudo") user.pseudo}}</h1>
+        {{/if}}
+      </div>
+      <div class="item__user-infos">
+        <h1 class="user-infos__pseudo">{{user.pseudo}}</h1>
+        <p class="user-infos__info">Dernière apparition <span class="value">{{moment-format user.lastConnection "Do MMMM YYYY à HH:mm"}}</span></p>
+        <p class="user-infos__info">Nombre de films <span class="value">{{user.totalMovies}}</span></p>
+        <p class="user-infos__info">Profil <span class="value red">Privé</span></p>
+      </div>
+    </li>
+  {{else}}
+    {{#link-to 'users.lists' user.id class=(concat styleNamespace "__item") tagName="li" style=(compute (action "style") "border-color" user.color)}}
+      <div class="item__user-profile-img">
+        {{#if user.profileImg}}
+          <img class="img" style="{{compute (action "updateUserProfileImgPos") user.profileImg.posX user.profileImg.posY user.profileImg.scale}}" src="https://image.tmdb.org/t/p/w500{{user.profileImg.path}}" alt=" ">
+        {{else}}
+          <h1 class="sliced-pseudo">{{compute (action "slicedPseudo") user.pseudo}}</h1>
+        {{/if}}
+      </div>
+      <div class="item__user-infos">
+        <h1 class="user-infos__pseudo">{{or user.pseudo 'Aucun pseudo...'}}</h1>
+        <p class="user-infos__info">Dernière apparition <span class="value">{{moment-format user.lastConnection "Do MMMM YYYY à HH:mm"}}</span></p>
+        <p class="user-infos__info">Nombre de films <span class="value">{{user.totalMovies}}</span></p>
+        {{#if (and (eq session.uid user.id) user.private)}}
+          <p class="user-infos__info">Profil <span class="value red">Privé</span></p>
+        {{/if}}
+      </div>
+    {{/link-to}}
+  {{/if}}
+{{/each}}

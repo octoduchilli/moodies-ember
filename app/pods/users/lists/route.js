@@ -17,11 +17,11 @@ export default Route.extend({
   },
 
   model () {
-    this.controllerFor('users.lists').fetch.perform(this.modelFor('users').id)
+    const c = this.controllerFor('users.lists')
+
+    c.fetch.perform(this.modelFor('users').id)
 
     setTimeout(() => {
-      const c = this.controllerFor('users.lists')
-
       c.__waitFetch.perform()
     })
   },

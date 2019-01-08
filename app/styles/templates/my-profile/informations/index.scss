@@ -141,15 +141,15 @@
         }
       }
 
-      &.little-device {
-        display: none;
-
+      &.user-img-setting {
+        display: flex;
         flex-direction: column;
+        justify-content: center;
 
         padding: 10px;
 
         .setting__message {
-          margin: 15px 0;
+          margin-right: 15px;
         }
 
         .setting__user-profile-img-container, .setting__user-cover-img-container {
@@ -161,14 +161,51 @@
         }
       }
 
+      &.user-img-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .setting__message {
+          display: flex;
+          align-items: center;
+
+          margin: 10px auto;
+
+          .fa-icon-info {
+            margin-right: 20px;
+          }
+
+          &.message__info {
+            font-size: 0.8em;
+
+            line-height: 1.2em;
+
+            max-width: 300px;
+          }
+        }
+
+        .link {
+          text-decoration: underline;
+
+          margin: 5px auto 5px 0;
+
+          font-size: 0.9em;
+
+          &:last-child {
+            margin-bottom: 15px;
+          }
+        }
+      }
+
       .setting__message {
         margin: 0 20px;
       }
 
       .setting__button {
-        border: 2px solid $white;
-        background: $black;
-        color: $white;
+        color: black;
+
+        font-weight: bold;
 
         text-decoration: underline;
 
@@ -317,11 +354,7 @@
 
       .setting {
 
-        &.large-device {
-          display: none;
-        }
-
-        &.disconnect, &.little-device {
+        &.disconnect {
           display: flex;
         }
       }

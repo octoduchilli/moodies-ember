@@ -3,7 +3,7 @@ import moment from 'moment'
 import { set, get } from '@ember/object'
 
 export default Mixin.create({
-  __checkFiltersValue (array) {
+  __checkFiltersValue (array, reset) {
     array.forEach(filter => {
       const value = get(this, filter.key)
 
@@ -47,6 +47,10 @@ export default Mixin.create({
         set(filter, 'selected', filter.default)
       }
     })
+
+    if (reset) {
+      set(this, 'isLeaving', false)
+    }
 
     if (!this.isLeaving) {
       this.__checkQueryFilters()
