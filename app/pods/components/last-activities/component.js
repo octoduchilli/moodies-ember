@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
 
 export default Component.extend(preloadImg, {
+  notify: service('notification-messages'),
   store: service(),
 
   tagName: 'ul',
@@ -26,6 +27,9 @@ export default Component.extend(preloadImg, {
     },
     slicedPseudo (pseudo) {
       return pseudo[0].toUpperCase()
+    },
+    notifyUserPrivate (user) {
+      this.notify.error(`${user.pseudo} a mit son profil en privé. Vous ne pouvez pas y accéder`)
     }
   },
 
@@ -39,12 +43,16 @@ export default Component.extend(preloadImg, {
           const user = await this.store.find('fb-community-user', last.user.id).then(user => {
             if (user.profileImg) {
               return {
+                id: user.id,
                 pseudo: user.pseudo,
                 path: user.profileImg.path,
                 posX: user.profileImg.posX,
                 posY: user.profileImg.posY,
-                scale: user.profileImg.scale
+                scale: user.profileImg.scale,
+                private: user.private
               }
+            } else {
+              return last.user
             }
           })
 
@@ -59,14 +67,14 @@ export default Component.extend(preloadImg, {
               ],
               createdAt: last.createdAt,
               movie: last.movie,
-              user: user || last.user
+              user: user
             })
           } else if (last.id === 'favorite') {
             this.activities.pushObject({
               title: 'Dernier favori',
               createdAt: last.createdAt,
               movie: last.movie,
-              user: user || last.user
+              user: user
             })
           } else if (last.id === 'vote') {
             this.activities.pushObject({
@@ -79,7 +87,7 @@ export default Component.extend(preloadImg, {
               ],
               createdAt: last.createdAt,
               movie: last.movie,
-              user: user || last.user
+              user: user
             })
           }
         })

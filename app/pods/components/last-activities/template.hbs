@@ -26,16 +26,29 @@
       {{#link-to 'movie' activity.movie.id class="item__movie-img"}}
         <img class="img" src="https://image.tmdb.org/t/p/w500{{activity.movie.path}}" alt="">
       {{/link-to}}
-      {{#link-to 'users.lists' activity.user.id class="item__user"}}
-        <div class="user__img">
-          {{#if activity.user.path}}
-            <img class="img" style="{{compute (action "updateUserProfileImgPos") activity.user.posX activity.user.posY activity.user.scale}}" src="https://image.tmdb.org/t/p/w500{{activity.user.path}}" alt="">
-          {{else}}
-            <h1 class="sliced-pseudo">{{compute (action "slicedPseudo") activity.user.pseudo}}</h1>
-          {{/if}}
+      {{#if activity.user.private}}
+        <div class="item__user" {{action "notifyUserPrivate" activity.user on="click"}}>
+          <div class="user__img">
+            {{#if activity.user.path}}
+              <img class="img" style="{{compute (action "updateUserProfileImgPos") activity.user.posX activity.user.posY activity.user.scale}}" src="https://image.tmdb.org/t/p/w500{{activity.user.path}}" alt="">
+            {{else}}
+              <h1 class="sliced-pseudo">{{compute (action "slicedPseudo") activity.user.pseudo}}</h1>
+            {{/if}}
+          </div>
+          <h1 class="user__pseudo">{{activity.user.pseudo}}</h1>
         </div>
-        <h1 class="user__pseudo">{{activity.user.pseudo}}</h1>
-      {{/link-to}}
+      {{else}}
+        {{#link-to 'users.lists' activity.user.id class="item__user"}}
+          <div class="user__img">
+            {{#if activity.user.path}}
+              <img class="img" style="{{compute (action "updateUserProfileImgPos") activity.user.posX activity.user.posY activity.user.scale}}" src="https://image.tmdb.org/t/p/w500{{activity.user.path}}" alt="">
+            {{else}}
+              <h1 class="sliced-pseudo">{{compute (action "slicedPseudo") activity.user.pseudo}}</h1>
+            {{/if}}
+          </div>
+          <h1 class="user__pseudo">{{activity.user.pseudo}}</h1>
+        {{/link-to}}
+      {{/if}}
       <p class="item__info">Le <span class="value">{{moment-format activity.createdAt "Do MMMM YYYY à HH:mm"}}</span></p>
       {{#each activity.infos as |info|}}
         <p class="item__info">{{info.message}} <span class="value">{{info.value}}</span></p>
