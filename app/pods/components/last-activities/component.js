@@ -37,12 +37,14 @@ export default Component.extend(preloadImg, {
 
         lasts.forEach(async last => {
           const user = await this.store.find('fb-community-user', last.user.id).then(user => {
-            return {
-              pseudo: user.pseudo,
-              path: user.profileImg.path,
-              posX: user.profileImg.posX,
-              posY: user.profileImg.posY,
-              scale: user.profileImg.scale
+            if (user.profileImg) {
+              return {
+                pseudo: user.pseudo,
+                path: user.profileImg.path,
+                posX: user.profileImg.posX,
+                posY: user.profileImg.posY,
+                scale: user.profileImg.scale
+              }
             }
           })
 
