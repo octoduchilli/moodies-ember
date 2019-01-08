@@ -256,7 +256,7 @@
         margin: 20px;
 
         &.grey-bg {
-          background: $darkgrey;
+          background: rgba($darkgrey, .8);
 
           border-radius: 5px;
         }
