@@ -37,6 +37,7 @@ export default Service.extend({
       createdAt: new Date().toString(),
       movie: {
         id: movie.id,
+        title: movie.title,
         path: movie.poster_path
       },
       user: {
@@ -54,7 +55,7 @@ export default Service.extend({
       })
     }
 
-    if (value) {
+    if (value !== null) {
       payload.value = value
     }
 
@@ -145,7 +146,7 @@ export default Service.extend({
     this.ajax.request(`https://api.themoviedb.org/3/movie/${id}/rating?api_key=3836694fa8a7ae3ea69b5ff360b3be0b&guest_session_id=${this.guestSessionId}`, {
       method: 'POST',
       data: {
-        value: average
+        value: average || 0.5
       }
     })
 
