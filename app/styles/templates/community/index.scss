@@ -12,12 +12,12 @@
 
     padding: 10px;
 
-    min-height: 400px;
+    min-height: 471px;
 
     background: linear-gradient(to left top, $black, $black2, $black);
 
     .last-activities__title {
-      margin: 20px 20px 20px 0;
+      margin: 20px 20px auto 0;
 
       text-align: center;
 
@@ -27,116 +27,7 @@
     }
 
     .last-activities__list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-
-      .list__item {
-        display: flex;
-        flex-direction: column;
-
-        margin: 10px;
-        padding: 10px 20px;
-
-        background: rgba(black, .7);
-
-        border-radius: 5px;
-
-        min-width: 170px;
-
-        .item__title {
-          display: flex;
-          align-items: center;
-
-          margin: 5px auto 10px auto;
-
-          font-size: 1.2em;
-        }
-
-        .item__movie-img {
-          margin: 5px auto;
-
-          background: $black;
-
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-
-          min-height: 210px;
-
-          .img {
-            min-height: 190px;
-            width: 140px;
-          }
-        }
-
-        .item__user {
-          display: flex;
-          align-items: center;
-
-          margin: 5px 0;
-
-          padding: 2.5px;
-
-          border-radius: 5px;
-
-          transition: 300ms ease;
-
-          color: $white;
-
-          background: $black;
-
-          &:hover {
-            background: $white;
-            color: $black;
-          }
-
-          .user__img {
-            position: relative;
-
-            height: 50px;
-            width: 50px;
-            min-height: 50px;
-            min-width: 50px;
-
-            border-radius: 50%;
-
-            background: $black;
-
-            cursor: pointer;
-
-            margin-right: 10px;
-
-            overflow: hidden;
-
-            .img {
-              height: 50px;
-
-              position: absolute;
-
-              top: 50%;
-              left: 50%;
-
-              transform: translate(-50%, -50%);
-            }
-          }
-        }
-
-        .item__info {
-          color: lightgray;
-
-          font-size: 0.85em;
-
-          margin: 10px 0 10px 10px;
-
-          .value {
-            color: $white;
-
-            font-size: 1.05em;
-          }
-        }
-      }
+      margin-top: 20px;
     }
   }
 
@@ -173,6 +64,14 @@
 
 @media (max-width: 767px) {
   .community {
+
+    .community__last-activities {
+      min-height: calc(370px * 3);
+
+      .last-activities__title {
+        margin: 20px 0 auto 0;
+      }
+    }
 
     .community__filters-top-bar {
 
