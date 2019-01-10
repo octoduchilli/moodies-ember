@@ -51,11 +51,38 @@
       justify-content: center;
       align-items: center;
 
+      position: relative;
+
       min-height: 210px;
 
       .img {
         min-height: 190px;
         width: 140px;
+      }
+
+      &.no-poster::after {
+        content: attr(data-name);
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        padding: 0 5px;
+
+        width: calc(100% - 10px);
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        background: rgba(black, .7);
+
+        color: $white;
+
+        z-index: 1;
       }
     }
 

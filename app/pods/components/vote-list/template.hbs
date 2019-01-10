@@ -1,7 +1,7 @@
 {{#each items as |vote|}}
   <li class="{{styleNamespace}}__vote">
     {{#link-to 'movie' vote.id}}
-      <img class="vote__poster" src="https://image.tmdb.org/t/p/w500{{vote.poster_path}}" alt="">
+      <img class="vote__poster" src="https://image.tmdb.org/t/p/w500{{vote.poster_path}}" alt="" onerror="this.src='/img/no-picture.png'">
     {{/link-to}}
     <div class="vote__informations">
       <h1 class="informations__title josefin">{{vote.title}}</h1>
