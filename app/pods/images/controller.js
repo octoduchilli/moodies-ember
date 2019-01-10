@@ -45,7 +45,10 @@ export default Controller.extend({
       this.user.updateInfos({
         [dataPath]: {
           id: this.model.id,
-          path: imgPath
+          path: imgPath,
+          posX: 0,
+          posY: 0,
+          scale: 1
         }
       })
 
