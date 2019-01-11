@@ -1,6 +1,7 @@
 import Component from '@ember/component'
 import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
+import { set } from '@ember/object'
 
 export default Component.extend({
   session: service(),
@@ -35,6 +36,8 @@ export default Component.extend({
           top: this.scrollY
         })
       }
+    } else {
+      set(this, 'scrollY', 0)
     }
 
     this.updatedItems(this.items)

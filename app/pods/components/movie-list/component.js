@@ -3,6 +3,7 @@ import lerpColor from 'moodies-ember/mixins/lerp-color'
 import genres from 'moodies-ember/data/genres'
 import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
+import { set } from '@ember/object'
 
 export default Component.extend(lerpColor, {
   session: service(),
@@ -42,6 +43,8 @@ export default Component.extend(lerpColor, {
           top: this.scrollY
         })
       }
+    } else {
+      set(this, 'scrollY', 0)
     }
 
     this.updatedItems(this.items)

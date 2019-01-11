@@ -37,7 +37,7 @@ export default Component.extend(lerpColor, {
       set(this, 'newAverage', Math.round((event.offsetX / event.target.offsetWidth) * 10))
     },
     onChange (average) {
-      this.user.updateLastActivityCommunity('vote', this.movieId, average)
+      this.user.updateLastActivity('vote', this.movieId, average)
 
       this.onChange(average)
     }
