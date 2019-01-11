@@ -40,6 +40,8 @@ export default Component.extend({
           top: this.scrollY
         })
       }
+    } else {
+      set(this, 'scrollY', 0)
     }
 
     this.updatedItems(this.items)
