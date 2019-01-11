@@ -30,7 +30,7 @@ export default Service.extend({
     this.votes = []
   },
 
-  async updateLastActivityCommunity (type, movieId, value) {
+  async updateLastActivity (type, movieId, value) {
     const movie = await this.store.find('tmdb-movie', movieId).then(movie => movie)
 
     let payload = {
@@ -39,11 +39,18 @@ export default Service.extend({
         id: movie.id,
         title: movie.title,
         path: movie.poster_path
-      },
-      user: {
-        id: get(this.session, 'uid'),
-        pseudo: this.infos.pseudo,
       }
+    }
+
+    if (value !== undefined && value !== null) {
+      payload.value = value
+    }
+
+    firebase.database().ref(`users/${get(this.session, 'uid')}/last/${type}`).update(payload)
+
+    payload.user = {
+      id: get(this.session, 'uid'),
+      pseudo: this.infos.pseudo,
     }
 
     if (this.infos.profileImg) {
@@ -53,10 +60,6 @@ export default Service.extend({
         posY: this.infos.profileImg.posY,
         scale: this.infos.profileImg.scale
       })
-    }
-
-    if (value !== null) {
-      payload.value = value
     }
 
     firebase.database().ref(`community/last/${type}`).update(payload)

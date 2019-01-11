@@ -180,12 +180,12 @@ export default Component.extend({
       })
 
       if (list.id !== 'heart') {
-        this.user.updateLastActivityCommunity('add', this.movie.id, list.name)
+        this.user.updateLastActivity('add', this.movie.id, list.name)
       }
     }
 
-    if (list.id === 'heart') {
-      this.user.updateLastActivityCommunity('favorite', this.movie.id)
+    if (list.id === 'heart' && value) {
+      this.user.updateLastActivity('favorite', this.movie.id)
     }
 
     this.user.__updateUserInfosData()
