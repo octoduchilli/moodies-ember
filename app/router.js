@@ -33,6 +33,7 @@ Router.map(function() {
     this.route('statistics');
     this.route('lists');
     this.route('votes');
+    this.route('last-activities');
   });
 });
 

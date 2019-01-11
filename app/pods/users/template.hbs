@@ -17,6 +17,9 @@
       <div class="banner__link">
         Voir les votes
       </div>
+      <div class="banner__link">
+        Voir les dernières activités
+      </div>
     </div>
   </div>
 {{else}}
@@ -67,6 +70,15 @@
       {{else}}
         {{#link-to 'users.votes' class="banner__link"}}
           Voir les votes
+        {{/link-to}}
+      {{/if}}
+      {{#if (eq currentRouteName "users.last-activities")}}
+        {{#link-to 'users' class="banner__link"}}
+          Voir les dernières activités
+        {{/link-to}}
+      {{else}}
+        {{#link-to 'users.last-activities' class="banner__link"}}
+          Voir les dernières activités
         {{/link-to}}
       {{/if}}
     </div>
