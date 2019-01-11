@@ -84,6 +84,12 @@ export default Service.extend({
     this.lists.removeObject(list)
   },
 
+  async signOut () {
+    await this.session.close()
+
+    this.resetUser()
+  },
+
   resetUser() {
     this.store.unloadAll('fb-user-lists')
 

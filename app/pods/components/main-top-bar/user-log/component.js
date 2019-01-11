@@ -35,10 +35,8 @@ export default Component.extend({
   errorPasswordSignUp: '',
 
   actions: {
-    async signOut () {
-      await this.session.close()
-
-      this.user.resetUser()
+    signOut () {
+      this.user.signOut()
     },
     styleUserColor (color, attr) {
       if (!color) {

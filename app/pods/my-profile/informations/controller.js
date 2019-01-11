@@ -61,10 +61,8 @@ export default Controller.extend({
     updateUserProfileImgPos (x, y, scale) {
       return htmlSafe(`transform: translate(calc(-50% + ${x * (50 / 150)}px), calc(-50% + ${y * (50 / 150)}px)) scale(${scale})`)
     },
-    async signOut () {
-      await this.session.close()
-
-      this.user.resetUser()
+    signOut () {
+      this.user.signOut()
     },
     openCenterImg (path) {
       set(this, 'imgDataPathToCenter', path)
