@@ -30,7 +30,7 @@ export default Controller.extend(preloadImg, filtersHelper, {
   movies: null,
   moviesContentSliced: null,
 
-  refineItems: computed('user.lists', 'user.lists.length', function () {
+  refineItems: computed('user.{lists,lists.length}', function () {
     let items = [
       {
         id: 0,
@@ -57,7 +57,7 @@ export default Controller.extend(preloadImg, filtersHelper, {
     return items
   }),
 
-  listsItems: computed('user.lists', 'user.lists.length', function () {
+  listsItems: computed('user.{lists,lists.length}', function () {
     let items = [
       {
         id: 0,
@@ -253,7 +253,7 @@ export default Controller.extend(preloadImg, filtersHelper, {
       yield timeout(200)
     }
 
-    this.__checkFiltersValue([this.sort, this.genres, this.lists, this.refine])
+    this.__checkFiltersValue([this.sort, this.genres, this.lists, this.refine], this.user.reset === 'my-lists')
   }),
 
   __nextPage () {
