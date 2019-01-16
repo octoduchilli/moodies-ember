@@ -69,7 +69,11 @@ export default Component.extend({
       if (value) {
         const rgb = this.__hexToRgb(value)
 
-        return htmlSafe(`${attr}: rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, .4)`)
+        if (rgb) {
+          return htmlSafe(`${attr}: rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, .4)`)
+        } else {
+          return htmlSafe(`${attr}: ${value}`)
+        }
       }
     }
   },
