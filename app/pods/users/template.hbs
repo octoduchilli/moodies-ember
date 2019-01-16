@@ -44,7 +44,7 @@
         <p class="banner__info">Votre profil est <span class="value red">Privé</span></p>
       {{/if}}
       <p class="banner__info">Inscrit le <span class="value">{{moment-format infos.createdAt "Do MMMM YYYY"}}</span></p>
-      <p class="banner__info last-child">Dernière apparition le <span class="value">{{moment-format infos.lastConnection "Do MMMM YYYY"}}</span></p>
+      <p class="banner__info last-child">Dernière apparition <span class="value">{{moment-format infos.lastConnection "Do MMMM YYYY à HH:mm"}}</span></p>
       {{#if (eq currentRouteName "users.statistics")}}
         {{#link-to 'users' class="banner__link"}}
         Voir les statistiques
