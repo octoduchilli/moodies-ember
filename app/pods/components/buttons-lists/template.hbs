@@ -3,23 +3,26 @@
     {{fa-icon list.icon}}
   </li>
 {{/each}}
-<ul class="other-lists {{movie.id}}__other-lists {{if otherListsOpen "is--visible" "not--visible"}}" {{action (mut otherListsOpen) false on="mouseLeave"}}>
-  {{#if otherListsOpen}}
-    {{#if (eq otherLists.length 0)}}
-      {{#link-to 'my-profile.lists-pannel.new' class="other-lists__no-lists"}}
-        Créer une personnalisée
-      {{/link-to}}
-    {{else}}
-      {{#each (sort-by "position" otherLists) as |list|}}
-        <li class="div-button-list" {{action "selectOrDeselect" list}}>
-          <div class="button-list {{movie.id}}__{{list.id}} {{if list.isSelected "is--selected" "not--selected"}}" style="{{compute (action "listColor") list.isSelected list.color}}">
-            {{list.label}}
-          </div>
-          <p class="list-name">
-            {{list.name}}
-          </p>
-        </li>
-      {{/each}}
+<div class="other-lists {{movie.id}}__other-lists {{if otherListsOpen "is--visible" "not--visible"}}" {{action (mut otherListsOpen) false on="mouseLeave"}}>
+  <div class="other-lists__arrow"></div>
+  <ul class="other-lists__container-scrollable">
+    {{#if otherListsOpen}}
+      {{#if (eq otherLists.length 0)}}
+        {{#link-to 'my-profile.lists-pannel.new' class="other-lists__no-lists"}}
+          Créer une personnalisée
+        {{/link-to}}
+      {{else}}
+        {{#each (sort-by "position" otherLists) as |list|}}
+          <li class="div-button-list" {{action "selectOrDeselect" list}}>
+            <div class="button-list {{movie.id}}__{{list.id}} {{if list.isSelected "is--selected" "not--selected"}}" style="{{compute (action "listColor") list.isSelected list.color}}">
+              {{list.label}}
+            </div>
+            <p class="list-name">
+              {{list.name}}
+            </p>
+          </li>
+        {{/each}}
+      {{/if}}
     {{/if}}
-  {{/if}}
-</ul>
+  </ul>
+</div>

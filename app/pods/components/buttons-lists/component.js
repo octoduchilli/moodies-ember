@@ -119,8 +119,10 @@ export default Component.extend({
 
         if (this.element.parentNode.offsetLeft + this.element.parentNode.offsetWidth + otherListsEl.offsetWidth / 2 > window.innerWidth) {
           otherListsEl.style.transform = 'translateX(calc(-100% + 20px))'
+          otherListsEl.classList.add('is--repositioned')
         } else {
           otherListsEl.style.transform = 'translateX(-50%)'
+          otherListsEl.classList.remove('is--repositioned')
         }
       })
     },
