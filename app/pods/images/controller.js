@@ -52,7 +52,7 @@ export default Controller.extend({
         }
       })
 
-      this.notify.info(`Recadrez votre image de ${dataPath === 'profileImg' ? 'profil' : 'couverture'} sur votre page de profile`, {
+      this.notify.info(`Recadrez votre image de ${dataPath === 'profileImg' ? 'profil' : 'couverture'} sur votre page de profil`, {
         htmlContent: true
       })
     }
