@@ -32,12 +32,32 @@
 
     transition: 200ms linear;
 
+    display: flex;
+    align-items: center;
+
     &:hover {
       background: rgba($white, .1);
     }
 
     &.active {
       background: linear-gradient(to right, rgba($white, 0), rgba($white, .1) 40%);
+    }
+
+    .link__icon {
+      height: 15px;
+      width: 15px;
+
+      color: white;
+
+      margin-right: 10px;
+
+      &.red {
+        color: red;
+      }
+
+      &.green {
+        color: greenyellow;
+      }
     }
   }
 }
