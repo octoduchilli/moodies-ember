@@ -6,6 +6,7 @@ import { set } from '@ember/object'
 export default Controller.extend({
   progress: service('page-progress'),
   media: service(),
+  user: service('current-user'),
 
   id: null,
 
@@ -48,7 +49,9 @@ export default Controller.extend({
             infos: [
               {
                 message: 'Dans sa liste',
-                value: last.value
+                value: last.value,
+                valueId: last.valueId,
+                valueLink: 'users.lists'
               }
             ],
             createdAt: last.createdAt,

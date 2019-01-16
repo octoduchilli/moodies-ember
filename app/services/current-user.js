@@ -30,7 +30,7 @@ export default Service.extend({
     this.votes = []
   },
 
-  async updateLastActivity (type, movieId, value) {
+  async updateLastActivity (type, movieId, value, valueId) {
     const movie = await this.store.find('tmdb-movie', movieId).then(movie => movie)
 
     let payload = {
@@ -44,6 +44,10 @@ export default Service.extend({
 
     if (value !== undefined && value !== null) {
       payload.value = value
+
+      if (valueId) {
+        payload.valueId = valueId
+      }
     }
 
     firebase.database().ref(`users/${get(this.session, 'uid')}/last/${type}`).update(payload)

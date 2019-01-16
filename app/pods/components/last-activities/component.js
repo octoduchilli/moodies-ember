@@ -7,6 +7,7 @@ import { htmlSafe } from '@ember/string'
 export default Component.extend(preloadImg, {
   notify: service('notification-messages'),
   store: service(),
+  user: service('current-user'),
 
   tagName: 'ul',
   classNames: 'work',
@@ -62,7 +63,9 @@ export default Component.extend(preloadImg, {
               infos: [
                 {
                   message: 'Dans sa liste',
-                  value: last.value
+                  value: last.value,
+                  valueId: last.valueId,
+                  valueLink: 'users.lists'
                 }
               ],
               createdAt: last.createdAt,

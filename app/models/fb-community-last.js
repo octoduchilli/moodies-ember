@@ -8,5 +8,6 @@ export default DS.Model.extend({
   movie: attr(''),
   user: attr(''),
 
-  value: attr('string')
+  value: attr('string'),
+  valueId: attr('string')
 })

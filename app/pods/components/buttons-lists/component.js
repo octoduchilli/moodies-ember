@@ -182,7 +182,7 @@ export default Component.extend({
       })
 
       if (list.id !== 'heart') {
-        this.user.updateLastActivity('add', this.movie.id, list.name)
+        this.user.updateLastActivity('add', this.movie.id, list.name, list.id)
       }
     }
 

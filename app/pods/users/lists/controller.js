@@ -259,7 +259,7 @@ export default Controller.extend(filtersHelper, {
       yield timeout(200)
     }
 
-    this.__checkFiltersValue([this.sort, this.genres, this.lists, this.refine])
+    this.__checkFiltersValue([this.sort, this.genres, this.lists, this.refine], this.user.reset === 'users.lists')
   }),
 
   __nextPage () {
