@@ -27,6 +27,8 @@ export default Component.extend({
   initialX: null,
   initialY: null,
 
+  id: null,
+
   imgX: 0,
   imgY: 0,
 
@@ -37,6 +39,7 @@ export default Component.extend({
   init () {
     this._super(...arguments)
 
+    this.id = get(this.user.infos, `${this.imgDataPath}.id`)
     this.imgPath = get(this.user.infos, `${this.imgDataPath}.path`)
     this.imgX = get(this.user.infos, `${this.imgDataPath}.posX`) || 0
     this.imgY = get(this.user.infos, `${this.imgDataPath}.posY`) || 0
@@ -53,6 +56,7 @@ export default Component.extend({
     if (this.save) {
       this.user.updateInfos({
         [this.imgDataPath]: {
+          id: this.id,
           posX: this.imgX,
           posY: this.imgY,
           scale: this.scale,
@@ -61,6 +65,7 @@ export default Component.extend({
       })
 
       set(this.user.infos, this.imgDataPath, {
+        id: this.id,
         posX: this.imgX,
         posY: this.imgY,
         scale: this.scale,
