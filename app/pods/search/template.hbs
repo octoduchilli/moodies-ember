@@ -24,7 +24,7 @@
     </div>
   {{/if}}
 
-  {{#if (eq type.selected.value 'movie')}}
+  {{#if (not-eq type.selected.value 'person')}}
     {{#if __fetchData.isRunning}}
       {{movie-list-skeleton}}
     {{else}}
