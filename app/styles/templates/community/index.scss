@@ -17,7 +17,7 @@
     background: linear-gradient(to left top, $black, $black2, $black);
 
     .last-activities__title {
-      margin: 20px 20px auto 0;
+      margin: 20px 0 auto 0;
 
       text-align: center;
 
@@ -67,10 +67,6 @@
 
     .community__last-activities {
       min-height: calc(370px * 3);
-
-      .last-activities__title {
-        margin: 20px 0 auto 0;
-      }
     }
 
     .community__filters-top-bar {

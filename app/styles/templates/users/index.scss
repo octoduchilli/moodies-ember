@@ -83,7 +83,7 @@
 
     border-radius: 5px;
 
-    max-width: 300px;
+    max-width: calc(280px - 30px);
 
     .banner__profile-img {
       position: relative;
@@ -138,6 +138,8 @@
       font-size: 0.85em;
 
       margin: 5px 0;
+
+      line-height: 1.1em;
 
       .value {
         color: $white;
