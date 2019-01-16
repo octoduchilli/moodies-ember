@@ -1,0 +1,19 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .home__no-home {
+    padding: 15px 30px;
+    margin: 15px 0;
+
+    background: $white;
+
+    border-radius: 5px;
+
+    color: $black;
+
+    font-family: 'Work Sans';
+    font-size: 1.2em;
+  }
+}
