@@ -20,7 +20,9 @@ export default Component.extend({
 
   currentRouteName: computed('router.currentRouteName', function () {
     const name = this.router.currentRouteName
-    if (name === 'search') {
+    if (name === 'home') {
+      return 'Accueil'
+    } else if (name === 'search') {
       return 'Recherche'
     } else if (name === 'discover') {
       return 'Bibliothèque'
@@ -53,6 +55,8 @@ export default Component.extend({
         return `Listes d'Utilisateur`
       } else if (name.indexOf('votes') !== -1) {
         return `Votes d'Utilisateur`
+      } else if (name.indexOf('last-activities') !== -1) {
+        return `Activités d'Utilisat.`
       }
 
       return 'Utilisateur'
