@@ -79,7 +79,7 @@ export default Controller.extend({
   }),
 
   updateColorSetting: task(function*(color) {
-    yield timeout(750)
+    yield timeout(1300)
 
     yield this.user.updateInfos({ color: color })
   }).restartable(),
