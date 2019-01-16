@@ -2,12 +2,13 @@
   {{fa-icon (if sideBarIsOpen "times" "bars") color="#274556" class="toggle-side-bar__icon"}}
   <p class="toggle-side-bar__current-route-name">{{currentRouteName}}</p>
 </div>
-<div class="moodies-title josefin">
+
+{{#link-to 'home' class="moodies-title link josefin"}}
   <div class="shine-container">
     <h1 class="shine-title">moodies</h1>
   </div>
   <h1 class="title">moodies</h1>
-</div>
+{{/link-to}}
 
 {{main-top-bar/search-input searchType=searchType text=searchText onClick=(action "search") onChange=(action "search") totalResults=fetch.total_results}}
 

@@ -1,0 +1,55 @@
+<div class="users__last-activities-container">
+  <ul class="users__last-activities">
+    {{#if fetch.isRunning}}
+      <li class="last-activities__skeleton-item">
+        <h1 class="item__title">Dernier ajout</h1>
+        <div class="item__movie-img"></div>
+        <p class="item__info">Le <span class="value">...</span></p>
+        <p class="item__info">Dans sa liste <span class="value">...</span></p>
+      </li>
+      <li class="last-activities__skeleton-item">
+        <h1 class="item__title">Dernier favori</h1>
+        <div class="item__movie-img"></div>
+        <p class="item__info">Le <span class="value">...</span></p>
+      </li>
+      <li class="last-activities__skeleton-item">
+        <h1 class="item__title">Dernier vote</h1>
+        <div class="item__movie-img"></div>
+        <p class="item__info">Le <span class="value">...</span></p>
+        <p class="item__info">A noté <span class="value">...</span></p>
+      </li>
+    {{else if (eq lastActivities.length 0)}}
+      <li class="last-activities__skeleton-item">
+        <h1 class="item__title">Dernier ajout</h1>
+        <div class="item__movie-img"></div>
+        <p class="item__info">Le <span class="value">...</span></p>
+        <p class="item__info">Dans sa liste <span class="value">...</span></p>
+      </li>
+      <li class="last-activities__skeleton-item">
+        <h1 class="item__title">Dernier favori</h1>
+        <div class="item__movie-img"></div>
+        <p class="item__info">Le <span class="value">...</span></p>
+      </li>
+      <li class="last-activities__skeleton-item">
+        <h1 class="item__title">Dernier vote</h1>
+        <div class="item__movie-img"></div>
+        <p class="item__info">Le <span class="value">...</span></p>
+        <p class="item__info">A noté <span class="value">...</span></p>
+      </li>
+      <h1 class="last-activities__no-activities">Aucune activité disponible</h1>
+    {{else}}
+      {{#each lastActivities as |activity|}}
+        <li class="last-activities__item">
+          <h1 class="item__title">{{activity.title}}</h1>
+          {{#link-to 'movie' activity.movie.id class="item__movie-img josefin" data-name=activity.movie.title}}
+            <img class="img" src="https://image.tmdb.org/t/p/w500{{activity.movie.path}}" alt="" onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
+          {{/link-to}}
+          <p class="item__info">Le <span class="value">{{moment-format activity.createdAt "Do MMMM YYYY à HH:mm"}}</span></p>
+          {{#each activity.infos as |info|}}
+            <p class="item__info">{{info.message}} <span class="value">{{info.value}}</span></p>
+          {{/each}}
+        </li>
+      {{/each}}
+    {{/if}}
+  </ul>
+</div>

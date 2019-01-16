@@ -17,6 +17,9 @@
       <div class="banner__link">
         Voir les votes
       </div>
+      <div class="banner__link">
+        Voir les dernières activités
+      </div>
     </div>
   </div>
 {{else}}
@@ -41,7 +44,7 @@
         <p class="banner__info">Votre profil est <span class="value red">Privé</span></p>
       {{/if}}
       <p class="banner__info">Inscrit le <span class="value">{{moment-format infos.createdAt "Do MMMM YYYY"}}</span></p>
-      <p class="banner__info last-child">Dernière apparition le <span class="value">{{moment-format infos.lastConnection "Do MMMM YYYY"}}</span></p>
+      <p class="banner__info last-child">Dernière apparition <span class="value">{{moment-format infos.lastConnection "Do MMMM YYYY à HH:mm"}}</span></p>
       {{#if (eq currentRouteName "users.statistics")}}
         {{#link-to 'users' class="banner__link"}}
         Voir les statistiques
@@ -67,6 +70,15 @@
       {{else}}
         {{#link-to 'users.votes' class="banner__link"}}
           Voir les votes
+        {{/link-to}}
+      {{/if}}
+      {{#if (eq currentRouteName "users.last-activities")}}
+        {{#link-to 'users' class="banner__link"}}
+          Voir les dernières activités
+        {{/link-to}}
+      {{else}}
+        {{#link-to 'users.last-activities' class="banner__link"}}
+          Voir les dernières activités
         {{/link-to}}
       {{/if}}
     </div>

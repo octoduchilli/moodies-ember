@@ -41,11 +41,6 @@ export default Controller.extend(preloadImg, filtersHelper, {
         name: 'Films (par défaut)',
         value: 'movie'
       },
-      default: {
-        id: 0,
-        name: 'Films (par défaut)',
-        value: 'movie'
-      },
       key: 'search_type',
       items: [
         {

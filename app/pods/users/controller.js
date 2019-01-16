@@ -48,7 +48,11 @@ export default Controller.extend({
       return htmlSafe(style)
     },
     slicedPseudo (pseudo) {
-      return pseudo[0].toUpperCase()
+      if (pseudo === 'Aucun pseudo') {
+        return '-'
+      } else {
+        return pseudo[0].toUpperCase()
+      }
     }
   },
 

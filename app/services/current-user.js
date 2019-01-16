@@ -30,19 +30,27 @@ export default Service.extend({
     this.votes = []
   },
 
-  async updateLastActivityCommunity (type, movieId, value) {
+  async updateLastActivity (type, movieId, value) {
     const movie = await this.store.find('tmdb-movie', movieId).then(movie => movie)
 
     let payload = {
       createdAt: new Date().toString(),
       movie: {
         id: movie.id,
+        title: movie.title,
         path: movie.poster_path
-      },
-      user: {
-        id: get(this.session, 'uid'),
-        pseudo: this.infos.pseudo,
       }
+    }
+
+    if (value !== undefined && value !== null) {
+      payload.value = value
+    }
+
+    firebase.database().ref(`users/${get(this.session, 'uid')}/last/${type}`).update(payload)
+
+    payload.user = {
+      id: get(this.session, 'uid'),
+      pseudo: this.infos.pseudo,
     }
 
     if (this.infos.profileImg) {
@@ -52,10 +60,6 @@ export default Service.extend({
         posY: this.infos.profileImg.posY,
         scale: this.infos.profileImg.scale
       })
-    }
-
-    if (value) {
-      payload.value = value
     }
 
     firebase.database().ref(`community/last/${type}`).update(payload)
@@ -81,6 +85,12 @@ export default Service.extend({
 
   removeList (list) {
     this.lists.removeObject(list)
+  },
+
+  async signOut () {
+    await this.session.close()
+
+    this.resetUser()
   },
 
   resetUser() {
@@ -145,7 +155,7 @@ export default Service.extend({
     this.ajax.request(`https://api.themoviedb.org/3/movie/${id}/rating?api_key=3836694fa8a7ae3ea69b5ff360b3be0b&guest_session_id=${this.guestSessionId}`, {
       method: 'POST',
       data: {
-        value: average
+        value: average || 0.5
       }
     })
 

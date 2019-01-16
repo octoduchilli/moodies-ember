@@ -197,8 +197,8 @@
       {{#if (not-eq 0 slicedMoviesCast.length)}}
         {{#each slicedMoviesCast as |movie|}}
           {{#link-to 'movie' movie.id}}
-            <li class="movie-list__movie">
-              <img class="movie__poster" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''">
+            <li class="movie-list__movie" data-name="{{movie.title}}">
+              <img class="movie__poster" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''; this.parentElement.classList.add('no-poster')">
               <p class="movie__information"><span class="value information__vote-average" style="{{compute (action "voteAverageBorderColorStyle") movie.vote_average}}">{{movie.vote_average}} / 10</span> sur <span class="value">{{movie.vote_count}}</span> votes</p>
               <p class="movie__information"><span class="value">{{movie.character}}</span></p>
               <p class="movie__information">sortie le <span class="value">{{if movie.release_date (moment-format movie.release_date "Do MMMM YYYY") "Date inconnue"}}</span></p>
@@ -245,8 +245,8 @@
       {{#if (not-eq 0 slicedMoviesCrew.length)}}
         {{#each slicedMoviesCrew as |movie|}}
           {{#link-to 'movie' movie.id}}
-            <li class="movie-list__movie">
-              <img class="movie__poster" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''">
+            <li class="movie-list__movie" data-name="{{movie.title}}">
+              <img class="movie__poster" src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="" onerror="this.src='/img/no-picture.png'; this.onerror=''; this.parentElement.classList.add('no-poster')">
               <p class="movie__information"><span class="value information__vote-average" style="{{compute (action "voteAverageBorderColorStyle") movie.vote_average}}">{{movie.vote_average}} / 10</span> sur <span class="value">{{movie.vote_count}}</span> votes</p>
               <p class="movie__information"><span class="value">{{compute (action "knownFor") movie.department}}</span></p>
               <p class="movie__information">sortie le <span class="value">{{if movie.release_date (moment-format movie.release_date "Do MMMM YYYY") "Date inconnue"}}</span></p>

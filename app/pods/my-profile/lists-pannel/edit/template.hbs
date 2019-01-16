@@ -18,7 +18,7 @@
       <h1 class="section__title">Position</h1>
       {{input type="number" min=1 max=user.lists.length value=props.position class="edit__input-number"}}
     </div>
-    {{#link-to 'my-profile.my-lists' (query-params show_lists=list.id) click=(action (mut user.reset) "my-lists") class="edit__little-link"}}
+    {{#link-to 'my-profile.my-lists' (query-params show_lists=list.id with_genres=null refine_by=null sort_by=null) click=(action (mut user.reset) "my-lists") class="edit__little-link"}}
       voir dans MES LISTES
     {{/link-to}}
     {{basic-button icon="check" label="Sauvegarder" pending=save.isRunning click=(perform save) class=(concat (if haveChanges "is--clickable ") "edit__save-button edit__button")}}

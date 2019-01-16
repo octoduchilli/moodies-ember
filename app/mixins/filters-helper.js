@@ -42,10 +42,6 @@ export default Mixin.create({
           }
         }
       }
-
-      if (filter.default) {
-        set(filter, 'selected', filter.default)
-      }
     })
 
     if (reset) {
