@@ -1,7 +1,8 @@
 <div class="images work">
   {{#each imageSections as |section|}}
     <div class="images__section">
-      <h1 class="section__title">{{section.title}} - {{section.images.length}}</h1>
+      <h1 class="section__title">{{compute (action "html") section.title}}</h1>
+      <h2 class="section__second-title">{{section.secondTitle}}</h2>
       <ul class="section__image-list">
         {{#each section.images as |image|}}
           <li class="image-list__image">

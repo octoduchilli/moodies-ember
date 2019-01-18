@@ -1,6 +1,7 @@
 <div class="videos work">
   <div class="videos__section">
-    <h1 class="section__title">Vidéos YouTube - {{model.videos.length}}</h1>
+    <h1 class="section__title">Vidéos du film <span class="bold">{{model.title}}</span></h1>
+    <h2 class="section__second-title">Actuellement {{model.videos.length}} {{if (lt 1 model.videos.length) 'vidéos disponibles' 'vidéo disponible'}}</h2>
     <ul class="section__video-list">
       {{#each model.videos as |video|}}
         {{#if (eq video.site "YouTube")}}

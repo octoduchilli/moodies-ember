@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route'
+import RSVP from 'rsvp'
 import { inject as service } from '@ember/service'
 import { set } from '@ember/object'
 
@@ -18,7 +19,7 @@ export default Route.extend({
   },
 
   async model ({ id }, { queryParams }) {
-    return await this.store.find(`tmdb-${queryParams.images_type}-images`, id).then(async images => {
+    const { posters, backdrops, images_type } = await this.store.find(`tmdb-${queryParams.images_type}-images`, id).then(async images => {
       set(images, 'images_type', queryParams.images_type)
 
       await this.store.find(`tmdb-${queryParams.images_type}`, id).then(_ => {
@@ -40,6 +41,14 @@ export default Route.extend({
       })
 
       return images
+    })
+
+    return await RSVP.hash({
+      id: id,
+      posters: posters,
+      backdrops: backdrops,
+      images_type: images_type,
+      title: this.store.find('tmdb-movie', id).then(movie => movie.title)
     })
   },
 

@@ -14,11 +14,13 @@ export default Controller.extend({
     if (this.model.images_type === 'movie') {
       return [
         {
-          title: 'Affiches',
+          title: `Affiches du film <span class="bold">${this.model.title}</span>`,
+          secondTitle: `Actuellement ${this.model.posters.length} disponible${this.model.posters.length > 1 ? 's' : ''}`,
           images: this.model.posters
         },
         {
-          title: `Fonds d'écran`,
+          title: `Fonds d'écran du film <span class="bold">${this.model.title}</span>`,
+          secondTitle: `Actuellement ${this.model.backdrops.length} disponible${this.model.backdrops.length > 1 ? 's' : ''}`,
           images: this.model.backdrops
         }
       ]
@@ -55,6 +57,9 @@ export default Controller.extend({
       this.notify.info(`Recadrez votre image de ${dataPath === 'profileImg' ? 'profil' : 'couverture'} sur votre page de profil`, {
         htmlContent: true
       })
+    },
+    html (html) {
+      return htmlSafe(html)
     }
   }
 });

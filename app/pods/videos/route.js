@@ -19,7 +19,10 @@ export default Route.extend({
         type: 'videos'
       })
 
-      return { videos: movie.videos.results}
+      return {
+        title: movie.title,
+        videos: movie.videos.results
+      }
     })
   }
 });
