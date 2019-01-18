@@ -33,6 +33,10 @@
                 {{#if (eq item.id hover)}}
                   {{buttons-lists movie=item class="col"}}
                 {{/if}}
+              {{else}}
+                {{#if (eq item.id hover)}}
+                  {{buttons-lists-skeleton class="div-buttons-lists__buttons-lists pending col"}}
+                {{/if}}
               {{/if}}
             {{else}}
               {{#if (eq item.id hover)}}
@@ -68,6 +72,14 @@
               {{else}}
                 {{#if (eq item.id hover)}}
                   {{buttons-lists movie=item}}
+                {{/if}}
+              {{/if}}
+            {{else}}
+              {{#if (eq view.userButton "visible")}}
+                {{buttons-lists-skeleton class="div-buttons-lists__buttons-lists pending"}}
+              {{else}}
+                {{#if (eq item.id hover)}}
+                  {{buttons-lists-skeleton class="div-buttons-lists__buttons-lists pending"}}
                 {{/if}}
               {{/if}}
             {{/if}}
