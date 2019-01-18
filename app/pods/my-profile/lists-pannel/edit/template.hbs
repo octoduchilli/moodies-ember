@@ -8,7 +8,7 @@
     <h1 class="edit__title">Modifiez votre liste</h1>
     {{#basic-form class="edit__form" onSubmit=(perform save) as |form|}}
       {{form.input label="Label" placeholder="LOL" value=props.label error=errorLabel maxlength=3 class="edit__input-text"}}
-      {{form.input label="Titre" placeholder="Un jolie titre pour ma liste" value=props.name error=errorName maxlength=50 class="edit__input-text"}}
+      {{form.input label="Titre" placeholder="Un joli titre pour ma liste" value=props.name error=errorName maxlength=50 class="edit__input-text"}}
     {{/basic-form}}
     <div class="edit__section">
       <h1 class="section__title">Couleur</h1>
