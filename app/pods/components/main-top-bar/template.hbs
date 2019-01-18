@@ -16,6 +16,8 @@
   {{basic-options class="type-options" selected=searchType options=typeOptions onChange=(action "search")}}
 {{/if}}
 
-{{main-top-bar/search-results type=searchType items=fetch.results click=(action "resetFetch")}}
+{{#if fetch.results}}
+  {{main-top-bar/search-results type=searchType items=fetch.results click=(action "resetFetch")}}
+{{/if}}
 
 {{main-top-bar/user-log}}
