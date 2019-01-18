@@ -17,11 +17,7 @@
       </div>
       <div class="item__details flex col">
         <h1 class="details__title"></h1>
-        <ul class="details__genres flex wrap work">
-          {{#each (repeat 3) as |nb|}}
-            <li class="genre"></li>
-          {{/each}}
-        </ul>
+        {{basic-genre-list-skeleton class="details__genres"}}
         <div class="details__vote flex ali-center work">
           <div class="vote__average"></div>
           <div class="vote__count"></div>

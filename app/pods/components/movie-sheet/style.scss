@@ -150,25 +150,6 @@
           color: lightgray;
         }
 
-        .information__genres {
-
-          .genre {
-            margin: 5px;
-
-            padding: 7px;
-
-            background: $white;
-
-            color: $black;
-
-            border-radius: 3px;
-
-            &:first-child {
-              margin-left: 0;
-            }
-          }
-        }
-
         .information__overview {
           font-size: 1.15em;
 
@@ -190,24 +171,6 @@
       }
 
       .informations-section__information {
-
-        .information__genres {
-
-          .genre {
-            height: 30px;
-            width: 80px;
-
-            padding: 0;
-
-            background: $white;
-
-            border-radius: 3px;
-
-            &:first-child {
-              margin-left: 0;
-            }
-          }
-        }
 
         .information__overview {
           width: calc(100vw - 700px);

@@ -1,6 +1,5 @@
 import Component from '@ember/component'
 import lerpColor from 'moodies-ember/mixins/lerp-color'
-import genres from 'moodies-ember/data/genres'
 import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
 import { set } from '@ember/object'
@@ -73,13 +72,6 @@ export default Component.extend(lerpColor, {
       }
 
       return overview
-    },
-    genreName (id) {
-      const genre = genres.findBy('value', id)
-
-      if (genre) {
-        return genre.name
-      }
     },
     notifyNotConnected () {
       this.notify.info(`Vous n'êtes pas connecté...`)

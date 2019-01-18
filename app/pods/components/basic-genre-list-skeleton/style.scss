@@ -1,0 +1,15 @@
+& {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__genre {
+    margin: 5px;
+
+    width: 100px;
+    height: 30px;
+
+    background: rgba(gray, .15);
+
+    border-radius: 3px;
+  }
+}

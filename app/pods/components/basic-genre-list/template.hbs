@@ -1,0 +1,8 @@
+{{#each genresWithData as |genre|}}
+  {{#link-to 'discover' (query-params with_genres=genre.id sort_by=null vote_count_gte=null primary_release_date_gte=null primary_release_date_lte=null) class=(concat styleNamespace "__genre") click=(action (mut user.reset) "discover")}}
+    {{#if genre.icon}}
+      {{compute (action "genreIcon") genre.icon}}
+    {{/if}}
+    {{genre.name}}
+  {{/link-to}}
+{{/each}}

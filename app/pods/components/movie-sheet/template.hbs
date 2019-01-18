@@ -12,11 +12,7 @@
       <p class="informations-section__little-information last-child">Noté <span class="value little-information__vote-average" style="{{compute (action "voteAverageBorderColorStyle") null}}">... / 10</span> sur <span class="value">...</span> votes</p>
       <div class="informations-section__information">
         <h1 class="information__title">Avec les genres :</h1>
-        <ul class="information__genres flex wrap">
-          <li class="genre"></li>
-          <li class="genre"></li>
-          <li class="genre"></li>
-        </ul>
+        {{basic-genre-list-skeleton}}
       </div>
       <div class="informations-section__information">
         <h1 class="information__title">Synopsis :</h1>
@@ -59,13 +55,7 @@
       <p class="informations-section__little-information last-child">Noté <span class="value little-information__vote-average" style="{{compute (action "voteAverageBorderColorStyle") movie.vote_average}}">{{movie.vote_average}} / 10</span> sur <span class="value">{{movie.vote_count}}</span> votes</p>
       <div class="informations-section__information">
         <h1 class="information__title">Avec les genres :</h1>
-        <ul class="information__genres flex wrap">
-          {{#each movie.genres as |genre|}}
-            {{#link-to 'discover' (query-params with_genres=genre.id sort_by=null vote_count_gte=null primary_release_date_gte=null primary_release_date_lte=null) class="genre" click=(action (mut user.reset) "discover")}}
-              {{genre.name}}
-            {{/link-to}}
-          {{/each}}
-        </ul>
+        {{basic-genre-list genres=movie.genres}}
       </div>
       <div class="informations-section__information">
         <h1 class="information__title">Synopsis :</h1>
