@@ -51,7 +51,7 @@
       {{/if}}
       <p class="item__info">Le <span class="value">{{moment-format activity.createdAt "Do MMMM YYYY à HH:mm"}}</span></p>
       {{#each activity.infos as |info|}}
-        {{#if info.valueId}}
+        {{#if (and (not activity.user.private) info.valueId)}}
           {{#link-to info.valueLink activity.user.id (query-params show_lists=info.valueId refine_by=null with_genres=null sort_by=null) click=(action (mut user.reset) "users.lists") class="item__info"}}
             {{info.message}} <span class="value">{{info.value}}</span>
           {{/link-to}}
