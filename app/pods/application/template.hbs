@@ -6,7 +6,7 @@
   {{fa-icon "arrow-up" color="white"}}
 </div>
 {{#if media.isMobile}}
-  <div class="close-side-bar {{if sideBar.isOpen 'side--bar-is-open'}}" {{action "closeSideBar" on="touchEnd"}}></div>
+  <div class="close-side-bar {{if sideBar.isOpen 'side--bar-is-open'}}" {{action "closeSideBar" on="touchEnd"}} {{action "closeSideBar" on="mouseUp"}}></div>
 {{/if}}
 <div id="app">
   {{outlet}}
