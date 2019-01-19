@@ -39,7 +39,7 @@ export default Controller.extend(preloadImg, filtersHelper, {
       },
       {
         id: 1,
-        name: 'Coups de coeurs',
+        name: 'Coups de coeur',
         value: 'heart'
       }
     ]
@@ -66,7 +66,7 @@ export default Controller.extend(preloadImg, filtersHelper, {
       },
       {
         id: 1,
-        name: 'Coups de coeurs',
+        name: 'Coups de coeur',
         value: 'heart'
       }
     ]

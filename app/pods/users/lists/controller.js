@@ -44,7 +44,7 @@ export default Controller.extend(filtersHelper, {
       },
       {
         id: 1,
-        name: 'Coups de coeurs',
+        name: 'Coups de coeur',
         value: 'heart'
       }
     ]
@@ -71,7 +71,7 @@ export default Controller.extend(filtersHelper, {
       },
       {
         id: 1,
-        name: 'Coups de coeurs',
+        name: 'Coups de coeur',
         value: 'heart'
       }
     ]
@@ -381,7 +381,7 @@ export default Controller.extend(filtersHelper, {
     this.progress.update(40)
 
     yield all([
-      timeout(500),
+      timeout(750),
       this.__fetch.perform(id)
     ])
 

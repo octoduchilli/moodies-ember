@@ -24,7 +24,7 @@ export default Component.extend({
       },
       {
         id: 'heart',
-        name: 'Coups de coeurs',
+        name: 'Coups de coeur',
         icon: 'heart',
         color: 'red'
       },
