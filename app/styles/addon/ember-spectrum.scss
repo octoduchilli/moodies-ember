@@ -46,6 +46,8 @@
 
         cursor: pointer;
 
+        max-width: 30px;
+
         .sp-slider {
           border: 3px solid white;
 
@@ -95,6 +97,8 @@
   }
 
   .sp-button-container {
+    margin-top: 10px;
+    float: left;
 
     .sp-cancel {
       font-size: 1.1em;
@@ -112,5 +116,11 @@
 
       border-radius: 3px;
     }
+  }
+}
+
+@media (max-width: 500px) {
+  .sp-container {
+    max-width: 178px;
   }
 }

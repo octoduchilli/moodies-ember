@@ -8,6 +8,7 @@ import { htmlSafe } from '@ember/string'
 export default Controller.extend({
   firebaseApp: service(),
   session: service(),
+  media: service(),
   user: service('current-user'),
 
   genresItems: null,

@@ -34,7 +34,7 @@
     </div>
     <div class="setting">
       <p class="setting__message">Couleur</p>
-      {{spectrum-color-picker showButtons=false clickoutFiresChange=true preferredFormat="hex" color=user.infos.color onChange=(perform updateColorSetting)}}
+      {{spectrum-color-picker showButtons=media.isMobile cancelText="Fermer" chooseText="Valider" moveFiresChange=true preferredFormat="hex" color=user.infos.color onChange=(perform updateColorSetting)}}
     </div>
     <div class="setting user-img-setting">
       {{#if user.infos.profileImg}}

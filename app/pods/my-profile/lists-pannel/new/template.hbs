@@ -12,7 +12,7 @@
     {{/basic-form}}
     <div class="edit__section">
       <h1 class="section__title">Couleur</h1>
-      {{spectrum-color-picker showButtons=false clickoutFiresChange=true preferredFormat="hex" color=color}}
+      {{spectrum-color-picker showButtons=media.isMobile cancelText="Fermer" chooseText="Valider" moveFiresChange=true preferredFormat="hex" color=color}}
     </div>
     {{basic-button icon="check" label="Créer" pending=save.isRunning click=(perform save) class=(concat (if (and label name) "is--clickable ") "edit__save-button edit__button")}}
   {{/if}}
