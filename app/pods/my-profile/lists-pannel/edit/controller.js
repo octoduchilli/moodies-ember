@@ -21,7 +21,7 @@ export default Controller.extend({
   willDeleteList: false,
   deleted: false,
 
-  haveChanges: computed('propsToCheck', 'props.color', 'props.name', 'props.label', 'props.position', function () {
+  haveChanges: computed('propsToCheck', 'props.{color,name,label,position}', function () {
     if (this.props) {
       return Object.entries(this.propsToCheck).every(values => String(this.props[values[0]]) === String(values[1])) === false
     }
