@@ -9,7 +9,7 @@ export default Component.extend(lerpColor, {
   user: service('current-user'),
 
   tagName: 'div',
-  classNames: 'work',
+  classNames: 'work pointer',
 
   movieId: null,
 
@@ -19,6 +19,30 @@ export default Component.extend(lerpColor, {
   userPseudo: null,
 
   onChange () {},
+
+  click (event) {
+    if (!this.userPseudo) {
+      set(this, 'newAverage', Math.round((event.offsetX / event.target.offsetWidth) * 10))
+
+      this.__onChange(this.newAverage)
+
+      if (this.media.isMobile) {
+        set(this, 'newAverage', null)
+      }
+    }
+  },
+
+  mouseMove (event) {
+    if (!this.media.isMobile && !this.userPseudo) {
+      set(this, 'newAverage', Math.round((event.offsetX / event.target.offsetWidth) * 10))
+    }
+  },
+
+  mouseLeave () {
+    if (!this.media.isMobile && !this.userPseudo) {
+      set(this, 'newAverage', null)
+    }
+  },
 
   actions: {
     voteAverageBorderColorStyle (average) {
@@ -32,14 +56,12 @@ export default Component.extend(lerpColor, {
       } else {
         return htmlSafe(`width: ${(average / 10) * 100}%; background: ${this.lerpColor({r: 255, g: 0, b: 0}, {r: 0, g: 255, b: 0}, average / 10)}`)
       }
-    },
-    updateVoteAverage () {
-      set(this, 'newAverage', Math.round((event.offsetX / event.target.offsetWidth) * 10))
-    },
-    onChange (average) {
-      this.user.updateLastActivity('vote', this.movieId, average)
-
-      this.onChange(average)
     }
+  },
+
+  __onChange (average) {
+    this.user.updateLastActivity('vote', this.movieId, average)
+
+    this.onChange(average)
   }
 });
