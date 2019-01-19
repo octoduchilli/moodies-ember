@@ -1,3 +1,11 @@
+.users__wait-lists {
+  z-index: 3;
+
+  margin: 20px auto;
+
+  font-size: 2.3em;
+}
+
 .users__lists {
   display: flex;
   flex-direction: column;
@@ -7,12 +15,6 @@
   min-width: 100%;
 
   background: linear-gradient(to right, rgba(black, 0), rgba($black2, .8) 20%);
-
-  .wait {
-    margin: 10px auto;
-
-    font-size: 1.5em;
-  }
 
   .lists__filters-top-bar {
     left: auto;
