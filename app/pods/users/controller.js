@@ -53,6 +53,9 @@ export default Controller.extend({
       } else {
         return pseudo[0].toUpperCase()
       }
+    },
+    style (attr, value) {
+      return htmlSafe(`${attr}: ${value}`)
     }
   },
 
