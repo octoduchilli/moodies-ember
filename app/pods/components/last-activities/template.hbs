@@ -24,7 +24,7 @@
     <li class="{{styleNamespace}}__item">
       <h1 class="item__title">{{activity.title}}</h1>
       {{#link-to 'movie' activity.movie.id class="item__movie-img josefin" data-name=activity.movie.title}}
-        <img class="img" src="https://image.tmdb.org/t/p/w500{{activity.movie.path}}" alt="" onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
+        <img class="img" title="{{activity.movie.title}}" src="https://image.tmdb.org/t/p/w500{{activity.movie.path}}" alt="" onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
       {{/link-to}}
       {{#if activity.user.private}}
         <div class="item__user" {{action "notifyUserPrivate" activity.user on="click"}}>

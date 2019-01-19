@@ -3,7 +3,7 @@
     {{#if (eq view.userButton "visible")}}
       <li class="{{styleNamespace}}__item mouse--is-over" {{action (mut hover) item.id on="mouseEnter"}} {{action (mut hover) null on="mouseLeave"}}>
         {{#link-to 'movie' item.id class="item__link" data-name=item.title}}
-          <img class="link__poster" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
+          <img class="link__poster" title="{{item.title}}" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
         {{/link-to}}
         <div class="div-buttons-lists">
           {{#if session.isAuthenticated}}
@@ -24,7 +24,7 @@
     {{else}}
       <li class="{{styleNamespace}}__item {{if (eq item.id hover) "mouse--is-over"}}" {{action (mut hover) null on="mouseLeave"}}>
         {{#link-to 'movie' item.id class="item__link" mouseEnter=(action (mut hover) item.id) data-name=item.title}}
-          <img class="link__poster" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
+          <img class="link__poster" title="{{item.title}}" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
         {{/link-to}}
         <div class="div-buttons-lists">
           {{#if (not media.isMobile)}}
@@ -50,7 +50,7 @@
   {{else if (eq view.list "details")}}
     <li class="{{styleNamespace}}__item is--detailed mouse--is-over" {{action (mut hover) null on="mouseLeave"}} {{action (mut hover) item.id on="mouseEnter"}}>
       {{#link-to 'movie' item.id class="item__link" data-name=item.title}}
-        <img class="link__poster bigger" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
+        <img class="link__poster bigger" title="{{item.title}}" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" alt=" " onerror="this.src='/img/no-picture.png'; this.parentElement.classList.add('no-poster')">
       {{/link-to}}
       <div class="item__details flex col">
         <h1 class="details__title">{{item.title}}</h1>
