@@ -1,9 +1,12 @@
 import Component from '@ember/component'
 import genres from 'moodies-ember/data/genres'
+import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
 import { typeOf } from '@ember/utils'
 
 export default Component.extend({
+  user: service('current-user'),
+
   tagName: 'ul',
   classNames: 'work',
 
