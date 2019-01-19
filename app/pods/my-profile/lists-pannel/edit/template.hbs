@@ -12,7 +12,7 @@
     {{/basic-form}}
     <div class="edit__section">
       <h1 class="section__title">Couleur</h1>
-      {{basic-color-selector value=props.color}}
+      {{spectrum-color-picker showButtons=false clickoutFiresChange=true preferredFormat="hex" color=props.color}}
     </div>
     <div class="edit__section">
       <h1 class="section__title">Position</h1>

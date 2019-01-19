@@ -1,6 +1,6 @@
 import Controller from '@ember/controller'
 import genres from 'moodies-ember/data/genres'
-import { task, timeout, all } from 'ember-concurrency'
+import { task, timeout } from 'ember-concurrency'
 import { get, set, computed } from '@ember/object'
 import { inject as service } from '@ember/service'
 import { htmlSafe } from '@ember/string'
