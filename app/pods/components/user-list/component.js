@@ -66,15 +66,7 @@ export default Component.extend({
       }
     },
     style (attr, value) {
-      if (value) {
-        const rgb = this.__hexToRgb(value)
-
-        if (rgb) {
-          return htmlSafe(`${attr}: rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, .4)`)
-        } else {
-          return htmlSafe(`${attr}: ${value}`)
-        }
-      }
+      return htmlSafe(`${attr}: ${value}`)
     }
   },
 
@@ -83,6 +75,8 @@ export default Component.extend({
   __setScrollY () {
     this.scroll(window.scrollY)
   },
+
+  /* SAVE FUNCTION
 
   __hexToRgb (hex) {
     let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
@@ -98,4 +92,6 @@ export default Component.extend({
       b: parseInt(result[3], 16)
     } : null
   }
+
+  */
 });
